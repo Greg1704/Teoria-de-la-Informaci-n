@@ -24,11 +24,11 @@ void init(int M[3][3], int V[3]) { // M va a guardar en cada mij la ocurrencia d
 
 void leeArch(int M[3][3]) {
     int i=0, ocA=0, ocB=0, ocC=0; // si fuesen muchos simb haria un vector de ocurrencias
-    int MPasaje[3][3]
+    int MPasaje[3][3], V[3];
     char simb, ultSimb;
     FILE* archt; // archivo de texto
 
-    initMatriz(M);
+    init(M, V);
     archt = fopen("datos.txt", "r");
     fscanf(archt, "%c", &simb)
     while (!feof(archt)) {
