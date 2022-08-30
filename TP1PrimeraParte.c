@@ -3,8 +3,8 @@
 #include "string.h"
 
 void leeArch(int M[3][3]); // parámetro N por si llega a haber una letra de más o de menos
-void init(int M[][], int V[]);
-void calculaProbabilidades(int MPasaje[][]);
+void init(int M[3][3], int V[]);
+void calculaProbabilidades(int MPasaje[3][3], int M[][3], int V[]);
 
 int main() {
     int M[3][3];
@@ -30,23 +30,24 @@ void leeArch(int M[3][3]) {
 
     init(M, V);
     archt = fopen("datos.txt", "r");
-    fscanf(archt, "%c", &simb)
+    fscanf(archt, "%c", &simb);
     while (!feof(archt)) {
         V[simb-97]++; // hago un vector para ir guardando las ocurrencias
         M[simb][ultSimb]+=1; // el simbolo "simb" aparecio despues de la ocurrencia de "ultSimb"
         //cadena[i] = simb;
         ultSimb=simb;
         fscanf(archt, "%c", &simb);
-        i++
+        i++;
     }
-    calculaProbabilidades(MPasaje, M, V)
+    calculaProbabilidades(MPasaje, M, V);
 }
 
 void calculaProbabilidades(int MPasaje[3][3], int M[3][3], int V[]) {
     int i, j;
     for (j=0 ; j<3 ; i++) {
         for (i=0 ; i<3 ; j++) {
-            MPasaje[i][j] = (M[i][j] / V[i]);
+            MPasaje[i][j] = (M[i][j] / V[i]); // divido ocurrencias de i despues de j sobre ocurrencias total de i. obteniendo esto se puede sacar la conclusion
+            // de si es de memoria nula o no
         }
     }
 }
