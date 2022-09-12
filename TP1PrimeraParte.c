@@ -29,8 +29,9 @@ void leeArch(int M[3][3]) {
     FILE* archt; // archivo de texto
 
     init(M, V);
-    archt = fopen("datos.txt", "r");
+    archt = fopen("datosGrupo11.txt", "r");
     fscanf(archt, "%c", &simb);
+    simb = lowercase(simb);
     while (!feof(archt)) {
         V[simb-97]++; // hago un vector para ir guardando las ocurrencias
         M[simb][ultSimb]+=1; // el simbolo "simb" aparecio despues de la ocurrencia de "ultSimb"
