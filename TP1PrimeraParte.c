@@ -6,7 +6,7 @@
 void leeArch(int M[N][N]); // parámetro N por si llega a haber una letra de más o de menos
 void init(int M[N][N], int V[N]);
 void generaMIdentidad(int MIdentidad[N][N]);
-void igualoMatrices(float MPasaje[N][N], int MIdentidad[N][N], float MAux[N][N]);
+void igualoMatrices(float MPasaje[N][N], int MIdentidad[N][N], float MAux[N][N]); //CAMBIARLE NOMBRE
 int esErgodica(float MPasaje[N][N]);
 void calculaProbabilidades(float MPasaje[N][N], int M[N][N], int V[N]);
 
@@ -80,21 +80,26 @@ void calculaProbabilidades(float MPasaje[N][N], int M[N][N], int V[N]) {
     printf("%f \n", MPasaje[0][0] + MPasaje[1][0] + MPasaje[2][0]);
     printf("%f \n", MPasaje[0][1] + MPasaje[1][1] + MPasaje[2][1]);
     printf("%f \n", MPasaje[0][2] + MPasaje[1][2] + MPasaje[2][2]);
-    generaMIdentidad(MIdentidad);
-    igualoMatrices(MPasaje, MIdentidad, MAux); // resultado = MAux = (M-I) para poder hacer (M-I)V* = 0
-    //Dan los tres 1(Fuente de Markov)
+
+    if(esErgodica(MPasaje)){
+        generaMIdentidad(MIdentidad);
+        igualoMatrices(MPasaje, MIdentidad, MAux); // resultado = MAux = (M-I) para poder hacer (M-I)V* = 0
+        //Dan los tres 1(Fuente de Markov)
+        //HAY QUE CALCULAR VECTOR ESTACIONARIO
+    }
+    
 }
 
 int esErgodica(float MPasaje[N][N]){
     int M[N][N];
     int fila=0,columna=0;
-    for (int i = 1; i<=N ; i++)
-            for (int j = 1; j <=N ; j++){
+    for (int i = 0; i<N ; i++)
+            for (int j = 0; j <N ; j++){
                 M[i][j]=0;
             }
-    for (int k = 1; k <=N ; k++)
-        for (int i = 1; i<=N ; i++)
-            for (int j = 1; j <=N ; j++){
+    for (int k = 0; k <N ; k++)
+        for (int i = 0; i<N ; i++)
+            for (int j = 0; j <N ; j++){
                 if(MPasaje[i][j] > 0 || (MPasaje[i][k] + MPasaje[k][j] > 0))
                     M[i][j] = 1;
             }
