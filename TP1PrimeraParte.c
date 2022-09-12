@@ -35,7 +35,7 @@ void leeArch(int M[3][3]) {
     fscanf(archt, "%c", &simb); // los datos estan en mayuscula
     while (!feof(archt)) {
         V[simb-65]++; // hago un vector para ir guardando las ocurrencias
-        M[simb-65][ultSimb-65]+=1; // el simbolo "simb" aparecio despues de la ocurrencia de "ultSimb"
+        M[ultSimb-65][simb-65]+=1; // el simbolo "simb" aparecio despues de la ocurrencia de "ultSimb"
         //cadena[i] = simb;
         ultSimb=simb;
         fscanf(archt, "%c", &simb);
