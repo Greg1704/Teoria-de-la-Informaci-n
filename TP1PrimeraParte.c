@@ -8,6 +8,8 @@ void calculaProbabilidades(int MPasaje[3][3], int M[][3], int V[]);
 
 int main() {
     int M[3][3];
+    //char c = 'A'-'A';
+   // printf("%c", c);
     leeArch(M);
     return 0;
 }
@@ -30,11 +32,10 @@ void leeArch(int M[3][3]) {
 
     init(M, V);
     archt = fopen("datosGrupo11.txt", "r");
-    fscanf(archt, "%c", &simb);
-    simb = lowercase(simb);
+    fscanf(archt, "%c", &simb); // los datos estan en mayuscula
     while (!feof(archt)) {
-        V[simb-97]++; // hago un vector para ir guardando las ocurrencias
-        M[simb][ultSimb]+=1; // el simbolo "simb" aparecio despues de la ocurrencia de "ultSimb"
+        V[simb-65]++; // hago un vector para ir guardando las ocurrencias
+        M[simb-65][ultSimb-65]+=1; // el simbolo "simb" aparecio despues de la ocurrencia de "ultSimb"
         //cadena[i] = simb;
         ultSimb=simb;
         fscanf(archt, "%c", &simb);
