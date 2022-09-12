@@ -5,6 +5,9 @@
 
 void leeArch(int M[N][N]); // parámetro N por si llega a haber una letra de más o de menos
 void init(int M[N][N], int V[N]);
+void generaMIdentidad(int MIdentidad[N][N]);
+void igualoMatrices(float MPasaje[N][N], int MIdentidad[N][N], float MAux[N][N]);
+
 void calculaProbabilidades(float MPasaje[N][N], int M[N][N], int V[N]);
 
 int main() {
@@ -34,7 +37,7 @@ void generaMIdentidad(int MIdentidad[N][N]) {
     }
 }
 
-void igualoMatrices(int MPasaje[N][N], int MIdentidad[N][N], float MAux[N][N]) {
+void igualoMatrices(float MPasaje[N][N], int MIdentidad[N][N], float MAux[N][N]) {
     int i, j;
     for (i=0 ; i<N ; i++)
         for (j=0; j<N ; j++) 
@@ -79,7 +82,7 @@ void calculaProbabilidades(float MPasaje[N][N], int M[N][N], int V[N]) {
     //Dan los tres 1(Fuente de Markov)
 }
 
-int esErgodica(int MPasaje[N][N], int MIdentidad[N][N]) {
+int esErgodica(float MPasaje[N][N], int MIdentidad[N][N]) {
     int aux=0; //false para inicializar
     float MAux[N][N];
     generaMIdentidad(MIdentidad);
