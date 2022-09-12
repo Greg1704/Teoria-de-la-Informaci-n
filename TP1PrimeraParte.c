@@ -7,7 +7,7 @@ void leeArch(int M[N][N]); // parámetro N por si llega a haber una letra de má
 void init(int M[N][N], int V[N]);
 void generaMIdentidad(int MIdentidad[N][N]);
 void igualoMatrices(float MPasaje[N][N], int MIdentidad[N][N], float MAux[N][N]);
-
+int esErgodica(float MPasaje[N][N], int MIdentidad[N][N]);
 void calculaProbabilidades(float MPasaje[N][N], int M[N][N], int V[N]);
 
 int main() {
