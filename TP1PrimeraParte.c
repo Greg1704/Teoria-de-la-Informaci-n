@@ -33,8 +33,13 @@ void leeArch(int M[3][3]) {
     init(M, V);
     archt = fopen("datosGrupo11.txt", "r");
     fscanf(archt, "%c", &simb); // los datos estan en mayuscula
-    while (!feof(archt)) {
+    if(!feof(archt)){
+        ultSimb = simb;
         V[simb-65]++; // hago un vector para ir guardando las ocurrencias
+        fscanf(archt, "%c", &simb);
+    }
+    while (!feof(archt)) {
+        V[simb-65]++; 
         M[ultSimb-65][simb-65]+=1; // el simbolo "simb" aparecio despues de la ocurrencia de "ultSimb"
         //cadena[i] = simb;
         ultSimb=simb;
