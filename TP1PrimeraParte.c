@@ -1,32 +1,33 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "string.h"
+#define N 3
 
-void leeArch(int M[3][3]); // parámetro N por si llega a haber una letra de más o de menos
-void init(int M[3][3], int V[]);
-void calculaProbabilidades(float MPasaje[3][3], int M[][3], int V[]);
+void leeArch(int M[N][N]); // parámetro N por si llega a haber una letra de más o de menos
+void init(int M[N][N], int V[N]);
+void calculaProbabilidades(float MPasaje[N][N], int M[N][N], int V[N]);
 
 int main() {
-    int M[3][3];
+    int M[N][N];
     //char c = 'A'-'A';
    // printf("%c", c);
     leeArch(M);
     return 0;
 }
 
-void init(int M[3][3], int V[3]) { // M va a guardar en cada mij la ocurrencia de i despues de la ocurrencia de j
+void init(int M[N][N], int V[N]) { // M va a guardar en cada mij la ocurrencia de i despues de la ocurrencia de j
     int i, j;
-    for (i=0 ; i<3 ; i++) {
+    for (i=0 ; i<N ; i++) {
         V[i]=0;
-        for (j=0 ; j<3 ; j++) {
+        for (j=0 ; j<N ; j++) {
             M[i][j]=0;
         }
     }
 }
 
-void leeArch(int M[3][3]) {
-    float MPasaje[3][3];
-    int V[3];
+void leeArch(int M[N][N]) {
+    float MPasaje[N][N];
+    int V[N];
     char simb, ultSimb;
     FILE* archt; // archivo de texto
 
@@ -47,11 +48,11 @@ void leeArch(int M[3][3]) {
     calculaProbabilidades(MPasaje, M, V);
 }
 
-void calculaProbabilidades(float MPasaje[3][3], int M[3][3], int V[]) {
+void calculaProbabilidades(float MPasaje[N][N], int M[N][N], int V[N]) {
     int i, j;
-    for (j=0 ; j<3 ; j++) {
-        for (i=0 ; i<3 ; i++) {
-            MPasaje[i][j] = ((float) M[i][j] / (float) V[j]); // divido ocurrencias de i despues de j sobre ocurrencias total de i. obteniendo esto se puede sacar la conclusion
+    for (j=0 ; j<N ; j++) {
+        for (i=0 ; i<N ; i++) {
+            MPasaje[i][j] = ((float) M[i][j] / (float) V[j]); // divido ocurrencias de i despues de j sobre ocurrencias total de j. obteniendo esto se puede sacar la conclusion
             // de si es de memoria nula o no
             printf("i = %d  j = %d  MPasaje = %f \n",i,j,MPasaje[i][j]);
         }
@@ -60,4 +61,12 @@ void calculaProbabilidades(float MPasaje[3][3], int M[3][3], int V[]) {
     printf("%f \n", MPasaje[0][1] + MPasaje[1][1] + MPasaje[2][1]);
     printf("%f \n", MPasaje[0][2] + MPasaje[1][2] + MPasaje[2][2]);
     //Dan los tres 1(Fuente de Markov)
+}
+
+int calculoEntropia(float MPasaje[N][N], int M[N][N], int V[N]) {
+    int aux=0, i, j;
+    for (i=0; i<N ; i++) {
+        for (j=0; i<N ; i++)
+        
+    }
 }
