@@ -7,7 +7,7 @@ void leeArch(int M[N][N]); // parámetro N por si llega a haber una letra de má
 void init(int M[N][N], int V[N]);
 void generaMIdentidad(int MIdentidad[N][N]);
 void igualoMatrices(float MPasaje[N][N], int MIdentidad[N][N], float MAux[N][N]);
-int esErgodica(float MPasaje[N][N], int MIdentidad[N][N]);
+int esErgodica(float MPasaje[N][N]);
 void calculaProbabilidades(float MPasaje[N][N], int M[N][N], int V[N]);
 
 int main() {
@@ -68,7 +68,8 @@ void leeArch(int M[N][N]) {
 }
 
 void calculaProbabilidades(float MPasaje[N][N], int M[N][N], int V[N]) {
-    int i, j;
+    int i, j, MIdentidad[N][N];
+    float MAux[N][N];
     for (j=0 ; j<N ; j++) {
         for (i=0 ; i<N ; i++) {
             MPasaje[i][j] = ((float) M[i][j] / (float) V[j]); // divido ocurrencias de i despues de j sobre ocurrencias total de j. obteniendo esto se puede sacar la conclusion
@@ -79,14 +80,14 @@ void calculaProbabilidades(float MPasaje[N][N], int M[N][N], int V[N]) {
     printf("%f \n", MPasaje[0][0] + MPasaje[1][0] + MPasaje[2][0]);
     printf("%f \n", MPasaje[0][1] + MPasaje[1][1] + MPasaje[2][1]);
     printf("%f \n", MPasaje[0][2] + MPasaje[1][2] + MPasaje[2][2]);
+    generaMIdentidad(MIdentidad);
+    igualoMatrices(MPasaje, MIdentidad, MAux); // resultado = MAux = (M-I) para poder hacer (M-I)V* = 0
     //Dan los tres 1(Fuente de Markov)
 }
 
-int esErgodica(float MPasaje[N][N], int MIdentidad[N][N]) {
+int esErgodica(float MPasaje[N][N]) {
     int aux=0; //false para inicializar
     float MAux[N][N];
-    generaMIdentidad(MIdentidad);
-    igualoMatrices(MPasaje, MIdentidad, MAux); // resultado = MAux = (M-I) para poder hacer (M-I)V* = 0
 }
 
 /*int calculoEntropia(float MPasaje[N][N], int M[N][N], int V[N]) {
