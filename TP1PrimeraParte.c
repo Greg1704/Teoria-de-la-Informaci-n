@@ -66,7 +66,9 @@ void calculaProbabilidades(float MPasaje[N][N], int M[N][N], int V[N]) {
 int calculoEntropia(float MPasaje[N][N], int M[N][N], int V[N]) {
     int aux=0, i, j;
     for (i=0; i<N ; i++) {
-        for (j=0; i<N ; i++)
+        for (j=0; i<N ; i++){
+            
+        }
         
     }
 }
