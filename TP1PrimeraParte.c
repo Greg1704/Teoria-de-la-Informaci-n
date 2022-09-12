@@ -85,10 +85,31 @@ void calculaProbabilidades(float MPasaje[N][N], int M[N][N], int V[N]) {
     //Dan los tres 1(Fuente de Markov)
 }
 
-int esErgodica(float MPasaje[N][N]) {
-    int aux=0; //false para inicializar
-    float MAux[N][N];
+int esErgodica(float MPasaje[N][N]){
+    int M[N][N];
+    int fila=0,columna=0;
+    for (int i = 1; i<=N ; i++)
+            for (int j = 1; j <=N ; j++){
+                M[i][j]=0;
+            }
+    for (int k = 1; k <=N ; k++)
+        for (int i = 1; i<=N ; i++)
+            for (int j = 1; j <=N ; j++){
+                if(MPasaje[i][j] > 0 || (MPasaje[i][k] + MPasaje[k][j] > 0))
+                    M[i][j] = 1;
+            }
+    while(fila<3){
+        while(columna<3){
+            if(M[fila][columna] !=1)
+                return 0;   //Entra en este if si no se cumple la condicion de Ergodica
+            columna++;
+        }
+        fila++;
+        columna=0;
+    }
+    return 1; //Llega a esta linea si se cumplio la condición de que sea Ergodica
 }
+
 
 /*int calculoEntropia(float MPasaje[N][N], int M[N][N], int V[N]) {
     int aux=0, i, j;
