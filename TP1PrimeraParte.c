@@ -25,6 +25,22 @@ void init(int M[N][N], int V[N]) { // M va a guardar en cada mij la ocurrencia d
     }
 }
 
+void generaMIdentidad(int MIdentidad[N][N]) {
+    int i, j;
+    for (i=0 ; i<N ; i++) {
+        for (j=0 ; i<N ; i++) {
+            MIdentidad[i][j] = (i==j);
+        }
+    }
+}
+
+void igualoMatrices(int MPasaje[N][N], int MIdentidad[N][N], float MAux[N][N]) {
+    int i, j;
+    for (i=0 ; i<N ; i++)
+        for (j=0; j<N ; j++) 
+            MAux[i][j]=MPasaje[i][j]-MIdentidad[i][j];
+}
+
 void leeArch(int M[N][N]) {
     float MPasaje[N][N];
     int V[N];
@@ -63,12 +79,18 @@ void calculaProbabilidades(float MPasaje[N][N], int M[N][N], int V[N]) {
     //Dan los tres 1(Fuente de Markov)
 }
 
-int calculoEntropia(float MPasaje[N][N], int M[N][N], int V[N]) {
+int esErgodica(int MPasaje[N][N], int MIdentidad[N][N]) {
+    int aux=0; //false para inicializar
+    float MAux[N][N];
+    generaMIdentidad(MIdentidad);
+    igualoMatrices(MPasaje, MIdentidad, MAux); // resultado = MAux = (M-I) para poder hacer (M-I)V* = 0
+}
+
+/*int calculoEntropia(float MPasaje[N][N], int M[N][N], int V[N]) {
     int aux=0, i, j;
     for (i=0; i<N ; i++) {
-        for (j=0; i<N ; i++){
-            
-        }
+        for (j=0; i<N ; i++)
         
     }
 }
+*/
