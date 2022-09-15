@@ -36,20 +36,25 @@ public class Ej1 {
     public static void leeArch(int[][] M) {
         float[][] MPasaje = new float[N][N];
         int[] V = new int[N];
-        char ultSimb='A';
+        int ultSimb=65;
         init(M, V);
         System.out.println("intento leer archivo");
         try (InputStream in = new FileInputStream("datosGrupo11.txt");
              Reader reader = new InputStreamReader(in)) {
 
-            char simb;
-            while ((simb = (char) reader.read()) != -1) {
+            int simb;
+            while ((simb = (int) reader.read()) != -1) {
                 V[simb-65] += 1;
                 M[simb-65][ultSimb-65]+=1;
                 ultSimb=simb;
             }
-            System.out.println(M);
-            System.out.println("entra aca");
+            for (int i = 0 ; i<N; i++) {
+                for (int j = 0 ; j<N ; j++) {
+                    System.out.print(M[i][j]);
+                    System.out.println("");
+                }
+                System.out.println("");
+            }
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
