@@ -1,0 +1,6 @@
+{
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "c:\\Users\\Mateo\\OneDrive\\Escritorio\\teoriaInfo\\la4j-0.6.0.jar"
+    ]
+}

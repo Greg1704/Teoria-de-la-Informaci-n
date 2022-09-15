@@ -1,5 +1,12 @@
 import java.io.*;
 
+import org.la4j.LinearAlgebra;
+import org.la4j.Matrix;
+import org.la4j.Vector;
+import org.la4j.linear.LinearSystemSolver;
+import org.la4j.matrix.dense.Basic2DMatrix;
+import org.la4j.vector.dense.BasicVector;
+
 public class Ej1 {
     private static final int N = 3;
     public static void main(String[] args) {
@@ -8,36 +15,21 @@ public class Ej1 {
         System.out.println("LOL");
     }
 
-    public static void init(int [][] M, int[] V){
+    public static void init(int [][] M, int[] V, double[] VEstacionario){
         for (int i=0;i<N;i++){
             V[i]=0;
+
             for (int j=0;j<N;j++)
                 M[i][j]=0;
-        }
-    }
-
-    public static void generaMIdentidad(int [][] MId){
-        for (int i=0;i<N;i++){
-            for (int j=0;j<N;j++)
-                if(i == j)
-                    MId[i][j] = 1;
-                else
-                    MId[i][j] = 0;
-        }
-    }
-
-    public static void igualoMatrices(double[][] MPasaje,int[][] MId,double [][] Maux) {
-        for (int i = 0; i < N; i++) {
-            for (int j = 0; j < N; j++)
-                Maux[i][j] = (float) (MPasaje[i][j] - MId[i][j]);
         }
     }
 
     public static void leeArch(int[][] M) {
         double[][] MPasaje = new double[N][N];
         int[] V = new int[N];
+        double[] VEstacionario = new double[N];
         int ultSimb=65;
-        init(M, V);
+        init(M, V, VEstacionario);
         System.out.println("intento leer archivo");
         try (InputStream in = new FileInputStream("src/datosGrupo11.txt");
              Reader reader = new InputStreamReader(in)) {
@@ -50,17 +42,15 @@ public class Ej1 {
                 M[simb-65][ultSimb-65]+=1;
                 ultSimb=simb;
             }
-            calculaProbabilidades(MPasaje,M,V);
+            calculaProbabilidades(MPasaje, M, V , VEstacionario);
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
 
-    public static void calculaProbabilidades(double[][] MPasaje, int[][] M, int[] V) {
+    public static void calculaProbabilidades(double[][] MPasaje, int[][] M, int[] V, double[] VEstacionario) {
         int i, j;
-        int[][] MIdentidad = new int [N][N];
-        double[][] MAux = new double[N][N];
         for (j=0 ; j<N ; j++) {
             for (i=0 ; i<N ; i++) {
                 MPasaje[i][j] = ((float) M[i][j] / (float) V[j]); // divido ocurrencias de i despues de j sobre ocurrencias total de j. obteniendo esto se puede sacar la conclusion
@@ -77,11 +67,10 @@ public class Ej1 {
         System.out.println(MPasaje[0][0] + MPasaje[1][0] + MPasaje[2][0]);
         System.out.println(MPasaje[0][1] + MPasaje[1][1] + MPasaje[2][1]);
         System.out.println(MPasaje[0][2] + MPasaje[1][2] + MPasaje[2][2]);
-
+        //Dan los tres 1(Fuente de Markov)
         if(esErgodica(MPasaje)){
-            generaMIdentidad(MIdentidad);
-            igualoMatrices(MPasaje, MIdentidad, MAux); // resultado = MAux = (M-I) para poder hacer (M-I)V* = 0
-            //Dan los tres 1(Fuente de Markov)
+            resuelveSistema(MPasaje, VEstacionario);
+            
             //HAY QUE CALCULAR VECTOR ESTACIONARIO
         }
     }
@@ -110,4 +99,39 @@ public class Ej1 {
         }
         return true; //Llega a esta linea si se cumplio la condición de que sea Ergodica
     }
+
+private static void resuelveSistema(double[][] MPasaje, double[] VEstacionario) {
+    double[][] MAux = new double[4][4];
+
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < N; j++) {
+            MAux[i][j] = MPasaje[i][j];
+            if (i == j)
+                MAux[i][j]--; // acá hago (M-I) para hacer la cuenta de (M-I)V*
+        }
+    }
+
+    for (int j = 0; j < N; j++) {
+        MAux[N-1][j] = 1;
+    }
+
+
+    Matrix a = new Basic2DMatrix(MAux); //Arma la matriz para que pueda resolverse con la libreria
+
+    Vector b = new BasicVector(new double[]{0, 0, 1});
+
+
+    LinearSystemSolver solver =
+            a.withSolver(LinearAlgebra.FORWARD_BACK_SUBSTITUTION);
+
+    Vector VAux;
+    VAux = solver.solve(b);
+
+    for (int i = 0; i < N; i++) {
+        VEstacionario[i] = VAux.get(i);
+    }
+
+
+    System.out.println("Para la matriz cargada, el vector estacionario es: V* = [" + VAux + "]");
+}
 }
