@@ -15,10 +15,9 @@ public class Ej1 {
         System.out.println("LOL");
     }
 
-    public static void init(int [][] M, int[] V, double[] VEstacionario){
+    public static void init(int [][] M, int[] V){
         for (int i=0;i<N;i++){
             V[i]=0;
-
             for (int j=0;j<N;j++)
                 M[i][j]=0;
         }
@@ -29,7 +28,7 @@ public class Ej1 {
         int[] V = new int[N];
         double[] VEstacionario = new double[N];
         int ultSimb=65;
-        init(M, V, VEstacionario);
+        init(M, V);
         System.out.println("intento leer archivo");
         try (InputStream in = new FileInputStream("src/datosGrupo11.txt");
              Reader reader = new InputStreamReader(in)) {
