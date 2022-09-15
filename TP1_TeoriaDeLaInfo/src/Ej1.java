@@ -125,7 +125,7 @@ public class Ej1 {
         for (int j = 0; j < N; j++)
             MAux[N-1][j] = 1;
         Matrix a = new Basic2DMatrix(MAux); //Arma la matriz para que pueda resolverse con la libreria
-        Vector b = new BasicVector(new double[]{0, 0, 1});
+        Vector b = new BasicVector(new double[]{0, 0, 1}); // esto depende de N estrictamente
         LinearSystemSolver solver = a.withSolver(LinearAlgebra.FORWARD_BACK_SUBSTITUTION);
         Vector VAux = solver.solve(b);
         for (int i = 0; i < N; i++)
