@@ -68,7 +68,7 @@ public class Ej1 {
         System.out.println(MPasaje[0][2] + MPasaje[1][2] + MPasaje[2][2]);
         //Dan los tres 1(Fuente de Markov)
         if(esErgodica(MPasaje)){
-            resuelveSistema(MPasaje, VEstacionario);
+            resolvedorDeSistemas(MPasaje, VEstacionario);
             
             //HAY QUE CALCULAR VECTOR ESTACIONARIO
         }
@@ -99,38 +99,23 @@ public class Ej1 {
         return true; //Llega a esta linea si se cumplio la condición de que sea Ergodica
     }
 
-private static void resuelveSistema(double[][] MPasaje, double[] VEstacionario) {
-    double[][] MAux = new double[N][N];
-
-    for (int i = 0; i < N; i++) {
-        for (int j = 0; j < N; j++) {
-            MAux[i][j] = MPasaje[i][j];
-            if (i == j)
-                MAux[i][j]--; // acá hago (M-I) para hacer la cuenta de (M-I)V*
+    private static void resolvedorDeSistemas(double[][] MPasaje, double[] VEstacionario) {
+        double[][] MAux = new double[N][N];
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
+                MAux[i][j] = MPasaje[i][j];
+                if (i == j)
+                    MAux[i][j]--; // acá hago (M-I) para hacer la cuenta de (M-I)V*
+            }
         }
+        for (int j = 0; j < N; j++)
+            MAux[N-1][j] = 1;
+        Matrix a = new Basic2DMatrix(MAux); //Arma la matriz para que pueda resolverse con la libreria
+        Vector b = new BasicVector(new double[]{0, 0, 1});
+        LinearSystemSolver solver = a.withSolver(LinearAlgebra.FORWARD_BACK_SUBSTITUTION);
+        Vector VAux = solver.solve(b);
+        for (int i = 0; i < N; i++)
+            VEstacionario[i] = VAux.get(i);
+        System.out.println("Para la matriz cargada, el vector estacionario es: V* = [" + VAux + "]");
     }
-
-    for (int j = 0; j < N; j++) {
-        MAux[N-1][j] = 1;
-    }
-
-
-    Matrix a = new Basic2DMatrix(MAux); //Arma la matriz para que pueda resolverse con la libreria
-
-    Vector b = new BasicVector(new double[]{0, 0, 1});
-
-
-    LinearSystemSolver solver =
-            a.withSolver(LinearAlgebra.FORWARD_BACK_SUBSTITUTION);
-
-    Vector VAux;
-    VAux = solver.solve(b, linear.LinearSystemSolver);
-
-    for (int i = 0; i < N; i++) {
-        VEstacionario[i] = VAux.get(i);
-    }
-
-
-    System.out.println("Para la matriz cargada, el vector estacionario es: V* = [" + VAux + "]");
-}
 }
