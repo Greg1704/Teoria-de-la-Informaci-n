@@ -1,6 +1,6 @@
 import java.io.*;
 
-public class main {
+public class Ej1 {
     private static final int N = 3;
     public static void main(String[] args) {
         int[][] M = new int[N][N];
@@ -38,6 +38,7 @@ public class main {
         int[] V = new int[N];
         char ultSimb='A';
         init(M, V);
+        System.out.println("intento leer archivo");
         try (InputStream in = new FileInputStream("datosGrupo11.txt");
              Reader reader = new InputStreamReader(in)) {
 
