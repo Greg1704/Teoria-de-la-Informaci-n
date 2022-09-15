@@ -34,27 +34,23 @@ public class Ej1 {
     }
 
     public static void leeArch(int[][] M) {
-        float[][] MPasaje = new float[N][N];
+        double[][] MPasaje = new double[N][N];
         int[] V = new int[N];
         int ultSimb=65;
         init(M, V);
         System.out.println("intento leer archivo");
-        try (InputStream in = new FileInputStream("datosGrupo11.txt");
+        try (InputStream in = new FileInputStream("src/datosGrupo11.txt");
              Reader reader = new InputStreamReader(in)) {
-
+            //leer primero
+            if((ultSimb = reader.read()) != -1)
+                V[ultSimb - 65]++;
             int simb;
-            while ((simb = (int) reader.read()) != -1) {
+            while ((simb =  reader.read()) != -1) {
                 V[simb-65] += 1;
                 M[simb-65][ultSimb-65]+=1;
                 ultSimb=simb;
             }
-            for (int i = 0 ; i<N; i++) {
-                for (int j = 0 ; j<N ; j++) {
-                    System.out.print(M[i][j]);
-                    System.out.println("");
-                }
-                System.out.println("");
-            }
+            calculaProbabilidades(MPasaje,M,V);
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -71,6 +67,16 @@ public class Ej1 {
                 // de si es de memoria nula o no
             }
         }
+        for (i = 0 ; i<N; i++) {
+            for (j = 0 ; j<N ; j++) {
+                System.out.print(MPasaje[i][j] + "  ");
+            }
+            System.out.println("");
+        }
+
+        System.out.println(MPasaje[0][0] + MPasaje[1][0] + MPasaje[2][0]);
+        System.out.println(MPasaje[0][1] + MPasaje[1][1] + MPasaje[2][1]);
+        System.out.println(MPasaje[0][2] + MPasaje[1][2] + MPasaje[2][2]);
 
         if(esErgodica(MPasaje)){
             generaMIdentidad(MIdentidad);
