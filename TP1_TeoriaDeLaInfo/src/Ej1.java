@@ -100,7 +100,7 @@ public class Ej1 {
     }
 
 private static void resuelveSistema(double[][] MPasaje, double[] VEstacionario) {
-    double[][] MAux = new double[4][4];
+    double[][] MAux = new double[N][N];
 
     for (int i = 0; i < N; i++) {
         for (int j = 0; j < N; j++) {
@@ -124,7 +124,7 @@ private static void resuelveSistema(double[][] MPasaje, double[] VEstacionario) 
             a.withSolver(LinearAlgebra.FORWARD_BACK_SUBSTITUTION);
 
     Vector VAux;
-    VAux = solver.solve(b);
+    VAux = solver.solve(b, linear.LinearSystemSolver);
 
     for (int i = 0; i < N; i++) {
         VEstacionario[i] = VAux.get(i);
