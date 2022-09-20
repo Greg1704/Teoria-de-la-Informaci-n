@@ -50,6 +50,7 @@ public class Ej1 {
 
     public static void calculaProbabilidades(double[][] MPasaje, int[][] M, int[] V, double[] VEstacionario) {
         int i, j;
+        double [] VProb = new double[N];
         for (j=0 ; j<N ; j++) {
             for (i=0 ; i<N ; i++) {
                 MPasaje[i][j] = ((float) M[i][j] / (float) V[j]); // divido ocurrencias de i despues de j sobre ocurrencias total de j. obteniendo esto se puede sacar la conclusion
@@ -66,13 +67,49 @@ public class Ej1 {
         System.out.println(MPasaje[0][0] + MPasaje[1][0] + MPasaje[2][0]);
         System.out.println(MPasaje[0][1] + MPasaje[1][1] + MPasaje[2][1]);
         System.out.println(MPasaje[0][2] + MPasaje[1][2] + MPasaje[2][2]);
-        //Dan los tres 1(Fuente de Markov)
-        if(esErgodica(MPasaje)){
+
+        for(i=0;i<N;i++){
+            VProb[i]= (double) V[i]/10000;
+            System.out.println("VProb[i] = " + VProb[i]);
+        }
+        //if para ver si diferencia entre filas mayor(caso ya codeado) o menor(caso a codear) a 0,03
+        //if(diferencia entre elemento mayor y menor de cada fila < 0,03)
+        //else
+        if(verificacionMemoriaNula(MPasaje)){
+            calculoOrden20Entropia();
+        }else if(esErgodica(MPasaje)){
             resolvedorDeSistemas(MPasaje, VEstacionario);
             calculaEntropia(MPasaje, VEstacionario);
-            //HAY QUE CALCULAR VECTOR ESTACIONARIO
         }
     }
+
+    public static boolean verificacionMemoriaNula(double[][] MPasaje){
+        double mayor=0, menor=0;
+        for(int i=0;i<N;i++) {
+            for (int j = 0; j < N; j++) {
+                if (mayor < MPasaje[i][j]) {
+                    if (menor == 0 || menor > mayor)
+                        menor = mayor;
+                    mayor = MPasaje[i][j];
+                } else if (menor == 0 || menor > MPasaje[i][j])
+                    menor = MPasaje[i][j];
+            }
+            if(mayor - menor > 0.03)
+                return false;
+            mayor=0;
+            menor=0;
+        }
+        return true;
+    }
+
+    public static void calculoOrden20Entropia(){
+        //TEMA A TRATAR: COMBINATORIA
+    }
+
+    /*
+    * Todas las funciones que se encuentran abajo de este comentario son del inciso C <br>
+    * Las cuales fueron hechas en un principio porque creiamos que nuestra fuente era de memoria no nula
+    * */
 
     public static boolean esErgodica(double[][] MPasaje){
         int[][] M = new int [N][N]; // esta es una matrix auxiliar solo para usar warshall
@@ -133,3 +170,4 @@ public class Ej1 {
         System.out.println("Vector Estacionario de la matriz: V* = [" + VAux + "]");
     }
 }
+
