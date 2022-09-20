@@ -9,6 +9,7 @@ import org.la4j.vector.dense.BasicVector;
 
 public class Ej1 {
     private static final int N = 3;
+    private static final int Z = 20;
     public static void main(String[] args) {
         int[][] M = new int[N][N];
         leeArch(M);
@@ -48,6 +49,8 @@ public class Ej1 {
         }
     }
 
+
+
     public static void calculaProbabilidades(double[][] MPasaje, int[][] M, int[] V, double[] VEstacionario) {
         int i, j;
         double [] VProb = new double[N];
@@ -72,9 +75,6 @@ public class Ej1 {
             VProb[i]= (double) V[i]/10000;
             System.out.println("VProb[i] = " + VProb[i]);
         }
-        //if para ver si diferencia entre filas mayor(caso ya codeado) o menor(caso a codear) a 0,03
-        //if(diferencia entre elemento mayor y menor de cada fila < 0,03)
-        //else
         if(verificacionMemoriaNula(MPasaje)){
             calculoOrden20Entropia(VProb);
         }else if(esErgodica(MPasaje)){
@@ -103,11 +103,11 @@ public class Ej1 {
     }
 
     public static void calculoOrden20Entropia(double [] VProb){
-        int Z=20;
         for(int a=0;a<Math.pow(N,Z);a++){ //For de todas las combinaciones posibles
             /*
             * Habria que hacer algun metodo para que genere cada una de las combinaciones posibles
             * y asi generar las probabilidades de cada una para calcular su entropia*/
+            
         }
     }
 
