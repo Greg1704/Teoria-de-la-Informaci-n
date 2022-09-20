@@ -76,7 +76,7 @@ public class Ej1 {
         //if(diferencia entre elemento mayor y menor de cada fila < 0,03)
         //else
         if(verificacionMemoriaNula(MPasaje)){
-            calculoOrden20Entropia();
+            calculoOrden20Entropia(VProb);
         }else if(esErgodica(MPasaje)){
             resolvedorDeSistemas(MPasaje, VEstacionario);
             calculaEntropia(MPasaje, VEstacionario);
@@ -102,9 +102,20 @@ public class Ej1 {
         return true;
     }
 
-    public static void calculoOrden20Entropia(){
-        //TEMA A TRATAR: COMBINATORIA
+    public static void calculoOrden20Entropia(double [] VProb){
+        int Z=20;
+        for(int a=0;a<Math.pow(N,Z);a++){ //For de todas las combinaciones posibles
+            /*
+            * Habria que hacer algun metodo para que genere cada una de las combinaciones posibles
+            * y asi generar las probabilidades de cada una para calcular su entropia*/
+        }
     }
+
+
+
+
+
+
 
     /*
     * Todas las funciones que se encuentran abajo de este comentario son del inciso C <br>
