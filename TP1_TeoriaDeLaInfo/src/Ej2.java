@@ -57,19 +57,30 @@ public class Ej2 {
             }
             System.out.println("map3 = " + map3.size());
             map3.forEach((key,value) ->{
-                System.out.println("key = " + key + "   value = " + value);
+                System.out.println("key = " + key + "   value = " + value + "  Cantidad informacion = " +
+                        cantidadInformacion(value,Math.floor(10000/3)));
             });
             System.out.println();
             System.out.println("map5 = " + map5.size());
             map5.forEach((key,value) ->{
-                System.out.println("key = " + key + "   value = " + value);
+                System.out.println("key = " + key + "   value = " + value + "  Cantidad informacion = " +
+                        cantidadInformacion(value,Math.floor(10000/5)));
             });
             System.out.println("map7= " + map7.size());
             map7.forEach((key,value) ->{
-                System.out.println("key = " + key + "   value = " + value);
+                System.out.println("key = " + key + "   value = " + value + "  Cantidad informacion = " +
+                        cantidadInformacion(value,Math.floor(10000/7)));
             });
+
+            //Faltaria calcular entropia de cada una de las fuentes
+            //Faltaria calcular entropia de cada una de las fuentes
+            //Faltaria calcular entropia de cada una de las fuentes
         }catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static double cantidadInformacion(int value,double size){
+        return Math.log(1/((double)value/size));
     }
 }
