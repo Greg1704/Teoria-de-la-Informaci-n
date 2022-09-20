@@ -1,12 +1,14 @@
 import java.io.*;
 
-import org.la4j.LinearAlgebra;
+import javax.lang.model.util.ElementScanner14;
+
+/*import org.la4j.LinearAlgebra;
 import org.la4j.Matrix;
 import org.la4j.Vector;
 import org.la4j.linear.LinearSystemSolver;
 import org.la4j.matrix.dense.Basic2DMatrix;
 import org.la4j.vector.dense.BasicVector;
-
+*/
 public class Ej1 {
     private static final int N = 3;
     private static final int Z = 20;
@@ -24,6 +26,12 @@ public class Ej1 {
         }
     }
 
+    public static void cadenaPorDefault(char VCadena[]) {
+        for (int i =0 ; i<Z ; i++) {
+            VCadena[i] = 'A';
+        }
+    }
+
     public static void leeArch(int[][] M) {
         double[][] MPasaje = new double[N][N];
         int[] V = new int[N];
@@ -31,7 +39,7 @@ public class Ej1 {
         int ultSimb=65;
         init(M, V);
         System.out.println("intento leer archivo");
-        try (InputStream in = new FileInputStream("src/datosGrupo11.txt");
+        try (InputStream in = new FileInputStream("datosGrupo11.txt");
              Reader reader = new InputStreamReader(in)) {
             //leer primero
             if((ultSimb = reader.read()) != -1)
@@ -76,9 +84,12 @@ public class Ej1 {
             System.out.println("VProb[i] = " + VProb[i]);
         }
         if(verificacionMemoriaNula(MPasaje)){
-            calculoOrden20Entropia(VProb);
+            char [] VCadena = new char[Z]; // Z es el orden que se busca
+           // cadenaPorDefault(VCadena);
+           calculoEntropiaOrden20("ABC", 20, new StringBuffer());
+            //calculoOrden20Entropia(VProb, VCadena, Z-1, Z-1);
         }else if(esErgodica(MPasaje)){
-            resolvedorDeSistemas(MPasaje, VEstacionario);
+           // resolvedorDeSistemas(MPasaje, VEstacionario);
             calculaEntropia(MPasaje, VEstacionario);
         }
     }
@@ -102,21 +113,17 @@ public class Ej1 {
         return true;
     }
 
-    public static void calculoOrden20Entropia(double [] VProb){
-        for(int a=0;a<Math.pow(N,Z);a++){ //For de todas las combinaciones posibles
-            /*
-            * Habria que hacer algun metodo para que genere cada una de las combinaciones posibles
-            * y asi generar las probabilidades de cada una para calcular su entropia*/
-            
+        public  static void calculoEntropiaOrden20(String input, int depth, StringBuffer output) {
+            if (depth == 0) {
+                System.out.println(output);
+            } else {
+                for (int i = 0; i < input.length(); i++) {
+                    output.append(input.charAt(i));
+                    calculoEntropiaOrden20(input, depth - 1, output);
+                    output.deleteCharAt(output.length() - 1);
+                }
+            }
         }
-    }
-
-
-
-
-
-
-
     /*
     * Todas las funciones que se encuentran abajo de este comentario son del inciso C <br>
     * Las cuales fueron hechas en un principio porque creiamos que nuestra fuente era de memoria no nula
@@ -161,7 +168,7 @@ public class Ej1 {
         System.out.println("La entropia es " + entrop);
     }
 
-    private static void resolvedorDeSistemas(double[][] MPasaje, double[] VEstacionario) {
+    /*^private static void resolvedorDeSistemas(double[][] MPasaje, double[] VEstacionario) {
         double[][] MAux = new double[N][N];
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
@@ -180,5 +187,5 @@ public class Ej1 {
             VEstacionario[i] = VAux.get(i);
         System.out.println("Vector Estacionario de la matriz: V* = [" + VAux + "]");
     }
+*/
 }
-
