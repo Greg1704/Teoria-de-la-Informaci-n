@@ -78,6 +78,8 @@ public class Ej2 {
             });
 
             calculoEntropia();
+            inecKraft();
+            longitudMediaCodigo();
         }catch (IOException e) {
             e.printStackTrace();
         }
@@ -113,22 +115,49 @@ public class Ej2 {
         }
         System.out.println("Entropia de fuente de "+ C + " caracteres = " + auxentrop);
     }
+
+
     public static void inecKraft() {
         double valorAcum=0;
         for(Map.Entry<String, Integer> entry : mapA.entrySet()) {
-            valorAcum+=Math.pow(alfabetoCodigo, entry.getKey().length());
+            valorAcum+=Math.pow(alfabetoCodigo,- entry.getKey().length());
         }
         System.out.println("la inecuacion de kraft para el primer caso es " + valorAcum);
         valorAcum=0;
         for(Map.Entry<String, Integer> entry : mapB.entrySet()) {
-            valorAcum+=Math.pow(alfabetoCodigo, entry.getKey().length());
+            valorAcum+=Math.pow(alfabetoCodigo,- entry.getKey().length());
         }
         System.out.println("la inecuacion de kraft para el segundo caso es " + valorAcum);
         valorAcum=0;
         for(Map.Entry<String, Integer> entry : mapC.entrySet()) {
-            valorAcum+=Math.pow(alfabetoCodigo, entry.getKey().length());
+            valorAcum+=Math.pow(alfabetoCodigo,- entry.getKey().length());
         }
         System.out.println("la inecuacion de kraft para el tercer caso es " + valorAcum);
+    }
+
+    /*
+    * PENDIENTE: HACER MACMILLAN
+    * PENDIENTE: HACER EJ B
+    * */
+
+    public static void longitudMediaCodigo(){
+        double aux=0;
+        for(Map.Entry<String, Integer> entry : mapA.entrySet()) {
+            aux+=(entry.getValue()/Math.floor(10000/A))*entry.getKey().length();
+        }
+        System.out.println("Longitud media de codigo " + A  + " = " + aux);
+
+        aux=0;
+        for(Map.Entry<String, Integer> entry : mapB.entrySet()) {
+            aux+=(entry.getValue()/Math.floor(10000/B))*entry.getKey().length();
+        }
+        System.out.println("Longitud media de codigo " + B  + " = " + aux);
+
+        aux=0;
+        for(Map.Entry<String, Integer> entry : mapC.entrySet()) {
+            aux+=(entry.getValue()/Math.floor(10000/C))*entry.getKey().length();
+        }
+        System.out.println("Longitud media de codigo " + C  + " = " + aux);
     }
 }
 
