@@ -2,13 +2,13 @@ import java.io.*;
 
 import javax.lang.model.util.ElementScanner14;
 
-/*import org.la4j.LinearAlgebra;
+import org.la4j.LinearAlgebra;
 import org.la4j.Matrix;
 import org.la4j.Vector;
 import org.la4j.linear.LinearSystemSolver;
 import org.la4j.matrix.dense.Basic2DMatrix;
 import org.la4j.vector.dense.BasicVector;
-*/
+
 public class Ej1 {
     private static final int N = 3;
     private static final int Z = 20;
