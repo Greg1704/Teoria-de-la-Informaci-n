@@ -26,12 +26,6 @@ public class Ej1 {
         }
     }
 
-    public static void cadenaPorDefault(char VCadena[]) {
-        for (int i =0 ; i<Z ; i++) {
-            VCadena[i] = 'A';
-        }
-    }
-
     public static void leeArch(int[][] M) {
         double[][] MPasaje = new double[N][N];
         int[] V = new int[N];
@@ -56,8 +50,6 @@ public class Ej1 {
             e.printStackTrace();
         }
     }
-
-
 
     public static void calculaProbabilidades(double[][] MPasaje, int[][] M, int[] V, double[] VEstacionario) {
         int i, j;
@@ -85,14 +77,11 @@ public class Ej1 {
             System.out.println("VProb[i] = " + VProb[i]);
         }
         if(verificacionMemoriaNula(MPasaje)){
-            char [] VCadena = new char[Z]; // Z es el orden que se busca
-           // cadenaPorDefault(VCadena);
            calculoEntropiaOrden20("ABC", 20, new StringBuffer(),entrop,VProb);
             System.out.println("Entropia inicial = " + calculoEntropiaInicial(VProb));
             System.out.println("Entropia Orden 20 = " + entrop);
-            //calculoOrden20Entropia(VProb, VCadena, Z-1, Z-1);
         }else if(esErgodica(MPasaje)){
-           // resolvedorDeSistemas(MPasaje, VEstacionario);
+            resolvedorDeSistemas(MPasaje, VEstacionario);
             calculaEntropia(MPasaje, VEstacionario);
         }
     }
@@ -123,10 +112,9 @@ public class Ej1 {
         return auxentrop;
     }
 
-        public  static void calculoEntropiaOrden20(String input, int depth, StringBuffer output,double entrop,double[] VProb) {
+        public  static void calculoEntropiaOrden20(String input, int largo, StringBuffer output, double entrop, double[] VProb) {
             double auxentrop;
-            if (depth == 0) {
-                //calcular entropias e ir sumandolas
+            if (largo == 0) {
                 auxentrop=1;
                 for (int i=0; i< output.length();i++){  //Revisar forma de optimizar esto, tarda demasiado tiempo
                     auxentrop*=VProb[output.charAt(i)-65];
@@ -138,7 +126,7 @@ public class Ej1 {
             } else {
                 for (int i = 0; i < input.length(); i++) {
                     output.append(input.charAt(i));
-                    calculoEntropiaOrden20(input, depth - 1, output,entrop,VProb);
+                    calculoEntropiaOrden20(input, largo - 1, output,entrop,VProb);
                     output.deleteCharAt(output.length() - 1);
                 }
             }
@@ -187,7 +175,7 @@ public class Ej1 {
         System.out.println("La entropia es " + entrop);
     }
 
-    /*^private static void resolvedorDeSistemas(double[][] MPasaje, double[] VEstacionario) {
+    private static void resolvedorDeSistemas(double[][] MPasaje, double[] VEstacionario) {
         double[][] MAux = new double[N][N];
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
@@ -206,5 +194,4 @@ public class Ej1 {
             VEstacionario[i] = VAux.get(i);
         System.out.println("Vector Estacionario de la matriz: V* = [" + VAux + "]");
     }
-*/
 }

@@ -2,9 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1910deb1-3d8f-4e16-919c-21936ddb8ec3" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/TP1_TeoriaDeLaInfo/out/production/TP1_TeoriaDeLaInfo/Ej1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TP1_TeoriaDeLaInfo/out/production/TP1_TeoriaDeLaInfo/Ej2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TP1_TeoriaDeLaInfo/src/Ej1.java" beforeDir="false" afterPath="$PROJECT_DIR$/TP1_TeoriaDeLaInfo/src/Ej1.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Teoria-de-la-Informacion.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Teoria-de-la-Informacion.iml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,11 +23,14 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "last_opened_file_path": "C:/Users/Mateo/OneDrive/Escritorio/teoriaInfo/la4j-0.6.0.jar",
+    "project.structure.last.edited": "Libraries",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.2"
+  }
+}]]></component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -37,5 +41,16 @@
       <updated>1663256699049</updated>
     </task>
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>
