@@ -4,16 +4,20 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Ej2 {
-    static Map<String,Integer> map3 = new HashMap<String,Integer>();
-    static Map<String,Integer> map5 = new HashMap<String,Integer>();
-    static Map<String,Integer> map7 = new HashMap<String,Integer>();
+    static Map<String,Integer> mapA = new HashMap<String,Integer>();
+    static Map<String,Integer> mapB = new HashMap<String,Integer>();
+    static Map<String,Integer> mapC = new HashMap<String,Integer>();
+    final static int A=3;
+    final static int B=5;
+    final static int C=7;
+    final static int alfabetoCodigo=3;
     public static void main(String[] args) {
         leerArch();
     }
 
     public static void leerArch(){
         int simb;
-        String identificador3= "", identificador5 ="", identificador7 ="";
+        String identificadorA= "", identificadorB ="", identificadorC ="";
         int i = 0,j=0,k=0; //i para 3 caracteres,j para 5, y k para 7
         try (InputStream in = new FileInputStream("src/datosGrupo11.txt");
              Reader reader = new InputStreamReader(in)) {
@@ -21,66 +25,92 @@ public class Ej2 {
                 i++;
                 j++;
                 k++;
-                if(i < 3){
-                    identificador3+= (char) simb;
+                if(i < A){
+                    identificadorA+= (char) simb;
                 }else if(i == 3){
-                    identificador3+= (char) simb;
-                    if(map3.containsKey(identificador3))
-                        map3.put(identificador3,map3.get(identificador3) + 1);
+                    identificadorA+= (char) simb;
+                    if(mapA.containsKey(identificadorA))
+                        mapA.put(identificadorA, mapA.get(identificadorA) + 1);
                     else
-                        map3.put(identificador3,1);
+                        mapA.put(identificadorA,1);
                     i=0;
-                    identificador3="";
+                    identificadorA="";
                 }
-                if(j<5){
-                    identificador5+=(char) simb;
+                if(j<B){
+                    identificadorB+=(char) simb;
                 }else if(j == 5){
-                    identificador5+=(char) simb;
-                    if(map5.containsKey(identificador5))
-                        map5.put(identificador5,map5.get(identificador5) + 1);
+                    identificadorB+=(char) simb;
+                    if(mapB.containsKey(identificadorB))
+                        mapB.put(identificadorB, mapB.get(identificadorB) + 1);
                     else
-                        map5.put(identificador5,1);
+                        mapB.put(identificadorB,1);
                     j=0;
-                    identificador5="";
+                    identificadorB="";
                 }
-                if(k<7){
-                    identificador7+=(char) simb;
+                if(k<C){
+                    identificadorC+=(char) simb;
                 }else if(k == 7){
-                    identificador7+=(char) simb;
-                    if(map7.containsKey(identificador7))
-                        map7.put(identificador7,map7.get(identificador7) + 1);
+                    identificadorC+=(char) simb;
+                    if(mapC.containsKey(identificadorC))
+                        mapC.put(identificadorC, mapC.get(identificadorC) + 1);
                     else
-                        map7.put(identificador7,1);
+                        mapC.put(identificadorC,1);
                     k=0;
-                    identificador7="";
+                    identificadorC="";
                 }
             }
-            System.out.println("map3 = " + map3.size());
-            map3.forEach((key,value) ->{
+
+            System.out.println("mapA = " + mapA.size());
+            mapA.forEach((key,value) ->{
                 System.out.println("key = " + key + "   value = " + value + "  Cantidad informacion = " +
-                        cantidadInformacion(value,Math.floor(10000/3)));
+                        cantidadInformacion(value,Math.floor(10000/A)));
             });
             System.out.println();
-            System.out.println("map5 = " + map5.size());
-            map5.forEach((key,value) ->{
+            System.out.println("mapB = " + mapB.size());
+            mapB.forEach((key,value) ->{
                 System.out.println("key = " + key + "   value = " + value + "  Cantidad informacion = " +
-                        cantidadInformacion(value,Math.floor(10000/5)));
+                        cantidadInformacion(value,Math.floor(10000/B)));
             });
-            System.out.println("map7= " + map7.size());
-            map7.forEach((key,value) ->{
+            System.out.println("mapC = " + mapC.size());
+            mapC.forEach((key,value) ->{
                 System.out.println("key = " + key + "   value = " + value + "  Cantidad informacion = " +
-                        cantidadInformacion(value,Math.floor(10000/7)));
+                        cantidadInformacion(value,Math.floor(10000/C)));
             });
 
-            //Faltaria calcular entropia de cada una de las fuentes
-            //Faltaria calcular entropia de cada una de las fuentes
-            //Faltaria calcular entropia de cada una de las fuentes
+            calculoEntropia();
         }catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public static double cantidadInformacion(int value,double size){
-        return Math.log(1/((double)value/size));
+        return Math.log(((double)value/size))/-Math.log(2);
+    }
+
+    public static void calculoEntropia(){
+        double auxentrop=0,auxprob=0;
+        for(Map.Entry<String, Integer> entry : mapA.entrySet()) {
+            auxprob=entry.getValue()/Math.floor(10000/A);
+            auxentrop+=auxprob*(Math.log(auxprob)/-Math.log(2));
+        }
+        System.out.println("Entropia de fuente de "+ A + " caracteres = " + auxentrop);
+
+        auxprob=0;
+        auxentrop=0;
+
+        for(Map.Entry<String, Integer> entry : mapB.entrySet()) {
+            auxprob=entry.getValue()/Math.floor(10000/B);;
+            auxentrop+=auxprob*(Math.log(auxprob)/-Math.log(2));
+        }
+        System.out.println("Entropia de fuente de "+ B + " caracteres = " + auxentrop);
+
+        auxprob=0;
+        auxentrop=0;
+
+        for(Map.Entry<String, Integer> entry : mapC.entrySet()) {
+            auxprob=entry.getValue()/Math.floor(10000/C);;
+            auxentrop+=auxprob*(Math.log(auxprob)/-Math.log(2));
+        }
+        System.out.println("Entropia de fuente de "+ C + " caracteres = " + auxentrop);
     }
 }

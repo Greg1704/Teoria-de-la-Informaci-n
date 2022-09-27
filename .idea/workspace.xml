@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="1910deb1-3d8f-4e16-919c-21936ddb8ec3" name="Changes" comment="" />
+    <list default="true" id="1910deb1-3d8f-4e16-919c-21936ddb8ec3" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/TP1_TeoriaDeLaInfo/out/production/TP1_TeoriaDeLaInfo/Ej1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/TP1_TeoriaDeLaInfo/out/production/TP1_TeoriaDeLaInfo/Ej2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/TP1_TeoriaDeLaInfo/src/Ej1.java" beforeDir="false" afterPath="$PROJECT_DIR$/TP1_TeoriaDeLaInfo/src/Ej1.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
