@@ -108,9 +108,28 @@ public class Ej2 {
         auxentrop=0;
 
         for(Map.Entry<String, Integer> entry : mapC.entrySet()) {
-            auxprob=entry.getValue()/Math.floor(10000/C);;
+            auxprob=entry.getValue()/Math.floor(10000/C);
             auxentrop+=auxprob*(Math.log(auxprob)/-Math.log(2));
         }
         System.out.println("Entropia de fuente de "+ C + " caracteres = " + auxentrop);
     }
+    public static void inecKraft() {
+        double valorAcum=0;
+        for(Map.Entry<String, Integer> entry : mapA.entrySet()) {
+            valorAcum+=Math.pow(alfabetoCodigo, entry.getKey().length());
+        }
+        System.out.println("la inecuacion de kraft para el primer caso es " + valorAcum);
+        valorAcum=0;
+        for(Map.Entry<String, Integer> entry : mapB.entrySet()) {
+            valorAcum+=Math.pow(alfabetoCodigo, entry.getKey().length());
+        }
+        System.out.println("la inecuacion de kraft para el segundo caso es " + valorAcum);
+        valorAcum=0;
+        for(Map.Entry<String, Integer> entry : mapC.entrySet()) {
+            valorAcum+=Math.pow(alfabetoCodigo, entry.getKey().length());
+        }
+        System.out.println("la inecuacion de kraft para el tercer caso es " + valorAcum);
+    }
 }
+
+
