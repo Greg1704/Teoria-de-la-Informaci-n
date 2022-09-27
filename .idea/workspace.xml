@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1910deb1-3d8f-4e16-919c-21936ddb8ec3" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TP1_TeoriaDeLaInfo/src/Ej1.java" beforeDir="false" afterPath="$PROJECT_DIR$/TP1_TeoriaDeLaInfo/src/Ej1.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Teoria-de-la-Informacion.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Teoria-de-la-Informacion.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TP1_TeoriaDeLaInfo/src/Ej2.java" beforeDir="false" afterPath="$PROJECT_DIR$/TP1_TeoriaDeLaInfo/src/Ej2.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

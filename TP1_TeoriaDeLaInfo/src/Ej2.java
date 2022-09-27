@@ -27,7 +27,7 @@ public class Ej2 {
                 k++;
                 if(i < A){
                     identificadorA+= (char) simb;
-                }else if(i == 3){
+                }else if(i == A){
                     identificadorA+= (char) simb;
                     if(mapA.containsKey(identificadorA))
                         mapA.put(identificadorA, mapA.get(identificadorA) + 1);
@@ -38,7 +38,7 @@ public class Ej2 {
                 }
                 if(j<B){
                     identificadorB+=(char) simb;
-                }else if(j == 5){
+                }else if(j == B){
                     identificadorB+=(char) simb;
                     if(mapB.containsKey(identificadorB))
                         mapB.put(identificadorB, mapB.get(identificadorB) + 1);
@@ -49,7 +49,7 @@ public class Ej2 {
                 }
                 if(k<C){
                     identificadorC+=(char) simb;
-                }else if(k == 7){
+                }else if(k == C){
                     identificadorC+=(char) simb;
                     if(mapC.containsKey(identificadorC))
                         mapC.put(identificadorC, mapC.get(identificadorC) + 1);
