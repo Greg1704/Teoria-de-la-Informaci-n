@@ -69,24 +69,23 @@ public class Ej2 {
             }
 
             System.out.println("mapA = " + mapA.size());
-            mapA.forEach((key,value) ->{
-                value=value/Math.floor(10000/A);
-                System.out.println("key = " + key + "   value = " + value + "  Cantidad informacion = " +
-                        cantidadInformacion(value));
-            });
+            for(Map.Entry<String, Double> entry : mapA.entrySet()){
+                entry.setValue(entry.getValue()/Math.floor(10000/A));
+                System.out.println("key = " + entry.getKey() + "   value = " + entry.getValue() + "  Cantidad informacion = " +
+                        cantidadInformacion(entry.getValue()));
+            }
             System.out.println();
-            System.out.println("mapB = " + mapB.size());
-            mapB.forEach((key,value) ->{
-                value=value/Math.floor(10000/B);
-                System.out.println("key = " + key + "   value = " + value + "  Cantidad informacion = " +
-                        cantidadInformacion(value));
-            });
-            System.out.println("mapC = " + mapC.size());
-            mapC.forEach((key,value) ->{
-                value=value/Math.floor(10000/C);
-                System.out.println("key = " + key + "   value = " + value + "  Cantidad informacion = " +
-                        cantidadInformacion(value));
-            });
+            for(Map.Entry<String, Double> entry : mapB.entrySet()){
+                entry.setValue(entry.getValue()/Math.floor(10000/B));
+                System.out.println("key = " + entry.getKey() + "   value = " + entry.getValue() + "  Cantidad informacion = " +
+                        cantidadInformacion(entry.getValue()));
+            }
+            System.out.println();
+            for(Map.Entry<String, Double> entry : mapC.entrySet()){
+                entry.setValue(entry.getValue()/Math.floor(10000/C));
+                System.out.println("key = " + entry.getKey() + "   value = " + entry.getValue() + "  Cantidad informacion = " +
+                        cantidadInformacion(entry.getValue()));
+            }
 
             mapEntropia.put(A,calculoEntropia(mapA,A));
             mapEntropia.put(B,calculoEntropia(mapB,B));
