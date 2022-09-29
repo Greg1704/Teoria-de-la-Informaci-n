@@ -9,9 +9,9 @@ import java.util.Map;
  * */
 
 public class Ej2 {
-    static Map<String,Integer> mapA = new HashMap<String,Integer>();
-    static Map<String,Integer> mapB = new HashMap<String,Integer>();
-    static Map<String,Integer> mapC = new HashMap<String,Integer>();
+    static Map<String,Double> mapA = new HashMap<String,Double>();
+    static Map<String,Double> mapB = new HashMap<String,Double>();
+    static Map<String,Double> mapC = new HashMap<String,Double>();
     static Map<Integer,Double> mapEntropia = new HashMap<Integer,Double>();
     static Map<Integer,Double> mapLongMedia = new HashMap<Integer,Double>();
     final static int A=3;
@@ -27,7 +27,7 @@ public class Ej2 {
         int simb;
         String identificadorA= "", identificadorB ="", identificadorC ="";
         int i = 0,j=0,k=0; //i para 3 caracteres,j para 5, y k para 7
-        try (InputStream in = new FileInputStream("C:\\Users\\Mateo\\OneDrive\\Escritorio\\teoriaInfo\\Nueva carpeta\\Teoria-de-la-Informacion\\TP1_TeoriaDeLaInfo\\src\\datosGrupo11.txt");
+        try (InputStream in = new FileInputStream("src/datosGrupo11.txt");
              Reader reader = new InputStreamReader(in)) {
             while ((simb = reader.read()) != -1){
                 i++;
@@ -40,7 +40,7 @@ public class Ej2 {
                     if(mapA.containsKey(identificadorA))
                         mapA.put(identificadorA, mapA.get(identificadorA) + 1);
                     else
-                        mapA.put(identificadorA,1);
+                        mapA.put(identificadorA,1.0);
                     i=0;
                     identificadorA="";
                 }
@@ -51,7 +51,7 @@ public class Ej2 {
                     if(mapB.containsKey(identificadorB))
                         mapB.put(identificadorB, mapB.get(identificadorB) + 1);
                     else
-                        mapB.put(identificadorB,1);
+                        mapB.put(identificadorB,1.0);
                     j=0;
                     identificadorB="";
                 }
@@ -62,7 +62,7 @@ public class Ej2 {
                     if(mapC.containsKey(identificadorC))
                         mapC.put(identificadorC, mapC.get(identificadorC) + 1);
                     else
-                        mapC.put(identificadorC,1);
+                        mapC.put(identificadorC,1.0);
                     k=0;
                     identificadorC="";
                 }
@@ -70,19 +70,22 @@ public class Ej2 {
 
             System.out.println("mapA = " + mapA.size());
             mapA.forEach((key,value) ->{
+                value=value/Math.floor(10000/A);
                 System.out.println("key = " + key + "   value = " + value + "  Cantidad informacion = " +
-                        cantidadInformacion(value,Math.floor(10000/A)));
+                        cantidadInformacion(value));
             });
             System.out.println();
             System.out.println("mapB = " + mapB.size());
             mapB.forEach((key,value) ->{
+                value=value/Math.floor(10000/B);
                 System.out.println("key = " + key + "   value = " + value + "  Cantidad informacion = " +
-                        cantidadInformacion(value,Math.floor(10000/B)));
+                        cantidadInformacion(value));
             });
             System.out.println("mapC = " + mapC.size());
             mapC.forEach((key,value) ->{
+                value=value/Math.floor(10000/C);
                 System.out.println("key = " + key + "   value = " + value + "  Cantidad informacion = " +
-                        cantidadInformacion(value,Math.floor(10000/C)));
+                        cantidadInformacion(value));
             });
 
             mapEntropia.put(A,calculoEntropia(mapA,A));
@@ -111,23 +114,23 @@ public class Ej2 {
         }
     }
 
-    public static double cantidadInformacion(int value,double size){
-        return Math.log(((double)value/size))/-Math.log(2);
+    public static double cantidadInformacion(double value){
+        return Math.log(value)/-Math.log(2);
     }
-    public static double calculoEntropia(Map<String,Integer> map, int cantChar){
+    public static double calculoEntropia(Map<String,Double> map, int cantChar){
         double auxentrop=0,auxprob=0;
-        for(Map.Entry<String, Integer> entry : map.entrySet()) {
-            auxprob=entry.getValue()/Math.floor(10000/cantChar);
-            auxentrop+= auxprob * Math.log(auxprob) / -Math.log(2);
+        for(Map.Entry<String, Double> entry : map.entrySet()) {
+            auxprob=entry.getValue();
+            auxentrop+=auxprob*(Math.log(auxprob)/-Math.log(2));
         }
         System.out.println("Entropia de fuente de "+ cantChar + " caracteres = " + auxentrop);
         return auxentrop;
     }
 
-    public static double calculoLongMediaCodigo(Map<String,Integer> map, int cantChar){
+    public static double calculoLongMediaCodigo(Map<String,Double> map, int cantChar){
         double aux=0;
-        for(Map.Entry<String, Integer> entry : map.entrySet()) {
-            aux+=(entry.getValue()/Math.floor(10000/cantChar))*entry.getKey().length();
+        for(Map.Entry<String, Double> entry : map.entrySet()) {
+            aux+=entry.getValue()*entry.getKey().length();
         }
         System.out.println("Longitud media de codigo " + cantChar  + " = " + aux);
         return aux;
@@ -164,17 +167,17 @@ public class Ej2 {
 
     public static void inecKraft() {
         double valorAcum=0;
-        for(Map.Entry<String, Integer> entry : mapA.entrySet()) {
+        for(Map.Entry<String, Double> entry : mapA.entrySet()) {
             valorAcum+=Math.pow(alfabetoCodigo,- entry.getKey().length());
         }
         System.out.println("la inecuacion de kraft para el primer caso es " + valorAcum);
         valorAcum=0;
-        for(Map.Entry<String, Integer> entry : mapB.entrySet()) {
+        for(Map.Entry<String, Double> entry : mapB.entrySet()) {
             valorAcum+=Math.pow(alfabetoCodigo,- entry.getKey().length());
         }
         System.out.println("la inecuacion de kraft para el segundo caso es " + valorAcum);
         valorAcum=0;
-        for(Map.Entry<String, Integer> entry : mapC.entrySet()) {
+        for(Map.Entry<String, Double> entry : mapC.entrySet()) {
             valorAcum+=Math.pow(alfabetoCodigo,- entry.getKey().length());
         }
         System.out.println("la inecuacion de kraft para el tercer caso es " + valorAcum);
