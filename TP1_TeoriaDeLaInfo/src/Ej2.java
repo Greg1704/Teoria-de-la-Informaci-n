@@ -3,6 +3,11 @@ import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 
+/*
+ * PENDIENTE: HACER MACMILLAN
+ * PENDIENTE: HACER EJ B
+ * */
+
 public class Ej2 {
     static Map<String,Integer> mapA = new HashMap<String,Integer>();
     static Map<String,Integer> mapB = new HashMap<String,Integer>();
@@ -88,7 +93,7 @@ public class Ej2 {
     public static double cantidadInformacion(int value,double size){
         return Math.log(((double)value/size))/-Math.log(2);
     }
-
+    
     public static void calculoEntropia(){
         double auxentrop=0,auxprob=0;
         for(Map.Entry<String, Integer> entry : mapA.entrySet()) {
@@ -135,10 +140,6 @@ public class Ej2 {
         System.out.println("la inecuacion de kraft para el tercer caso es " + valorAcum);
     }
 
-    /*
-    * PENDIENTE: HACER MACMILLAN
-    * PENDIENTE: HACER EJ B
-    * */
 
     public static void longitudMediaCodigo(){
         double aux=0;
@@ -158,6 +159,47 @@ public class Ej2 {
             aux+=(entry.getValue()/Math.floor(10000/C))*entry.getKey().length();
         }
         System.out.println("Longitud media de codigo " + C  + " = " + aux);
+    }
+
+    public static void codigoCompacto(){
+        double auxentrop=0,auxprob=0,auxLongMed=0;
+        for(Map.Entry<String, Integer> entry : mapA.entrySet()) {
+            auxprob=entry.getValue()/Math.floor(10000/A);
+            auxentrop+=auxprob*(Math.log(auxprob)/-Math.log(2));
+            auxLongMed+=(entry.getValue()/Math.floor(10000/A))*entry.getKey().length();
+        }
+        if (auxentrop<=auxLongMed)
+            System.out.println("El codigo " + A + " es compacto");
+        else
+            System.out.println("El codigo " + A + " no es compacto");
+
+
+        auxentrop=0;
+        auxprob=0;
+        auxLongMed=0;
+        for(Map.Entry<String, Integer> entry : mapB.entrySet()) {
+            auxprob=entry.getValue()/Math.floor(10000/B);
+            auxentrop+=auxprob*(Math.log(auxprob)/-Math.log(2));
+            auxLongMed+=(entry.getValue()/Math.floor(10000/B))*entry.getKey().length();
+        }
+        if (auxentrop<=auxLongMed)
+            System.out.println("El codigo " + B + " es compacto");
+        else
+            System.out.println("El codigo " + B + " no es compacto");
+
+
+        auxentrop=0;
+        auxprob=0;
+        auxLongMed=0;
+        for(Map.Entry<String, Integer> entry : mapC.entrySet()) {
+            auxprob=entry.getValue()/Math.floor(10000/C);
+            auxentrop+=auxprob*(Math.log(auxprob)/-Math.log(2));
+            auxLongMed+=(entry.getValue()/Math.floor(10000/C))*entry.getKey().length();
+        }
+        if (auxentrop<=auxLongMed)
+            System.out.println("El codigo " + C + " es compacto");
+        else
+            System.out.println("El codigo " + C + " no es compacto");
     }
 }
 
