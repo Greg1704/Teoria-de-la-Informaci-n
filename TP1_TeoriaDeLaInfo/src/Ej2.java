@@ -12,10 +12,13 @@ public class Ej2 {
     static Map<String,Integer> mapA = new HashMap<String,Integer>();
     static Map<String,Integer> mapB = new HashMap<String,Integer>();
     static Map<String,Integer> mapC = new HashMap<String,Integer>();
+    static Map<Integer,Double> mapEntropia = new HashMap<Integer,Double>();
+    static Map<Integer,Double> mapLongMedia = new HashMap<Integer,Double>();
     final static int A=3;
     final static int B=5;
     final static int C=7;
     final static int alfabetoCodigo=3;
+
     public static void main(String[] args) {
         leerArch();
     }
@@ -82,9 +85,16 @@ public class Ej2 {
                         cantidadInformacion(value,Math.floor(10000/C)));
             });
 
-            calculoEntropia();
+            mapEntropia.put(A,calculoEntropia(mapA,A));
+            mapEntropia.put(B,calculoEntropia(mapB,B));
+            mapEntropia.put(C,calculoEntropia(mapC,C));
             inecKraft();
-            longitudMediaCodigo();
+            mapLongMedia.put(A,calculoLongMediaCodigo(mapA,A));
+            mapLongMedia.put(B,calculoLongMediaCodigo(mapB,B));
+            mapLongMedia.put(C,calculoLongMediaCodigo(mapC,C));
+            codigoCompacto(A,mapEntropia.get(A),mapLongMedia.get(A));
+            codigoCompacto(B,mapEntropia.get(B),mapLongMedia.get(B));
+            codigoCompacto(C,mapEntropia.get(C),mapLongMedia.get(C));
         }catch (IOException e) {
             e.printStackTrace();
         }
@@ -93,7 +103,26 @@ public class Ej2 {
     public static double cantidadInformacion(int value,double size){
         return Math.log(((double)value/size))/-Math.log(2);
     }
-    
+    public static double calculoEntropia(Map<String,Integer> map, int cantChar){
+        double auxentrop=0,auxprob=0;
+        for(Map.Entry<String, Integer> entry : map.entrySet()) {
+            auxprob=entry.getValue()/Math.floor(10000/cantChar);
+            auxentrop+=auxprob*(Math.log(auxprob)/-Math.log(2));
+        }
+        System.out.println("Entropia de fuente de "+ cantChar + " caracteres = " + auxentrop);
+        return auxentrop;
+    }
+
+    public static double calculoLongMediaCodigo(Map<String,Integer> map, int cantChar){
+        double aux=0;
+        for(Map.Entry<String, Integer> entry : map.entrySet()) {
+            aux+=(entry.getValue()/Math.floor(10000/cantChar))*entry.getKey().length();
+        }
+        System.out.println("Longitud media de codigo " + cantChar  + " = " + aux);
+        return aux;
+    }
+
+    /*
     public static void calculoEntropia(){
         double auxentrop=0,auxprob=0;
         for(Map.Entry<String, Integer> entry : mapA.entrySet()) {
@@ -120,7 +149,7 @@ public class Ej2 {
         }
         System.out.println("Entropia de fuente de "+ C + " caracteres = " + auxentrop);
     }
-
+    */
 
     public static void inecKraft() {
         double valorAcum=0;
@@ -140,7 +169,7 @@ public class Ej2 {
         System.out.println("la inecuacion de kraft para el tercer caso es " + valorAcum);
     }
 
-
+    /*
     public static void longitudMediaCodigo(){
         double aux=0;
         for(Map.Entry<String, Integer> entry : mapA.entrySet()) {
@@ -160,46 +189,12 @@ public class Ej2 {
         }
         System.out.println("Longitud media de codigo " + C  + " = " + aux);
     }
-
-    public static void codigoCompacto(){
-        double auxentrop=0,auxprob=0,auxLongMed=0;
-        for(Map.Entry<String, Integer> entry : mapA.entrySet()) {
-            auxprob=entry.getValue()/Math.floor(10000/A);
-            auxentrop+=auxprob*(Math.log(auxprob)/-Math.log(2));
-            auxLongMed+=(entry.getValue()/Math.floor(10000/A))*entry.getKey().length();
-        }
-        if (auxentrop<=auxLongMed)
-            System.out.println("El codigo " + A + " es compacto");
+    */
+    public static void codigoCompacto(int cantChar,double entropia,double longMediaCodigo){
+        if (entropia<=longMediaCodigo)
+            System.out.println("El codigo " + cantChar + " es compacto");
         else
-            System.out.println("El codigo " + A + " no es compacto");
-
-
-        auxentrop=0;
-        auxprob=0;
-        auxLongMed=0;
-        for(Map.Entry<String, Integer> entry : mapB.entrySet()) {
-            auxprob=entry.getValue()/Math.floor(10000/B);
-            auxentrop+=auxprob*(Math.log(auxprob)/-Math.log(2));
-            auxLongMed+=(entry.getValue()/Math.floor(10000/B))*entry.getKey().length();
-        }
-        if (auxentrop<=auxLongMed)
-            System.out.println("El codigo " + B + " es compacto");
-        else
-            System.out.println("El codigo " + B + " no es compacto");
-
-
-        auxentrop=0;
-        auxprob=0;
-        auxLongMed=0;
-        for(Map.Entry<String, Integer> entry : mapC.entrySet()) {
-            auxprob=entry.getValue()/Math.floor(10000/C);
-            auxentrop+=auxprob*(Math.log(auxprob)/-Math.log(2));
-            auxLongMed+=(entry.getValue()/Math.floor(10000/C))*entry.getKey().length();
-        }
-        if (auxentrop<=auxLongMed)
-            System.out.println("El codigo " + C + " es compacto");
-        else
-            System.out.println("El codigo " + C + " no es compacto");
+            System.out.println("El codigo " + cantChar + " no es compacto");
     }
 }
 
