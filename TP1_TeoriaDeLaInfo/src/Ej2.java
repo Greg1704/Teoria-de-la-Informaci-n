@@ -27,7 +27,7 @@ public class Ej2 {
         int simb;
         String identificadorA= "", identificadorB ="", identificadorC ="";
         int i = 0,j=0,k=0; //i para 3 caracteres,j para 5, y k para 7
-        try (InputStream in = new FileInputStream("src/datosGrupo11.txt");
+        try (InputStream in = new FileInputStream("C:\\Users\\Mateo\\OneDrive\\Escritorio\\teoriaInfo\\Nueva carpeta\\Teoria-de-la-Informacion\\TP1_TeoriaDeLaInfo\\src\\datosGrupo11.txt");
              Reader reader = new InputStreamReader(in)) {
             while ((simb = reader.read()) != -1){
                 i++;
@@ -95,6 +95,17 @@ public class Ej2 {
             codigoCompacto(A,mapEntropia.get(A),mapLongMedia.get(A));
             codigoCompacto(B,mapEntropia.get(B),mapLongMedia.get(B));
             codigoCompacto(C,mapEntropia.get(C),mapLongMedia.get(C));
+
+            // Inciso d
+
+            System.out.println("El rendimiento de " + A + " caracteres es " + rendimiento(A));
+            System.out.println("El rendimiento de " + B + " caracteres es " + rendimiento(B));
+            System.out.println("El rendimiento de " + C + " caracteres es " + rendimiento(C));
+
+            System.out.println("La redundancia de " + A + " caracteres es " + (1.0 - rendimiento(A)));
+            System.out.println("La redundancia de " + B + " caracteres es " + (1.0 - rendimiento(B)));
+            System.out.println("La redundancia de " + C + " caracteres es " + (1.0 - rendimiento(C)));
+
         }catch (IOException e) {
             e.printStackTrace();
         }
@@ -196,6 +207,13 @@ public class Ej2 {
         else
             System.out.println("El codigo " + cantChar + " no es compacto");
     }
+
+    public static double rendimiento(int N) {
+        double entrop = mapEntropia.get(N);
+        double longit = mapLongMedia.get(N);
+        return (entrop / longit);
+    }
+
 }
 
 
