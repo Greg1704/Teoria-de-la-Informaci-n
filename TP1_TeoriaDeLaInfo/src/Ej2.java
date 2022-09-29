@@ -118,7 +118,7 @@ public class Ej2 {
         double auxentrop=0,auxprob=0;
         for(Map.Entry<String, Integer> entry : map.entrySet()) {
             auxprob=entry.getValue()/Math.floor(10000/cantChar);
-            auxentrop+=auxprob*(Math.log(auxprob)/-Math.log(2));
+            auxentrop+= auxprob * Math.log(auxprob) / -Math.log(2);
         }
         System.out.println("Entropia de fuente de "+ cantChar + " caracteres = " + auxentrop);
         return auxentrop;
