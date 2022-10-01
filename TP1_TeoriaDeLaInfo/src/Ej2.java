@@ -1,5 +1,6 @@
 import java.io.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -107,6 +108,8 @@ public class Ej2 {
             System.out.println("La redundancia de " + A + " caracteres es " + (1.0 - rendimiento(A)));
             System.out.println("La redundancia de " + B + " caracteres es " + (1.0 - rendimiento(B)));
             System.out.println("La redundancia de " + C + " caracteres es " + (1.0 - rendimiento(C)));
+
+            Huffman(mapC);
 
         }catch (IOException e) {
             e.printStackTrace();
@@ -216,6 +219,42 @@ public class Ej2 {
         return (entrop / longit);
     }
 
+    public static void Huffman(Map<String,Double> map){
+        Map <String,Double> Huffmap = new HashMap<String,Double>();
+        for(Map.Entry<String, Double> entry : map.entrySet())
+           Huffmap.put(entry.getKey(),entry.getValue()); //TAL VEZ HABRIA QUE INICIALIZAR LAS KEYS DE OTRA MANERA
+        //Lama a la funcion que verdaderamente hara el huffman
+    }
+
+    public static void metodoHuffman(Map <String,Double> auxmap){
+        if(auxmap.size()>2){
+            String key1 = null,key2=null;
+            double menor1=1,menor2=1;
+            //Caso PASO 1 EN PROGRESO
+            for(Map.Entry<String, Double> entry : auxmap.entrySet()){
+                if(entry.getValue()<menor1){
+                    if(menor1<menor2) {
+                        key2 = key1;
+                        menor2 = menor1;
+                    }
+                    key1= entry.getKey();
+                    menor1=entry.getValue();
+                }else if(entry.getValue()<menor2){
+                    key2= entry.getKey();
+                    menor2=entry.getValue();
+                }
+            } //Del for salen las dos keys con menores probabilidades
+            auxmap.remove(key1,menor1); //Por ahi es al pedo(Consultar con GREGO)
+            auxmap.remove(key2,menor2);
+            auxmap.put(key1,menor1 + menor2);
+            metodoHuffman(auxmap);
+            //Meotodo inverso donde se le asigna a cada valor su key binaria
+        }else{
+            //Caso SE TERMINO PASO 1
+            System.out.println("\nPASO 1 COMPLETADO");
+            System.out.println("INICA PASO 2\n");
+        }
+    }
 }
 
 
