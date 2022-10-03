@@ -1,8 +1,10 @@
 import java.io.*;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 
 /*
  * PENDIENTE: HACER MACMILLAN
@@ -109,11 +111,11 @@ public class Ej2 {
             System.out.println("La redundancia de " + B + " caracteres es " + (1.0 - rendimiento(B)));
             System.out.println("La redundancia de " + C + " caracteres es " + (1.0 - rendimiento(C)) + "\n");
 
-            Huffman(mapA);
+            Huffman(mapA,"HuffmanA");
             System.out.println("\n");
-            Huffman(mapB);
+            Huffman(mapB,"HuffmanB");
             System.out.println("\n");
-            Huffman(mapC);
+            Huffman(mapC,"HuffmanC");
 
         }catch (IOException e) {
             e.printStackTrace();
@@ -223,7 +225,7 @@ public class Ej2 {
         return (entrop / longit);
     }
 
-    public static void Huffman(Map<String,Double> map){
+    public static void Huffman(Map<String,Double> map,String archivo){
         Map <String,Double> Huffmap = new HashMap<String,Double>();
         for(Map.Entry<String, Double> entry : map.entrySet())
            Huffmap.put(entry.getKey(),entry.getValue()); //TAL VEZ HABRIA QUE INICIALIZAR LAS KEYS DE OTRA MANERA
@@ -231,10 +233,23 @@ public class Ej2 {
 
         metodoHuffman(Huffmap);
 
-        int i=1;
-        for(Map.Entry<String, Double> entry : Huffmap.entrySet()) {
-            System.out.println(i + "  key = " + entry.getKey() + "  value = " + entry.getValue());
-            i++;
+        try {
+            File file = new File(archivo);
+
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+            FileWriter fw = new FileWriter(file);
+            BufferedWriter bw = new BufferedWriter(fw);
+            int i=1;
+            for(Map.Entry<String, Double> entry : Huffmap.entrySet()) {
+                System.out.println(i + "  key = " + entry.getKey() + "  value = " + entry.getValue());
+                bw.write(i + "  key = " + entry.getKey() + "  value = " + entry.getValue() + "\n");
+                i++;
+            }
+            bw.close();
+        }catch(IOException e){
+            e.printStackTrace();
         }
     }
 
