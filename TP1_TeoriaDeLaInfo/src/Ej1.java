@@ -12,7 +12,10 @@ import org.la4j.vector.dense.BasicVector;
 public class Ej1 {
     private static final int N = 3;
     private static final int Z = 20;
-    private static int Q=0;
+    private static int Q = 0;
+
+    private static double orden20entrop=0;
+
     public static void main(String[] args) {
         int[][] M = new int[N][N];
         leeArch(M);
@@ -33,7 +36,7 @@ public class Ej1 {
         int ultSimb=65;
         init(M, V);
         System.out.println("intento leer archivo");
-        try (InputStream in = new FileInputStream("src/datosGrupo11.txt");
+        try (InputStream in = new FileInputStream("TP1_TeoriaDeLaInfo/src/datosGrupo11.txt");
              Reader reader = new InputStreamReader(in)) {
             //leer primero
             if((ultSimb = reader.read()) != -1)
@@ -77,9 +80,9 @@ public class Ej1 {
             System.out.println("VProb[i] = " + VProb[i]);
         }
         if(verificacionMemoriaNula(MPasaje)){
-           calculoEntropiaOrden20("ABC", 20, new StringBuffer(),entrop,VProb);
+           calculoEntropiaOrden20("ABC", Z, new StringBuffer(),entrop,1,VProb);
             System.out.println("Entropia inicial = " + calculoEntropiaInicial(VProb));
-            System.out.println("Entropia Orden 20 = " + entrop);
+            System.out.println("Entropia Orden 20 = " + orden20entrop);
         }else if(esErgodica(MPasaje)){
             resolvedorDeSistemas(MPasaje, VEstacionario);
             calculaEntropia(MPasaje, VEstacionario);
@@ -112,21 +115,18 @@ public class Ej1 {
         return auxentrop;
     }
 
-        public  static void calculoEntropiaOrden20(String input, int largo, StringBuffer output, double entrop, double[] VProb) {
-            double auxentrop;
-            if (largo == 0) {
-                auxentrop=1;
-                for (int i=0; i< output.length();i++){  //Revisar forma de optimizar esto, tarda demasiado tiempo
-                    auxentrop*=VProb[output.charAt(i)-65];
-                }
+        public  static void calculoEntropiaOrden20(String input, int orden, StringBuffer output, double entrop, double auxentrop, double[] VProb) {
+            if (orden == 0) {
                 auxentrop=auxentrop*(Math.log(auxentrop) / -Math.log(2));
-                entrop+=auxentrop;
-                System.out.println(Q++);
-                //System.out.println(output);
+                orden20entrop+=auxentrop;
+                System.out.println(Q);
+                Q++;
             } else {
                 for (int i = 0; i < input.length(); i++) {
                     output.append(input.charAt(i));
-                    calculoEntropiaOrden20(input, largo - 1, output,entrop,VProb);
+                    auxentrop*=VProb[input.charAt(i)-65];
+                    calculoEntropiaOrden20(input, orden - 1, output,entrop,auxentrop,VProb);
+                    auxentrop/=VProb[input.charAt(i)-65];
                     output.deleteCharAt(output.length() - 1);
                 }
             }
