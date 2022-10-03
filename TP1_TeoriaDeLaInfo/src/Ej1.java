@@ -57,7 +57,6 @@ public class Ej1 {
     public static void calculaProbabilidades(double[][] MPasaje, int[][] M, int[] V, double[] VEstacionario) {
         int i, j;
         double [] VProb = new double[N];
-        double entrop=0;
         for (j=0 ; j<N ; j++) {
             for (i=0 ; i<N ; i++) {
                 MPasaje[i][j] = ((float) M[i][j] / (float) V[j]); // divido ocurrencias de i despues de j sobre ocurrencias total de j. obteniendo esto se puede sacar la conclusion
@@ -80,7 +79,7 @@ public class Ej1 {
             System.out.println("VProb[i] = " + VProb[i]);
         }
         if(verificacionMemoriaNula(MPasaje)){
-           calculoEntropiaOrden20("ABC", Z, new StringBuffer(),entrop,1,VProb);
+           calculoEntropiaOrden20("ABC", Z, new StringBuffer(),1,VProb);
             System.out.println("Entropia inicial = " + calculoEntropiaInicial(VProb));
             System.out.println("Entropia Orden 20 = " + orden20entrop);
         }else if(esErgodica(MPasaje)){
@@ -115,7 +114,7 @@ public class Ej1 {
         return auxentrop;
     }
 
-        public  static void calculoEntropiaOrden20(String input, int orden, StringBuffer output, double entrop, double auxentrop, double[] VProb) {
+        public  static void calculoEntropiaOrden20(String input, int orden, StringBuffer output, double auxentrop, double[] VProb) {
             if (orden == 0) {
                 auxentrop=auxentrop*(Math.log(auxentrop) / -Math.log(2));
                 orden20entrop+=auxentrop;
@@ -125,7 +124,7 @@ public class Ej1 {
                 for (int i = 0; i < input.length(); i++) {
                     output.append(input.charAt(i));
                     auxentrop*=VProb[input.charAt(i)-65];
-                    calculoEntropiaOrden20(input, orden - 1, output,entrop,auxentrop,VProb);
+                    calculoEntropiaOrden20(input, orden - 1, output,auxentrop,VProb);
                     auxentrop/=VProb[input.charAt(i)-65];
                     output.deleteCharAt(output.length() - 1);
                 }
