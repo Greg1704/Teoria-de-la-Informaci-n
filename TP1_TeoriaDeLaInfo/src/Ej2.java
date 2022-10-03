@@ -28,7 +28,7 @@ public class Ej2 {
         int simb;
         String identificadorA= "", identificadorB ="", identificadorC ="";
         int i = 0,j=0,k=0; //i para 3 caracteres,j para 5, y k para 7
-        try (InputStream in = new FileInputStream("src/datosGrupo11.txt");
+        try (InputStream in = new FileInputStream("TP1_TeoriaDeLaInfo/src/datosGrupo11.txt");
              Reader reader = new InputStreamReader(in)) {
             while ((simb = reader.read()) != -1){
                 i++;
@@ -109,6 +109,10 @@ public class Ej2 {
             System.out.println("La redundancia de " + B + " caracteres es " + (1.0 - rendimiento(B)));
             System.out.println("La redundancia de " + C + " caracteres es " + (1.0 - rendimiento(C)) + "\n");
 
+            Huffman(mapA);
+            System.out.println("\n");
+            Huffman(mapB);
+            System.out.println("\n");
             Huffman(mapC);
 
         }catch (IOException e) {
@@ -223,7 +227,15 @@ public class Ej2 {
         Map <String,Double> Huffmap = new HashMap<String,Double>();
         for(Map.Entry<String, Double> entry : map.entrySet())
            Huffmap.put(entry.getKey(),entry.getValue()); //TAL VEZ HABRIA QUE INICIALIZAR LAS KEYS DE OTRA MANERA
+
+
         metodoHuffman(Huffmap);
+
+        int i=1;
+        for(Map.Entry<String, Double> entry : Huffmap.entrySet()) {
+            System.out.println(i + "  key = " + entry.getKey() + "  value = " + entry.getValue());
+            i++;
+        }
     }
 
     public static void metodoHuffman(Map <String,Double> auxmap){
@@ -249,7 +261,12 @@ public class Ej2 {
             auxmap.put(key1,menor1 + menor2);
             metodoHuffman(auxmap);
             //Metodo inverso donde se le asigna a cada valor su key binaria
-
+            String key3=recuperaKeyMenor(auxmap,menor1,menor2);
+            auxmap.remove(key3,menor1+menor2);
+            key1=key3 + "0";
+            key2=key3 + "1";
+            auxmap.put(key1,menor1);
+            auxmap.put(key2,menor2);
 
         }else{
             //Caso SE TERMINO PASO 1
@@ -263,18 +280,31 @@ public class Ej2 {
                     key2="1";
                     menor2=entry.getValue();
                 }
+                i++;
             }
+            auxmap.clear();
             for (i=0;i<2;i++){ //A REVISAR(NO TERMINA DE FUNCIONAR ESTO)
                 if (i==0)
                     auxmap.put(key1,menor1);
                 else
                     auxmap.put(key2,menor2);
             }
-            //TENGO QUE DESCIFRAR COMO BORRAR LAS KEYS ORIGINALES Y DEJAR LAS DE 0 Y 1
+            System.out.println("\n");
+            for(Map.Entry<String, Double> entry : auxmap.entrySet())
+                System.out.println("entry.getKey() = " + entry.getKey() + " entry.getValue() = " + entry.getValue());
             System.out.println("\nPASO 1 COMPLETADO");
             System.out.println("INICA PASO 2\n");
 
         }
+    }
+
+    public static String recuperaKeyMenor(Map <String,Double> auxmap,double menor1,double menor2){
+        for(Map.Entry<String, Double> entry : auxmap.entrySet()){
+            if (entry.getValue() == menor1+menor2)
+                return entry.getKey();
+        }
+        System.out.println("Esto no deberia ocurrir");
+        return null; //No deberia ocurrir nunca
     }
 }
 
