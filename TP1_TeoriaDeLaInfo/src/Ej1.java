@@ -79,7 +79,7 @@ public class Ej1 {
             System.out.println("VProb[i] = " + VProb[i]);
         }
         if(verificacionMemoriaNula(MPasaje)){
-           calculoEntropiaOrden20("ABC", Z, new StringBuffer(),1,VProb);
+           calculoEntropiaOrden20("ABC", Z,1,VProb);
             System.out.println("Entropia inicial = " + calculoEntropiaInicial(VProb));
             System.out.println("Entropia Orden 20 = " + orden20entrop);
         }else if(esErgodica(MPasaje)){
@@ -114,7 +114,7 @@ public class Ej1 {
         return auxentrop;
     }
 
-        public  static void calculoEntropiaOrden20(String input, int orden, StringBuffer output, double auxentrop, double[] VProb) {
+        public  static void calculoEntropiaOrden20(String input, int orden, double auxentrop, double[] VProb) {
             if (orden == 0) {
                 auxentrop=auxentrop*(Math.log(auxentrop) / -Math.log(2));
                 orden20entrop+=auxentrop;
@@ -122,11 +122,9 @@ public class Ej1 {
                 Q++;
             } else {
                 for (int i = 0; i < input.length(); i++) {
-                    output.append(input.charAt(i));
                     auxentrop*=VProb[input.charAt(i)-65];
-                    calculoEntropiaOrden20(input, orden - 1, output,auxentrop,VProb);
+                    calculoEntropiaOrden20(input, orden - 1,auxentrop,VProb);
                     auxentrop/=VProb[input.charAt(i)-65];
-                    output.deleteCharAt(output.length() - 1);
                 }
             }
         }
