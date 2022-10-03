@@ -111,11 +111,12 @@ public class Ej2 {
             System.out.println("La redundancia de " + B + " caracteres es " + (1.0 - rendimiento(B)));
             System.out.println("La redundancia de " + C + " caracteres es " + (1.0 - rendimiento(C)) + "\n");
 
-            Huffman(mapA,"HuffmanA");
+           /* Huffman(mapA,"HuffmanA");
             System.out.println("\n");
             Huffman(mapB,"HuffmanB");
             System.out.println("\n");
             Huffman(mapC,"HuffmanC");
+            */
 
         }catch (IOException e) {
             e.printStackTrace();
@@ -131,7 +132,7 @@ public class Ej2 {
             auxprob=entry.getValue();
             auxentrop+=auxprob*(Math.log(auxprob)/-Math.log(2));
         }
-        System.out.println("Entropia de fuente de "+ cantChar + " caracteres = " + auxentrop);
+        System.out.println("Entropia de fuente de "+ cantChar + " caracteres es = " + auxentrop);
         return auxentrop;
     }
 
@@ -140,7 +141,7 @@ public class Ej2 {
         for(Map.Entry<String, Double> entry : map.entrySet()) {
             aux+=entry.getValue()*entry.getKey().length();
         }
-        System.out.println("Longitud media de codigo " + cantChar  + " = " + aux);
+        System.out.println("Longitud media de codigo de " + cantChar  + " caracteres es = " + aux);
         return aux;
     }
 
