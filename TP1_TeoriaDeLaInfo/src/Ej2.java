@@ -193,7 +193,7 @@ public class Ej2 {
             int i=1;
             for(Map.Entry<String, Double> entry : Huffmap.entrySet()) {
                 System.out.println(i + "  key = " + entry.getKey() + "  value = " + entry.getValue());
-                bw.write(i + "  key = " + entry.getKey() + "  value = " + entry.getValue() + "\n");
+                bw.write("  key = " + entry.getKey() + "  value = " + entry.getValue() + "\n");
                 i++;
             }
             bw.close();
