@@ -6,10 +6,6 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 
-/*
- * PENDIENTE: HACER MACMILLAN
- * PENDIENTE: HACER EJ B
- * */
 
 public class Ej2 {
     static Map<String,Double> mapA = new HashMap<String,Double>();
@@ -145,34 +141,6 @@ public class Ej2 {
         return aux;
     }
 
-    /*
-    public static void calculoEntropia(){
-        double auxentrop=0,auxprob=0;
-        for(Map.Entry<String, Integer> entry : mapA.entrySet()) {
-            auxprob=entry.getValue()/Math.floor(10000/A);
-            auxentrop+=auxprob*(Math.log(auxprob)/-Math.log(3));
-        }
-        System.out.println("Entropia de fuente de "+ A + " caracteres = " + auxentrop);
-
-        auxprob=0;
-        auxentrop=0;
-
-        for(Map.Entry<String, Integer> entry : mapB.entrySet()) {
-            auxprob=entry.getValue()/Math.floor(10000/B);;
-            auxentrop+=auxprob*(Math.log(auxprob)/-Math.log(3));
-        }
-        System.out.println("Entropia de fuente de "+ B + " caracteres = " + auxentrop);
-
-        auxprob=0;
-        auxentrop=0;
-
-        for(Map.Entry<String, Integer> entry : mapC.entrySet()) {
-            auxprob=entry.getValue()/Math.floor(10000/C);
-            auxentrop+=auxprob*(Math.log(auxprob)/-Math.log(3));
-        }
-        System.out.println("Entropia de fuente de "+ C + " caracteres = " + auxentrop);
-    }
-    */
 
     public static void inecKraft() {
         double valorAcum=0;
@@ -192,27 +160,7 @@ public class Ej2 {
         System.out.println("la inecuacion de kraft para el tercer caso es " + valorAcum);
     }
 
-    /*
-    public static void longitudMediaCodigo(){
-        double aux=0;
-        for(Map.Entry<String, Integer> entry : mapA.entrySet()) {
-            aux+=(entry.getValue()/Math.floor(10000/A))*entry.getKey().length();
-        }
-        System.out.println("Longitud media de codigo " + A  + " = " + aux);
 
-        aux=0;
-        for(Map.Entry<String, Integer> entry : mapB.entrySet()) {
-            aux+=(entry.getValue()/Math.floor(10000/B))*entry.getKey().length();
-        }
-        System.out.println("Longitud media de codigo " + B  + " = " + aux);
-
-        aux=0;
-        for(Map.Entry<String, Integer> entry : mapC.entrySet()) {
-            aux+=(entry.getValue()/Math.floor(10000/C))*entry.getKey().length();
-        }
-        System.out.println("Longitud media de codigo " + C  + " = " + aux);
-    }
-    */
     public static void codigoCompacto(int cantChar,double entropia,double longMediaCodigo){
         if (entropia<=longMediaCodigo)
             System.out.println("El codigo " + cantChar + " es compacto");
@@ -272,7 +220,7 @@ public class Ej2 {
                     menor2=entry.getValue();
                 }
             } //Del for salen las dos keys con menores probabilidades
-            auxmap.remove(key1,menor1); //Por ahi es al pedo(Consultar con GREGO)
+            auxmap.remove(key1,menor1);
             auxmap.remove(key2,menor2);
             auxmap.put(key1,menor1 + menor2);
             metodoHuffman(auxmap);
@@ -299,7 +247,7 @@ public class Ej2 {
                 i++;
             }
             auxmap.clear();
-            for (i=0;i<2;i++){ //A REVISAR(NO TERMINA DE FUNCIONAR ESTO)
+            for (i=0;i<2;i++){
                 if (i==0)
                     auxmap.put(key1,menor1);
                 else
@@ -319,7 +267,7 @@ public class Ej2 {
                 return entry.getKey();
         }
         System.out.println("Esto no deberia ocurrir");
-        return null; //No deberia ocurrir nunca
+        return null;
     }
 }
 
