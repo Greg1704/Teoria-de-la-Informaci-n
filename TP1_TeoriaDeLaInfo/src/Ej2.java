@@ -111,12 +111,12 @@ public class Ej2 {
             System.out.println("La redundancia de " + B + " caracteres es " + (1.0 - rendimiento(B)));
             System.out.println("La redundancia de " + C + " caracteres es " + (1.0 - rendimiento(C)) + "\n");
 
-           /* Huffman(mapA,"HuffmanA");
+            Huffman(mapA,"HuffmanA");
             System.out.println("\n");
             Huffman(mapB,"HuffmanB");
             System.out.println("\n");
             Huffman(mapC,"HuffmanC");
-            */
+
 
         }catch (IOException e) {
             e.printStackTrace();
@@ -130,7 +130,7 @@ public class Ej2 {
         double auxentrop=0,auxprob=0;
         for(Map.Entry<String, Double> entry : map.entrySet()) {
             auxprob=entry.getValue();
-            auxentrop+=auxprob*(Math.log(auxprob)/-Math.log(2));
+            auxentrop+=auxprob*(Math.log(auxprob)/-Math.log(3));
         }
         System.out.println("Entropia de fuente de "+ cantChar + " caracteres es = " + auxentrop);
         return auxentrop;
@@ -150,7 +150,7 @@ public class Ej2 {
         double auxentrop=0,auxprob=0;
         for(Map.Entry<String, Integer> entry : mapA.entrySet()) {
             auxprob=entry.getValue()/Math.floor(10000/A);
-            auxentrop+=auxprob*(Math.log(auxprob)/-Math.log(2));
+            auxentrop+=auxprob*(Math.log(auxprob)/-Math.log(3));
         }
         System.out.println("Entropia de fuente de "+ A + " caracteres = " + auxentrop);
 
@@ -159,7 +159,7 @@ public class Ej2 {
 
         for(Map.Entry<String, Integer> entry : mapB.entrySet()) {
             auxprob=entry.getValue()/Math.floor(10000/B);;
-            auxentrop+=auxprob*(Math.log(auxprob)/-Math.log(2));
+            auxentrop+=auxprob*(Math.log(auxprob)/-Math.log(3));
         }
         System.out.println("Entropia de fuente de "+ B + " caracteres = " + auxentrop);
 
@@ -168,7 +168,7 @@ public class Ej2 {
 
         for(Map.Entry<String, Integer> entry : mapC.entrySet()) {
             auxprob=entry.getValue()/Math.floor(10000/C);
-            auxentrop+=auxprob*(Math.log(auxprob)/-Math.log(2));
+            auxentrop+=auxprob*(Math.log(auxprob)/-Math.log(3));
         }
         System.out.println("Entropia de fuente de "+ C + " caracteres = " + auxentrop);
     }
@@ -309,8 +309,7 @@ public class Ej2 {
             for(Map.Entry<String, Double> entry : auxmap.entrySet())
                 System.out.println("entry.getKey() = " + entry.getKey() + " entry.getValue() = " + entry.getValue());
             System.out.println("\nPASO 1 COMPLETADO");
-            System.out.println("INICA PASO 2\n");
-
+            System.out.println("INICIA PASO 2\n");
         }
     }
 

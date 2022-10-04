@@ -11,7 +11,7 @@ import org.la4j.vector.dense.BasicVector;
 
 public class Ej1 {
     private static final int N = 3;
-    private static final int Z = 20;
+    private static final int Z = 3;
     private static int Q = 0;
 
     private static double orden20entrop=0;
@@ -110,13 +110,13 @@ public class Ej1 {
     public static double calculoEntropiaInicial(double[] VProb){
         double auxentrop=0;
         for(int i=0;i<N;i++)
-            auxentrop+=VProb[i]*(Math.log(VProb[i])/-Math.log(2));
+            auxentrop+=VProb[i]*(Math.log(VProb[i])/-Math.log(3));
         return auxentrop;
     }
 
         public  static void calculoEntropiaOrden20(String input, int orden, double auxentrop, double[] VProb) {
             if (orden == 0) {
-                auxentrop=auxentrop*(Math.log(auxentrop) / -Math.log(2));
+                auxentrop=auxentrop*(Math.log(auxentrop) / -Math.log(3));
                 orden20entrop+=auxentrop;
                 System.out.println(Q);
                 Q++;
@@ -165,7 +165,7 @@ public class Ej1 {
             auxCol=0;
             for (int i=0 ; i<N ; i++) {
                 if (MPasaje[i][j] != 0)
-                    auxCol += MPasaje[i][j] * Math.log(MPasaje[i][j]) / -Math.log(2);
+                    auxCol += MPasaje[i][j] * Math.log(MPasaje[i][j]) / -Math.log(3);
             }
             entrop+=auxCol*VEstacionario[j];
         }
