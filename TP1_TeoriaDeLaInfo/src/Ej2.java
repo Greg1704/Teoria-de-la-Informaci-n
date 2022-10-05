@@ -111,9 +111,9 @@ public class Ej2 {
 
             Huffman(mapA,"HuffmanA");
             System.out.println("\n");
-            //Huffman(mapB,"HuffmanB");
+            Huffman(mapB,"HuffmanB");
             System.out.println("\n");
-            //Huffman(mapC,"HuffmanC");
+            Huffman(mapC,"HuffmanC");
 
 
         }catch (IOException e) {
@@ -192,13 +192,18 @@ public class Ej2 {
             }
             FileWriter fw = new FileWriter(file);
             BufferedWriter bw = new BufferedWriter(fw);
-            int i=1;
-            ordenar(Huffmap);
-            for(Map.Entry<String, Double> entry : Huffmap.entrySet()) {
+
+            List<Entry<String,Double>> list = ordenar(Huffmap);
+            for (int i= list.size();i>0;i--){
+                //System.out.println("  key = " + list.get(i-1).getKey() + "  value = " + list.get(i-1).getValue());
+                bw.write("  key = " + list.get(i-1).getKey() + "  value = " + list.get(i-1).getValue() + "\n");
+            }
+            /*for(Map.Entry<String, Double> entry : Huffmap.entrySet()) {
                 //System.out.println(i + "  key = " + entry.getKey() + "  value = " + entry.getValue());
                 bw.write("  key = " + entry.getKey() + "  value = " + entry.getValue() + "\n");
                 i++;
             }
+             */
             bw.close();
         }catch(IOException e){
             e.printStackTrace();
@@ -226,7 +231,9 @@ public class Ej2 {
             auxmap.remove(key1,menor1);
             auxmap.remove(key2,menor2);
             auxmap.put(key1,menor1 + menor2);
+            //System.out.println("auxmap = " + auxmap);
             metodoHuffman(auxmap);
+            //System.out.println("auxmap = " + auxmap);
             //Metodo inverso donde se le asigna a cada valor su key binaria
             String key3=recuperaKeyMenor(auxmap,menor1,menor2);
             auxmap.remove(key3,menor1+menor2);
@@ -273,14 +280,10 @@ public class Ej2 {
         return null;
     }
 
-    public static void ordenar(Map<String,Double> map){
+    public static List ordenar(Map<String,Double> map){
         List<Entry<String,Double>> list = new ArrayList<Entry<String,Double>>(map.entrySet());
         list.sort(Entry.comparingByValue());
-        for(int i=list.size();i>0;i--){
-            map.put(list.get(i-1).getKey(),list.get(i-1).getValue());
-        }
-        for(Map.Entry<String, Double> entry : map.entrySet())
-            System.out.println("entry = " + entry);
+        return list;
     }
 }
 
