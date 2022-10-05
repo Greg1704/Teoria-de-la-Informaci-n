@@ -1,11 +1,13 @@
 import java.io.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
-
+import java.util.Map.Entry;
 
 public class Ej2 {
     static Map<String,Double> mapA = new HashMap<String,Double>();
@@ -109,9 +111,9 @@ public class Ej2 {
 
             Huffman(mapA,"HuffmanA");
             System.out.println("\n");
-            Huffman(mapB,"HuffmanB");
+            //Huffman(mapB,"HuffmanB");
             System.out.println("\n");
-            Huffman(mapC,"HuffmanC");
+            //Huffman(mapC,"HuffmanC");
 
 
         }catch (IOException e) {
@@ -191,8 +193,9 @@ public class Ej2 {
             FileWriter fw = new FileWriter(file);
             BufferedWriter bw = new BufferedWriter(fw);
             int i=1;
+            ordenar(Huffmap);
             for(Map.Entry<String, Double> entry : Huffmap.entrySet()) {
-                System.out.println(i + "  key = " + entry.getKey() + "  value = " + entry.getValue());
+                //System.out.println(i + "  key = " + entry.getKey() + "  value = " + entry.getValue());
                 bw.write("  key = " + entry.getKey() + "  value = " + entry.getValue() + "\n");
                 i++;
             }
@@ -268,6 +271,16 @@ public class Ej2 {
         }
         System.out.println("Esto no deberia ocurrir");
         return null;
+    }
+
+    public static void ordenar(Map<String,Double> map){
+        List<Entry<String,Double>> list = new ArrayList<Entry<String,Double>>(map.entrySet());
+        list.sort(Entry.comparingByValue());
+        for(int i=list.size();i>0;i--){
+            map.put(list.get(i-1).getKey(),list.get(i-1).getValue());
+        }
+        for(Map.Entry<String, Double> entry : map.entrySet())
+            System.out.println("entry = " + entry);
     }
 }
 
