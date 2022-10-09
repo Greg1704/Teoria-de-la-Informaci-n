@@ -66,24 +66,27 @@ public class Ej2 {
                     identificadorC="";
                 }
             }
-
+            double apariciones;
             System.out.println("mapA = " + mapA.size());
             for(Map.Entry<String, Double> entry : mapA.entrySet()){
+                apariciones = entry.getValue();
                 entry.setValue(entry.getValue()/Math.floor(10000/A));
-                System.out.println("key = " + entry.getKey() + "   value = " + entry.getValue() + "  Cantidad informacion = " +
-                        cantidadInformacion(entry.getValue()));
+                System.out.println("Simbolo = " + entry.getKey() + "  cantidad de apariciones = " + apariciones + "   probabilidad = "
+                        + entry.getValue() + "  Cantidad informacion = " + cantidadInformacion(entry.getValue()));
             }
             System.out.println();
             for(Map.Entry<String, Double> entry : mapB.entrySet()){
+                apariciones = entry.getValue();
                 entry.setValue(entry.getValue()/Math.floor(10000/B));
-                System.out.println("key = " + entry.getKey() + "   value = " + entry.getValue() + "  Cantidad informacion = " +
-                        cantidadInformacion(entry.getValue()));
+                System.out.println("Simbolo = " + entry.getKey() + "  cantidad de apariciones = " + apariciones + "   probabilidad = "
+                        + entry.getValue() + "  Cantidad informacion = " + cantidadInformacion(entry.getValue()));
             }
             System.out.println();
             for(Map.Entry<String, Double> entry : mapC.entrySet()){
+                apariciones = entry.getValue();
                 entry.setValue(entry.getValue()/Math.floor(10000/C));
-                System.out.println("key = " + entry.getKey() + "   value = " + entry.getValue() + "  Cantidad informacion = " +
-                        cantidadInformacion(entry.getValue()));
+                System.out.println("Simbolo = " + entry.getKey() + "  cantidad de apariciones = " + apariciones + "   probabilidad = "
+                        + entry.getValue() + "  Cantidad informacion = " + cantidadInformacion(entry.getValue()));
             }
 
             mapEntropia.put(A,calculoEntropia(mapA,A));
