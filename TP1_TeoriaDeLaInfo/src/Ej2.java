@@ -120,7 +120,7 @@ public class Ej2 {
     }
 
     public static double cantidadInformacion(double value){
-        return Math.log(value)/-Math.log(2);
+        return Math.log(value)/-Math.log(3);
     }
     public static double calculoEntropia(Map<String,Double> map, int cantChar){
         double auxentrop=0,auxprob=0;
@@ -192,7 +192,7 @@ public class Ej2 {
             BufferedWriter bw = new BufferedWriter(fw);
             int i=1;
             for(Map.Entry<String, Double> entry : Huffmap.entrySet()) {
-                System.out.println(i + "  key = " + entry.getKey() + "  value = " + entry.getValue());
+                //System.out.println(i + "  key = " + entry.getKey() + "  value = " + entry.getValue());
                 bw.write("  key = " + entry.getKey() + "  value = " + entry.getValue() + "\n");
                 i++;
             }
