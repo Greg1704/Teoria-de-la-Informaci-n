@@ -280,9 +280,17 @@ public class Ej2 {
         for(int i=list.size();i>0;i--){
             map.put(list.get(i-1).getKey(),list.get(i-1).getValue());
         }
-        for(Map.Entry<String, Double> entry : map.entrySet())
-            System.out.println("entry = " + entry);
+        //for(Map.Entry<String, Double> entry : map.entrySet())
+            //System.out.println("entry = " + entry);
         return list;
+    }
+
+    public static void reconstruccionArchivo(List<Entry<String,Double>> list,int simbolo){
+        double aux;
+        for (int i= list.size();i>0;i--){
+            aux = list.get(i).getValue() * Math.floor(10000/3);
+            //No se si esto sea correcto
+        }
     }
 }
 
