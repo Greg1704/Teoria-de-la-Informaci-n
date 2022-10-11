@@ -286,10 +286,23 @@ public class Ej2 {
     }
 
     public static void reconstruccionArchivo(List<Entry<String,Double>> list,int simbolo){
-        double aux;
-        for (int i= list.size();i>0;i--){
-            aux = list.get(i).getValue() * Math.floor(10000/3);
-            //No se si esto sea correcto
+        try (InputStream in = new FileInputStream("TP1_TeoriaDeLaInfo/src/datosGrupo11.txt");
+             Reader reader = new InputStreamReader(in)) {
+            int simb,i=0;
+            String identificador=null;
+            while ((simb = reader.read()) != -1) {
+                i++;
+                if (i < A) {
+                    identificador += (char) simb;
+                } else if (i == A) {
+                    identificador += (char) simb;
+                    //algo?
+                    i=0;
+                    identificador=null;
+                }
+            }
+        }catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
