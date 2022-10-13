@@ -112,11 +112,11 @@ public class Ej2 {
             System.out.println("La redundancia de " + B + " caracteres es " + (1.0 - rendimiento(B)));
             System.out.println("La redundancia de " + C + " caracteres es " + (1.0 - rendimiento(C)) + "\n");
 
-            Huffman(mapA,"HuffmanA");
+            Huffman(mapA,"HuffmanA",A);
             System.out.println("\n");
-            Huffman(mapB,"HuffmanB");
+            Huffman(mapB,"HuffmanB",B);
             System.out.println("\n");
-            Huffman(mapC,"HuffmanC");
+            Huffman(mapC,"HuffmanC",C);
 
 
         }catch (IOException e) {
@@ -179,7 +179,7 @@ public class Ej2 {
         return (entrop / longit);
     }
 
-    public static void Huffman(Map<String,Double> map,String archivo){
+    public static void Huffman(Map<String,Double> map,String archivo,int cantSimbolos){
         Map <String,Double> Huffmap = new HashMap<String,Double>();
         for(Map.Entry<String, Double> entry : map.entrySet())
            Huffmap.put(entry.getKey(),entry.getValue()); //TAL VEZ HABRIA QUE INICIALIZAR LAS KEYS DE OTRA MANERA
@@ -187,20 +187,28 @@ public class Ej2 {
 
         metodoHuffman(Huffmap);
 
+        /*for(Map.Entry<String, Double> entry : map.entrySet())
+            System.out.println("entry = " + entry.getKey() + "  " + entry.getValue());
+        for(Map.Entry<String, Double> entry : Huffmap.entrySet())
+            System.out.println("entry = " + entry.getKey() + "  " + entry.getValue()); */
         try {
             File file = new File(archivo);
 
-            if (!file.exists()) {
+            if (!file.exists())
                 file.createNewFile();
-            }
             FileWriter fw = new FileWriter(file);
             BufferedWriter bw = new BufferedWriter(fw);
-            List<Entry<String,Double>> list = ordenar(Huffmap);
-            for (int i= list.size();i>0;i--){
-                //System.out.println("  key = " + list.get(i-1).getKey() + "  value = " + list.get(i-1).getValue());
-                bw.write(list.get(i-1).getKey() + "  " + list.get(i-1).getValue() + "\n");
+            List<Entry<String,Double>> binList = ordenar(Huffmap);
+            for (int i= binList.size();i>0;i--){
+                //System.out.println("  key = " + binList.get(i-1).getKey() + "  value = " + binList.get(i-1).getValue());
+                bw.write(binList.get(i-1).getKey() + "  " + binList.get(i-1).getValue() + "\n");
             }
             bw.close();
+            List<Entry<String,Double>> origList = ordenar(map);
+            Map<String,String> mapStringABinario = new HashMap<String,String>();
+            for (int i= binList.size();i>0;i--)
+                mapStringABinario.put(origList.get(i-1).getKey(),binList.get(i-1).getKey());
+            reconstruccionArchivo(mapStringABinario,cantSimbolos);
         }catch(IOException e){
             e.printStackTrace();
         }
@@ -285,25 +293,41 @@ public class Ej2 {
         return list;
     }
 
-    public static void reconstruccionArchivo(List<Entry<String,Double>> list,int simbolo){
+    public static void reconstruccionArchivo(Map<String,String> map,int cantSimbolos){
         try (InputStream in = new FileInputStream("TP1_TeoriaDeLaInfo/src/datosGrupo11.txt");
              Reader reader = new InputStreamReader(in)) {
-            int simb,i=0;
-            String identificador=null;
+            int simb,i=0,bin;
+            String nombreArchivo = "Codificado" + cantSimbolos + ".dat";
+            String identificador="";
+            File archivo = new File(nombreArchivo);
+            FileOutputStream fos = new FileOutputStream(archivo);
+            ObjectOutputStream escribir = new ObjectOutputStream(fos);
             while ((simb = reader.read()) != -1) {
                 i++;
-                if (i < A) {
+                if (i < cantSimbolos) {
                     identificador += (char) simb;
-                } else if (i == A) {
+                } else if (i == cantSimbolos) {
                     identificador += (char) simb;
-                    //algo?
+                    bin=Integer.parseInt(buscaValue(map,identificador),2);
+                    escribir.write(bin);
                     i=0;
-                    identificador=null;
+                    identificador="";
                 }
             }
+            escribir.close();
+            fos.close();
         }catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static String buscaValue(Map<String,String> map,String buscado){
+        System.out.println("buscado = " + buscado);
+        for(Map.Entry<String, String> entry : map.entrySet()) {
+            if (entry.getKey().equals(buscado))
+                return entry.getValue();
+        }
+        return null; //Nunca deberia llegar a este return
     }
 }
 
