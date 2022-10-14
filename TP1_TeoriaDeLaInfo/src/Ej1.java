@@ -44,6 +44,12 @@ public class Ej1 {
                 M[simb-65][ultSimb-65]+=1;
                 ultSimb=simb;
             }
+            System.out.println(M[0][0] + " " + M[1][0] + " " + M[2][0]);
+            System.out.println(M[0][1] + " " + M[1][1] + " " + M[2][1]);
+            System.out.println(M[0][2] + " " + M[1][2] + " " + M[2][2]);
+
+            System.out.println(V[0] + " " + V[1] + " " + V[2]);
+
             calculaProbabilidades(MPasaje, M, V , VEstacionario);
         } catch (IOException e) {
             // TODO Auto-generated catch block
@@ -54,8 +60,8 @@ public class Ej1 {
     public static void calculaProbabilidades(double[][] MPasaje, int[][] M, int[] V, double[] VEstacionario) {
         int i, j;
         double [] VProb = new double[N];
-        for (j=0 ; j<N ; j++) {
-            for (i=0 ; i<N ; i++) {
+        for (i=0 ; i<N ; i++) {
+            for (j=0 ; j<N ; j++) {
                 MPasaje[i][j] = ((float) M[i][j] / (float) V[j]); // divido ocurrencias de i despues de j sobre ocurrencias total de j. obteniendo esto se puede sacar la conclusion
                 // de si es de memoria nula o no
             }
