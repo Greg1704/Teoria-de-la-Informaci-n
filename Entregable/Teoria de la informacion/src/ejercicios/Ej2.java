@@ -6,6 +6,8 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map.Entry;
 
@@ -284,10 +286,13 @@ public class Ej2 {
 
     public static List ordenar(Map<String,Double> map){
         List<Entry<String,Double>> list = new ArrayList<Entry<String,Double>>(map.entrySet());
-        //list.sort(Entry.comparingByValue());
-        for(int i=list.size();i>0;i--){
+        Collections.sort(list, new Comparator<Map.Entry<String, Double>>(){
+                         public int compare(Map.Entry<String, Double> ent1, Map.Entry<String, Double> ent2) {
+                            return ent1.getValue().compareTo(ent2.getValue());
+                        }});
+        /*for(int i=list.size();i>0;i--){
             map.put(list.get(i-1).getKey(),list.get(i-1).getValue());
-        }
+        }*/
         //for(Map.Entry<String, Double> entry : map.entrySet())
             //System.out.println("entry = " + entry);
         return list;
@@ -322,7 +327,6 @@ public class Ej2 {
     }
 
     public static String buscaValue(Map<String,String> map,String buscado){
-        System.out.println("buscado = " + buscado);
         for(Map.Entry<String, String> entry : map.entrySet()) {
             if (entry.getKey().equals(buscado))
                 return entry.getValue();

@@ -11,7 +11,6 @@ import org.la4j.vector.dense.BasicVector;
 public class Ej1 {
     private static final int N = 3;
     private static final int Z = 3;
-    private static int Q = 0;
 
     private static double orden20entrop=0;
 
@@ -117,8 +116,6 @@ public class Ej1 {
             if (orden == 0) {
                 auxentrop=auxentrop*(Math.log(auxentrop) / -Math.log(3));
                 orden20entrop+=auxentrop;
-                System.out.println(Q);
-                Q++;
             } else {
                 for (int i = 0; i < input.length(); i++) {
                     auxentrop*=VProb[input.charAt(i)-65];
