@@ -7,6 +7,6 @@
       <string v="oracle.jdeveloper.model.PathsConfiguration/ApplicationBuildToolContentSet"/>
    </list>
    <list n="listOfChildren">
-      <hash><url n="URL" path="Entregable/Teoria de la informacion/Teoria de la informacion.jpr"/></hash>
+      <hash><url n="URL" path="Entrega/Teoria de la informacion/Teoria de la informacion.jpr"/></hash>
    </list>
 </jws:workspace>
