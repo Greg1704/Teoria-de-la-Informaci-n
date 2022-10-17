@@ -112,11 +112,11 @@ public class Ej2 {
             System.out.println("La redundancia de " + B + " caracteres es " + (1.0 - rendimiento(B)));
             System.out.println("La redundancia de " + C + " caracteres es " + (1.0 - rendimiento(C)) + "\n");
 
-            Huffman(mapA,"HuffmanA",A);
+            Huffman(mapA,"HuffmanA.txt",A);
             System.out.println("\n");
-            Huffman(mapB,"HuffmanB",B);
+            Huffman(mapB,"HuffmanB.txt",B);
             System.out.println("\n");
-            Huffman(mapC,"HuffmanC",C);
+            Huffman(mapC,"HuffmanC.txt",C);
 
 
         }catch (IOException e) {
