@@ -1,3 +1,5 @@
+package ejercicios;
+
 import java.io.*;
 
 import java.util.HashMap;
@@ -270,9 +272,9 @@ public class Ej2 {
             bw.close();
             fw.close();
             List<Entry<String,Double>> origList = ordenar(map);
-            Map<String,String> mapStringABinario = new HashMap<String,String>();
+            Map<Integer,Integer> mapStringABinario = new HashMap<Integer,Integer>();
             for (int i= binList.size();i>0;i--)
-                mapStringABinario.put(origList.get(i-1).getKey(),binList.get(i-1).getKey());
+            mapStringABinario.put(stringAInteger(origList.get(i-1).getKey()),Integer.parseInt(binList.get(i-1).getKey(),2));
             reconstruccionArchivo(mapStringABinario,cantSimbolos);
         }catch(IOException e){
             e.printStackTrace();
@@ -361,7 +363,7 @@ public class Ej2 {
         return list;
     }
 
-    public static void reconstruccionArchivo(Map<String,String> map,int cantSimbolos){
+    public static void reconstruccionArchivo(Map<Integer,Integer> map,int cantSimbolos){
         try (InputStream in = new FileInputStream("datosGrupo11.txt");
              Reader reader = new InputStreamReader(in)) {
             int simb,i=0,bin;
@@ -370,13 +372,14 @@ public class Ej2 {
             File archivo = new File(nombreArchivo);
             FileOutputStream fos = new FileOutputStream(archivo);
             ObjectOutputStream escribir = new ObjectOutputStream(fos);
+            escribir.writeObject(map);
             while ((simb = reader.read()) != -1) {
                 i++;
                 if (i < cantSimbolos) {
                     identificador += (char) simb;
                 } else if (i == cantSimbolos) {
                     identificador += (char) simb;
-                    bin=Integer.parseInt(buscaValue(map,identificador),2);
+                    bin=buscaValue(map,identificador);
                     escribir.write(bin);
                     i=0;
                     identificador="";
@@ -389,12 +392,20 @@ public class Ej2 {
         }
     }
 
-    public static String buscaValue(Map<String,String> map,String buscado){
-        for(Map.Entry<String, String> entry : map.entrySet()) {
-            if (entry.getKey().equals(buscado))
+    public static Integer buscaValue(Map<Integer,Integer> map,String buscado){
+        for(Map.Entry<Integer, Integer> entry : map.entrySet()) {
+            if (entry.getKey() == stringAInteger(buscado))
                 return entry.getValue();
         }
         return null; //Nunca deberia llegar a este return
+    }
+    
+    public static int stringAInteger(String alf){
+            int aux=0;
+            for (int i=0;i<alf.length();i++){
+                aux+=(int) alf.indexOf(i);
+            }
+            return aux;
     }
 }
 
