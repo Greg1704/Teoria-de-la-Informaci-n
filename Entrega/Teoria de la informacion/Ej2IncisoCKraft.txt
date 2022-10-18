@@ -1,0 +1,3 @@
+la inecuacion de kraft para el caso de 3 caracteres es 0.9999999999999993
+la inecuacion de kraft para el caso de 3 caracteres es 0.9999999999999968
+la inecuacion de kraft para el caso de 7 caracteres es 0.4563328760859707

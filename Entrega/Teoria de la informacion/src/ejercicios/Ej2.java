@@ -72,48 +72,97 @@ public class Ej2 {
             }
             double apariciones;
             System.out.println("mapA = " + mapA.size());
+            File file = new File("Ej2IncisoA_CantidadDeInformacion.txt");
+            if (!file.exists())
+                file.createNewFile();
+            FileWriter fw = new FileWriter(file);
+            BufferedWriter bw = new BufferedWriter(fw);
+            bw.write("Palabras de 3 caracteres\n");
             for(Map.Entry<String, Double> entry : mapA.entrySet()){
                 apariciones = entry.getValue();
                 entry.setValue(entry.getValue()/Math.floor(10000/A));
                 System.out.println("Simbolo = " + entry.getKey() + "  cantidad de apariciones = " + apariciones + "   probabilidad = "
-                        + entry.getValue() + "  Cantidad informacion = " + cantidadInformacion(entry.getValue()));
+                        + entry.getValue() + "  Cantidad informacion = " + cantidadInformacion(entry.getValue()) + " unidades de orden 3");
+                bw.write("Simbolo = " + entry.getKey() + "  cantidad de apariciones = " + apariciones + "   probabilidad = "
+                        + entry.getValue() + "  Cantidad informacion = " + cantidadInformacion(entry.getValue()) + " unidades de orden 3\n");
             }
             System.out.println();
+            bw.write("\n\nPalabras de 5 caracteres\n");
             for(Map.Entry<String, Double> entry : mapB.entrySet()){
                 apariciones = entry.getValue();
                 entry.setValue(entry.getValue()/Math.floor(10000/B));
                 System.out.println("Simbolo = " + entry.getKey() + "  cantidad de apariciones = " + apariciones + "   probabilidad = "
-                        + entry.getValue() + "  Cantidad informacion = " + cantidadInformacion(entry.getValue()));
+                        + entry.getValue() + "  Cantidad informacion = " + cantidadInformacion(entry.getValue()) + " unidades de orden 3");
+                bw.write("Simbolo = " + entry.getKey() + "  cantidad de apariciones = " + apariciones + "   probabilidad = "
+                        + entry.getValue() + "  Cantidad informacion = " + cantidadInformacion(entry.getValue()) + " unidades de orden 3\n");
             }
             System.out.println();
+            bw.write("\n\nPalabras de 7 caracteres\n");
             for(Map.Entry<String, Double> entry : mapC.entrySet()){
                 apariciones = entry.getValue();
                 entry.setValue(entry.getValue()/Math.floor(10000/C));
                 System.out.println("Simbolo = " + entry.getKey() + "  cantidad de apariciones = " + apariciones + "   probabilidad = "
-                        + entry.getValue() + "  Cantidad informacion = " + cantidadInformacion(entry.getValue()));
+                        + entry.getValue() + "  Cantidad informacion = " + cantidadInformacion(entry.getValue()) + " unidades de orden 3");
+                bw.write("Simbolo = " + entry.getKey() + "  cantidad de apariciones = " + apariciones + "   probabilidad = "
+                        + entry.getValue() + "  Cantidad informacion = " + cantidadInformacion(entry.getValue()) + " unidades de orden 3\n");
             }
-
+            bw.close();
+            fw.close();
+            
+            File file1 = new File("Ej2IncisoA_Entropia.txt");
+            if (!file1.exists())
+                file1.createNewFile();
+            FileWriter fw1 = new FileWriter(file1);
+            BufferedWriter bw1 = new BufferedWriter(fw1);
             mapEntropia.put(A,calculoEntropia(mapA,A));
+            bw1.write("Entropia de fuente de "+ A + " caracteres es = " + mapEntropia.get(A) + "\n");
             mapEntropia.put(B,calculoEntropia(mapB,B));
+            bw1.write("Entropia de fuente de "+ B + " caracteres es = " + mapEntropia.get(B) + "\n");
             mapEntropia.put(C,calculoEntropia(mapC,C));
+            bw1.write("Entropia de fuente de "+ C + " caracteres es = " + mapEntropia.get(C) + "\n");
+            bw1.close();
+            fw1.close();
+            
             inecKraft();
+            
+            File file3 = new File("Ej2IncisoCLongMediaCodigo.txt");
+            if (!file3.exists())
+                file3.createNewFile();
+            FileWriter fw3 = new FileWriter(file3);
+            BufferedWriter bw3 = new BufferedWriter(fw3);
             mapLongMedia.put(A,calculoLongMediaCodigo(mapA,A));
+            bw3.write("Longitud media de codigo de " + A  + " caracteres es = " + calculoLongMediaCodigo(mapA,A) + "\n");
             mapLongMedia.put(B,calculoLongMediaCodigo(mapB,B));
+            bw3.write("Longitud media de codigo de " + B  + " caracteres es = " + calculoLongMediaCodigo(mapB,B) + "\n");
             mapLongMedia.put(C,calculoLongMediaCodigo(mapC,C));
+            bw3.write("Longitud media de codigo de " + C  + " caracteres es = " + calculoLongMediaCodigo(mapC,C) + "\n");
+            bw3.close();
+            fw3.close();
             codigoCompacto(A,mapEntropia.get(A),mapLongMedia.get(A));
             codigoCompacto(B,mapEntropia.get(B),mapLongMedia.get(B));
             codigoCompacto(C,mapEntropia.get(C),mapLongMedia.get(C));
 
             // Inciso d
-
+            File file2 = new File("Ej2IncisoD.txt");
+            if (!file2.exists())
+                file2.createNewFile();
+            FileWriter fw2 = new FileWriter(file2);
+            BufferedWriter bw2 = new BufferedWriter(fw2);
             System.out.println("El rendimiento de " + A + " caracteres es " + rendimiento(A));
+            bw2.write("El rendimiento de " + A + " caracteres es " + rendimiento(A) + "\n");
             System.out.println("El rendimiento de " + B + " caracteres es " + rendimiento(B));
+            bw2.write("El rendimiento de " + B + " caracteres es " + rendimiento(B) + "\n");
             System.out.println("El rendimiento de " + C + " caracteres es " + rendimiento(C));
+            bw2.write("El rendimiento de " + C + " caracteres es " + rendimiento(C) + "\n");
 
             System.out.println("La redundancia de " + A + " caracteres es " + (1.0 - rendimiento(A)));
+            bw2.write("La redundancia de " + A + " caracteres es " + (1.0 - rendimiento(A)) + "\n");
             System.out.println("La redundancia de " + B + " caracteres es " + (1.0 - rendimiento(B)));
+            bw2.write("La redundancia de " + B + " caracteres es " + (1.0 - rendimiento(B)) + "\n");
             System.out.println("La redundancia de " + C + " caracteres es " + (1.0 - rendimiento(C)) + "\n");
-
+            bw2.write("La redundancia de " + C + " caracteres es " + (1.0 - rendimiento(C)) + "\n");
+            bw2.close();
+            fw2.close();
             Huffman(mapA,"HuffmanA.txt",A);
             System.out.println("\n");
             Huffman(mapB,"HuffmanB.txt",B);
@@ -150,23 +199,36 @@ public class Ej2 {
 
 
     public static void inecKraft() {
-        double valorAcum=0;
-        for(Map.Entry<String, Double> entry : mapA.entrySet()) {
-            valorAcum+=Math.pow(alfabetoCodigo,- entry.getKey().length());
+        try{
+            double valorAcum=0;
+            File file = new File("Ej2IncisoCKraft.txt");
+            if (!file.exists())
+                file.createNewFile();
+            FileWriter fw = new FileWriter(file);
+            BufferedWriter bw = new BufferedWriter(fw);
+            for(Map.Entry<String, Double> entry : mapA.entrySet()) {
+                valorAcum+=Math.pow(alfabetoCodigo,- entry.getKey().length());
+            }
+            System.out.println("la inecuacion de kraft para el caso de " + A + " caracteres es " + valorAcum);
+            bw.write("la inecuacion de kraft para el caso de " + A + " caracteres es " + valorAcum + "\n");
+            valorAcum=0;
+            for(Map.Entry<String, Double> entry : mapB.entrySet()) {
+                valorAcum+=Math.pow(alfabetoCodigo,- entry.getKey().length());
+            }
+            System.out.println("la inecuacion de kraft para el caso de " + B + " caracteres es " + valorAcum);
+            bw.write("la inecuacion de kraft para el caso de " + A + " caracteres es " + valorAcum + "\n");
+            valorAcum=0;
+            for(Map.Entry<String, Double> entry : mapC.entrySet()) {
+                valorAcum+=Math.pow(alfabetoCodigo,- entry.getKey().length());
+            }
+            System.out.println("la inecuacion de kraft para el caso de " + C + " caracteres es " + valorAcum);
+            bw.write("la inecuacion de kraft para el caso de " + C + " caracteres es " + valorAcum + "\n");
+            bw.close();
+            fw.close();
+        }catch (IOException e) {
+            e.printStackTrace();
         }
-        System.out.println("la inecuacion de kraft para el primer caso es " + valorAcum);
-        valorAcum=0;
-        for(Map.Entry<String, Double> entry : mapB.entrySet()) {
-            valorAcum+=Math.pow(alfabetoCodigo,- entry.getKey().length());
-        }
-        System.out.println("la inecuacion de kraft para el segundo caso es " + valorAcum);
-        valorAcum=0;
-        for(Map.Entry<String, Double> entry : mapC.entrySet()) {
-            valorAcum+=Math.pow(alfabetoCodigo,- entry.getKey().length());
-        }
-        System.out.println("la inecuacion de kraft para el tercer caso es " + valorAcum);
     }
-
 
     public static void codigoCompacto(int cantChar,double entropia,double longMediaCodigo){
         if (entropia<=longMediaCodigo)
@@ -206,6 +268,7 @@ public class Ej2 {
                 bw.write(binList.get(i-1).getKey() + "  " + binList.get(i-1).getValue() + "\n");
             }
             bw.close();
+            fw.close();
             List<Entry<String,Double>> origList = ordenar(map);
             Map<String,String> mapStringABinario = new HashMap<String,String>();
             for (int i= binList.size();i>0;i--)

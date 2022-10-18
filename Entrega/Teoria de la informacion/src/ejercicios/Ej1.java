@@ -61,12 +61,27 @@ public class Ej1 {
                 // de si es de memoria nula o no
             }
         }
-        for (i = 0 ; i<N; i++) {
-            for (j = 0 ; j<N ; j++) {
-                System.out.print(MPasaje[i][j] + "  ");
+        
+        try {
+            File file = new File("Ej1IncisoA.txt");
+            if (!file.exists())
+                file.createNewFile();
+            FileWriter fw = new FileWriter(file);
+            BufferedWriter bw = new BufferedWriter(fw);
+            for (i = 0 ; i<N; i++) {
+                for (j = 0 ; j<N ; j++) {
+                    System.out.print(MPasaje[i][j] + "  ");
+                    bw.write(MPasaje[i][j] + "  ");
+                }
+                System.out.println("");
+                bw.write("\n");
             }
-            System.out.println("");
+            bw.close();
+            fw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+        
 
         System.out.println(MPasaje[0][0] + MPasaje[1][0] + MPasaje[2][0]);
         System.out.println(MPasaje[0][1] + MPasaje[1][1] + MPasaje[2][1]);
@@ -78,8 +93,20 @@ public class Ej1 {
         }
         if(verificacionMemoriaNula(MPasaje)){
            calculoEntropiaOrden20("ABC", Z,1,VProb);
-            System.out.println("Entropia inicial = " + calculoEntropiaInicial(VProb));
-            System.out.println("Entropia Orden 20 = " + orden20entrop);
+            try {
+                File file = new File("Ej1IncisoB.txt");
+                if (!file.exists())
+                    file.createNewFile();
+                FileWriter fw = new FileWriter(file);
+                BufferedWriter bw = new BufferedWriter(fw);
+                System.out.println("Entropia inicial = " + calculoEntropiaInicial(VProb));
+                System.out.println("Entropia Orden " + Z + " = " + orden20entrop);
+                bw.write("Entropia inicial = " + calculoEntropiaInicial(VProb) + "\nEntropia Orden " + Z + " = " + orden20entrop);
+                bw.close();
+                fw.close();
+            }catch (IOException e) {
+            e.printStackTrace();
+            }
         }else if(esErgodica(MPasaje)){
             resolvedorDeSistemas(MPasaje, VEstacionario);
             calculaEntropia(MPasaje, VEstacionario);
