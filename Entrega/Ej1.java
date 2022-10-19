@@ -8,6 +8,7 @@ import org.la4j.linear.LinearSystemSolver;
 import org.la4j.matrix.dense.Basic2DMatrix;
 import org.la4j.vector.dense.BasicVector;
 
+
 public class Ej1 {
     private static final int N = 3;
     private static final int Z = 3;
@@ -195,6 +196,7 @@ public class Ej1 {
         System.out.println("La entropia es " + entrop);
     }
 
+
     private static void resolvedorDeSistemas(double[][] MPasaje, double[] VEstacionario) {
         double[][] MAux = new double[N][N];
         for (int i = 0; i < N; i++) {
@@ -214,4 +216,5 @@ public class Ej1 {
             VEstacionario[i] = VAux.get(i);
         System.out.println("Vector Estacionario de la matriz: V* = [" + VAux + "]");
     }
+
 }

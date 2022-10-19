@@ -1,0 +1,3 @@
+Longitud media de codigo de 3 caracteres es = 3.0
+Longitud media de codigo de 5 caracteres es = 5.0
+Longitud media de codigo de 7 caracteres es = 6.999999999999977
