@@ -116,6 +116,7 @@ public class Ej2 {
                 file1.createNewFile();
             FileWriter fw1 = new FileWriter(file1);
             BufferedWriter bw1 = new BufferedWriter(fw1);
+            
             mapEntropia.put(A,calculoEntropia(mapA,A));
             bw1.write("Entropia de fuente de "+ A + " caracteres es = " + mapEntropia.get(A) + "\n");
             mapEntropia.put(B,calculoEntropia(mapB,B));
@@ -132,6 +133,7 @@ public class Ej2 {
                 file3.createNewFile();
             FileWriter fw3 = new FileWriter(file3);
             BufferedWriter bw3 = new BufferedWriter(fw3);
+            
             mapLongMedia.put(A,calculoLongMediaCodigo(mapA,A));
             bw3.write("Longitud media de codigo de " + A  + " caracteres es = " + calculoLongMediaCodigo(mapA,A) + "\n");
             mapLongMedia.put(B,calculoLongMediaCodigo(mapB,B));
@@ -140,6 +142,7 @@ public class Ej2 {
             bw3.write("Longitud media de codigo de " + C  + " caracteres es = " + calculoLongMediaCodigo(mapC,C) + "\n");
             bw3.close();
             fw3.close();
+            
             codigoCompacto(A,mapEntropia.get(A),mapLongMedia.get(A));
             codigoCompacto(B,mapEntropia.get(B),mapLongMedia.get(B));
             codigoCompacto(C,mapEntropia.get(C),mapLongMedia.get(C));
@@ -150,6 +153,7 @@ public class Ej2 {
                 file2.createNewFile();
             FileWriter fw2 = new FileWriter(file2);
             BufferedWriter bw2 = new BufferedWriter(fw2);
+            
             System.out.println("El rendimiento de " + A + " caracteres es " + rendimiento(A));
             bw2.write("El rendimiento de " + A + " caracteres es " + rendimiento(A) + "\n");
             System.out.println("El rendimiento de " + B + " caracteres es " + rendimiento(B));
@@ -165,6 +169,7 @@ public class Ej2 {
             bw2.write("La redundancia de " + C + " caracteres es " + (1.0 - rendimiento(C)) + "\n");
             bw2.close();
             fw2.close();
+            
             Huffman(mapA,"HuffmanA.txt",A);
             System.out.println("\n");
             Huffman(mapB,"HuffmanB.txt",B);
@@ -285,7 +290,6 @@ public class Ej2 {
         String key1 = null,key2=null;
         double menor1=1,menor2=1;
         if(auxmap.size()>2){
-            //Caso PASO 1 EN PROGRESO
             for(Map.Entry<String, Double> entry : auxmap.entrySet()){
                 if(entry.getValue()<menor1){
                     if(menor1<menor2) {
@@ -315,7 +319,7 @@ public class Ej2 {
             //Caso SE TERMINO PASO 1
             int i=0;
             for(Map.Entry<String, Double> entry : auxmap.entrySet()) {
-                System.out.println("entry.getKey() = " + entry.getKey() + " entry.getValue() = " + entry.getValue());
+                //System.out.println("entry.getKey() = " + entry.getKey() + " entry.getValue() = " + entry.getValue());
                 if(i==0){
                     key1="0";
                     menor1=entry.getValue();
@@ -333,9 +337,11 @@ public class Ej2 {
                     auxmap.put(key2,menor2);
             }
             System.out.println("\n");
+            System.out.println("\nPASO 1 COMPLETADO");
+            System.out.println("\n");
             for(Map.Entry<String, Double> entry : auxmap.entrySet())
                 System.out.println("entry.getKey() = " + entry.getKey() + " entry.getValue() = " + entry.getValue());
-            System.out.println("\nPASO 1 COMPLETADO");
+            System.out.println("\n");
             System.out.println("INICIA PASO 2\n");
         }
     }
@@ -355,11 +361,6 @@ public class Ej2 {
                          public int compare(Map.Entry<String, Double> ent1, Map.Entry<String, Double> ent2) {
                             return ent1.getValue().compareTo(ent2.getValue());
                         }});
-        /*for(int i=list.size();i>0;i--){
-            map.put(list.get(i-1).getKey(),list.get(i-1).getValue());
-        }*/
-        //for(Map.Entry<String, Double> entry : map.entrySet())
-            //System.out.println("entry = " + entry);
         return list;
     }
 
@@ -372,7 +373,7 @@ public class Ej2 {
             File archivo = new File(nombreArchivo);
             FileOutputStream fos = new FileOutputStream(archivo);
             ObjectOutputStream escribir = new ObjectOutputStream(fos);
-            escribir.writeObject(map);
+            escribir.writeObject(map); //Ingreso tabla como header
             while ((simb = reader.read()) != -1) {
                 i++;
                 if (i < cantSimbolos) {

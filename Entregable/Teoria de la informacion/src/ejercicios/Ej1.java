@@ -11,7 +11,7 @@ import org.la4j.vector.dense.BasicVector;
 
 public class Ej1 {
     private static final int N = 3;
-    private static final int Z = 3;
+    private static final int Z = 3; //Numero de orden de la entropia que se busca en el inciso 1b del trabajo practico
 
     private static double orden20entrop=0;
 
@@ -108,7 +108,7 @@ public class Ej1 {
             }catch (IOException e) {
             e.printStackTrace();
             }
-        }else if(esErgodica(MPasaje)){
+        }else if(esErgodica(MPasaje)){ 
             resolvedorDeSistemas(MPasaje, VEstacionario);
             calculaEntropia(MPasaje, VEstacionario);
         }
