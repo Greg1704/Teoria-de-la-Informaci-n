@@ -1,2 +1,2 @@
 Entropia inicial = 0.9893678631344445
-Entropia Orden 3 = 2.9681035894033343
+Entropia Orden 20 = 19.78735739179804

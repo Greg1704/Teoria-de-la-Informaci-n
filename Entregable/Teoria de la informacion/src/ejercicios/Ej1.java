@@ -1,17 +1,10 @@
 package ejercicios;
 
 import java.io.*;
-import org.la4j.LinearAlgebra;
-import org.la4j.Matrix;
-import org.la4j.Vector;
-import org.la4j.linear.LinearSystemSolver;
-import org.la4j.matrix.dense.Basic2DMatrix;
-import org.la4j.vector.dense.BasicVector;
-
 
 public class Ej1 {
     private static final int N = 3;
-    private static final int Z = 3; //Numero de orden de la entropia que se busca en el inciso 1b del trabajo practico
+    private static final int Z = 20; //Numero de orden de la entropia que se busca en el inciso 1b del trabajo practico
 
     private static double orden20entrop=0;
 
@@ -108,9 +101,6 @@ public class Ej1 {
             }catch (IOException e) {
             e.printStackTrace();
             }
-        }else if(esErgodica(MPasaje)){ 
-            resolvedorDeSistemas(MPasaje, VEstacionario);
-            calculaEntropia(MPasaje, VEstacionario);
         }
     }
 
@@ -140,7 +130,7 @@ public class Ej1 {
         return auxentrop;
     }
 
-        public  static void calculoEntropiaOrden20(String input, int orden, double auxentrop, double[] VProb) {
+        public  static void calculoEntropiaOrden20(String input, int orden, double auxentrop, double[] VProb) {//Duracion estimada, entre 1 y 2 minutos
             if (orden == 0) {
                 auxentrop=auxentrop*(Math.log(auxentrop) / -Math.log(3));
                 orden20entrop+=auxentrop;
@@ -152,69 +142,4 @@ public class Ej1 {
                 }
             }
         }
-    /*
-    * Todas las funciones que se encuentran abajo de este comentario son del inciso C <br>
-    * Las cuales fueron hechas en un principio porque creiamos que nuestra fuente era de memoria no nula
-    * */
-
-    public static boolean esErgodica(double[][] MPasaje){
-        int[][] M = new int [N][N]; // esta es una matrix auxiliar solo para usar warshall
-        int fila=0,columna=0;
-        for (int i = 0; i<N ; i++)
-            for (int j = 0; j <N ; j++){
-                M[i][j]=0;
-            }
-        for (int k = 0; k <N ; k++)
-            for (int i = 0; i<N ; i++)
-                for (int j = 0; j <N ; j++){
-                    if(MPasaje[i][j] > 0 || (MPasaje[i][k] + MPasaje[k][j] > 0))
-                        M[i][j] = 1;
-                }
-        while(fila<3){
-            while(columna<3){
-                if(M[fila][columna] !=1)
-                    return false;   //Entra en este if si no se cumple la condicion de Ergodica
-                columna++;
-            }
-            fila++;
-            columna=0;
-        }
-        return true; //Llega a esta linea si se cumplio la condición de que sea Ergodica
-    }
-
-    public static void calculaEntropia(double[][] MPasaje, double[] VEstacionario) {
-        double entrop=0;
-        double auxCol;
-        for (int j=0 ; j<N ; j++) {
-            auxCol=0;
-            for (int i=0 ; i<N ; i++) {
-                if (MPasaje[i][j] != 0)
-                    auxCol += MPasaje[i][j] * Math.log(MPasaje[i][j]) / -Math.log(3);
-            }
-            entrop+=auxCol*VEstacionario[j];
-        }
-        System.out.println("La entropia es " + entrop);
-    }
-
-
-    private static void resolvedorDeSistemas(double[][] MPasaje, double[] VEstacionario) {
-        double[][] MAux = new double[N][N];
-        for (int i = 0; i < N; i++) {
-            for (int j = 0; j < N; j++) {
-                MAux[i][j] = MPasaje[i][j];
-                if (i == j)
-                    MAux[i][j]--; // acá hago (M-I) para hacer la cuenta de (M-I)V*
-            }
-        }
-        for (int j = 0; j < N; j++)
-            MAux[N-1][j] = 1;
-        Matrix a = new Basic2DMatrix(MAux); //Arma la matriz para que pueda resolverse con la libreria
-        Vector b = new BasicVector(new double[]{0, 0, 1}); // esto depende de N estrictamente
-        LinearSystemSolver solver = a.withSolver(LinearAlgebra.FORWARD_BACK_SUBSTITUTION);
-        Vector VAux = solver.solve(b);
-        for (int i = 0; i < N; i++)
-            VEstacionario[i] = VAux.get(i);
-        System.out.println("Vector Estacionario de la matriz: V* = [" + VAux + "]");
-    }
-
 }

@@ -80,6 +80,7 @@ public class Ej2 {
             FileWriter fw = new FileWriter(file);
             BufferedWriter bw = new BufferedWriter(fw);
             bw.write("Palabras de 3 caracteres\n");
+            bw.write("Casos encontrados: " + mapA.size() + "\n");
             for(Map.Entry<String, Double> entry : mapA.entrySet()){
                 apariciones = entry.getValue();
                 entry.setValue(entry.getValue()/Math.floor(10000/A));
@@ -90,6 +91,7 @@ public class Ej2 {
             }
             System.out.println();
             bw.write("\n\nPalabras de 5 caracteres\n");
+            bw.write( "Casos encontrados: " + mapB.size() + "\n");
             for(Map.Entry<String, Double> entry : mapB.entrySet()){
                 apariciones = entry.getValue();
                 entry.setValue(entry.getValue()/Math.floor(10000/B));
@@ -100,6 +102,7 @@ public class Ej2 {
             }
             System.out.println();
             bw.write("\n\nPalabras de 7 caracteres\n");
+            bw.write( "Casos encontrados: " + mapC.size() + "\n");
             for(Map.Entry<String, Double> entry : mapC.entrySet()){
                 apariciones = entry.getValue();
                 entry.setValue(entry.getValue()/Math.floor(10000/C));
@@ -143,9 +146,9 @@ public class Ej2 {
             bw3.close();
             fw3.close();
             
-            codigoCompacto(A,mapEntropia.get(A),mapLongMedia.get(A));
-            codigoCompacto(B,mapEntropia.get(B),mapLongMedia.get(B));
-            codigoCompacto(C,mapEntropia.get(C),mapLongMedia.get(C));
+            codigoCompacto(mapA,A);
+            codigoCompacto(mapB,B);
+            codigoCompacto(mapC,C);
 
             // Inciso d
             File file2 = new File("Ej2IncisoD.txt");
@@ -236,12 +239,24 @@ public class Ej2 {
             e.printStackTrace();
         }
     }
-
-    public static void codigoCompacto(int cantChar,double entropia,double longMediaCodigo){
-        if (entropia<=longMediaCodigo)
-            System.out.println("El codigo " + cantChar + " es compacto");
+    
+    public static void codigoCompacto(Map<String,Double> map,int cantChar){
+        boolean compacto;
+        compacto = condicionCompacto(map);
+        if(compacto)
+            System.out.println("El codigo " + cantChar + " es compacto");   
         else
             System.out.println("El codigo " + cantChar + " no es compacto");
+    }
+    
+    public static boolean condicionCompacto(Map<String,Double> map){
+        for(Map.Entry<String, Double> entry : map.entrySet()){
+            //System.out.println(entry.getKey() + " " + Math.log(entry.getValue())/-Math.log(3));
+            if(entry.getKey().length() - 0.05 >= (Math.log(entry.getValue())/-Math.log(3)) || 
+               (Math.log(entry.getValue())/-Math.log(3))>= entry.getKey().length() + 0.05)
+                return false;
+        }  
+        return true;
     }
 
     public static double rendimiento(int N) {
