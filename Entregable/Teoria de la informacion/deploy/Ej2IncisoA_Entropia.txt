@@ -1,3 +1,0 @@
-Entropia de fuente de 3 caracteres es = 2.9655102414935146
-Entropia de fuente de 5 caracteres es = 4.900100409558381
-Entropia de fuente de 7 caracteres es = 6.186111818549913

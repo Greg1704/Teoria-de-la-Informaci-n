@@ -1,6 +1,0 @@
-El rendimiento de 3 caracteres es 0.9885034138311716
-El rendimiento de 5 caracteres es 0.9800200819116762
-El rendimiento de 7 caracteres es 0.8837302597928476
-La redundancia de 3 caracteres es 0.011496586168828427
-La redundancia de 5 caracteres es 0.019979918088323778
-La redundancia de 7 caracteres es 0.11626974020715242

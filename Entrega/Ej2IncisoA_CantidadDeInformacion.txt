@@ -1,4 +1,5 @@
 Palabras de 3 caracteres
+Casos encontrados: 27
 Simbolo = BBA  cantidad de apariciones = 145.0   probabilidad = 0.043504350435043505  Cantidad informacion = 2.853503795854786 unidades de orden 3
 Simbolo = ABA  cantidad de apariciones = 87.0   probabilidad = 0.026102610261026102  Cantidad informacion = 3.3184773165727135 unidades de orden 3
 Simbolo = ABB  cantidad de apariciones = 120.0   probabilidad = 0.036003600360036005  Cantidad informacion = 3.0257592872510766 unidades de orden 3
@@ -29,6 +30,7 @@ Simbolo = CAB  cantidad de apariciones = 119.0   probabilidad = 0.03570357035703
 
 
 Palabras de 5 caracteres
+Casos encontrados: 243
 Simbolo = BBBBA  cantidad de apariciones = 8.0   probabilidad = 0.004  Cantidad informacion = 5.025850315725238 unidades de orden 3
 Simbolo = BAACA  cantidad de apariciones = 9.0   probabilidad = 0.0045  Cantidad informacion = 4.918639576439611 unidades de orden 3
 Simbolo = BAACB  cantidad de apariciones = 5.0   probabilidad = 0.0025  Cantidad informacion = 5.453666055721683 unidades de orden 3
@@ -275,6 +277,7 @@ Simbolo = BCBCA  cantidad de apariciones = 10.0   probabilidad = 0.005  Cantidad
 
 
 Palabras de 7 caracteres
+Casos encontrados: 998
 Simbolo = CCCABAB  cantidad de apariciones = 1.0   probabilidad = 7.002801120448179E-4  Cantidad informacion = 6.612005179466903 unidades de orden 3
 Simbolo = ACCCCCA  cantidad de apariciones = 1.0   probabilidad = 7.002801120448179E-4  Cantidad informacion = 6.612005179466903 unidades de orden 3
 Simbolo = BBCCACB  cantidad de apariciones = 1.0   probabilidad = 7.002801120448179E-4  Cantidad informacion = 6.612005179466903 unidades de orden 3
