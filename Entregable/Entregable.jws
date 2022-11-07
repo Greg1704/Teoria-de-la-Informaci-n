@@ -9,5 +9,6 @@
    </list>
    <list n="listOfChildren">
       <hash><url n="URL" path="Teoria de la informacion/Teoria de la informacion.jpr"/></hash>
+      <hash><url n="URL" path="../SegundoTP/TP2Proj.jpr"/></hash>
    </list>
 </jws:workspace>
