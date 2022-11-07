@@ -2,22 +2,30 @@ package tp2proj;
 
 public class Parte2 {
     public static final int NumGrupo = 11;
+    public static final int N1 = 5;
+    public static final int M1 = 3; // matrices de 5x3
+
+    public static final int N2 = 4;
+    public static final int M2 = 4;
+
+    public static final int N3 = 6;
+    public static final int M3 = 4;
 
     public static void main(String[] args) {
-        int N1 = 5;
-        int M1 = 3; // matrices de 5x3
 
-        int N2 = 4;
-        int M2 = 4;
-
-        int N3 = 6;
-        int M3 = 4;
+        int i = 0;
+        double V1[] = {0.2, 0.1, 0.3, 0.3, 0.1};
+        double V2[] = {0.25, 0.33, 0.27, 0.15};
+        double V3[] = {0.15, 0.1, 0.20, 0.25, 0.14, 0.16};
 
         double MC1[][] = new double[N1][M1];
         double MC2[][] = new double[N2][M2];
         double MC3[][] = new double[N3][M3];
 
         cargaMatrices(MC1, MC2, MC3);
+        System.out.println("La entropia 'a priori' de la entrada" + 1 + "es de " + entropiaAPriori(V1));
+        System.out.println("La entropia 'a priori' de la entrada" + 2 + "es de " + entropiaAPriori(V2));
+        System.out.println("La entropia 'a priori' de la entrada" + 3 + "es de " + entropiaAPriori(V3));
     }
 
     public static void cargaMatrices(double MC1[][], double MC2[][], double MC3[][]) {
@@ -153,7 +161,18 @@ public class Parte2 {
         return aux;
     }
 
-    
+    public static double entropiaAPriori(double[] VProb) {
+        double auxEntrop = 0;
+        int i = 0;
+        for (i = 0 ; i < VProb.length ; i++)
+            auxEntrop += (VProb[i] * (-Math.log(VProb[i])) / Math.log(2));
+        return auxEntrop;
+    }
+
+    public static double equivocacion(double M[][]) {
+        double auxEquivoc = 0;
+        return auxEquivoc;
+    }
 
 }
 
