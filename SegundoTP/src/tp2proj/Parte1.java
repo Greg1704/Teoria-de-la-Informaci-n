@@ -1,5 +1,7 @@
 package tp2proj;
 
+import java.util.Map;
+
 public class Parte1 {
     public Parte1() {
         super();
@@ -7,5 +9,74 @@ public class Parte1 {
 
     public static void main(String[] args) {
         Parte1 parte1 = new Parte1();
+    }
+    
+    public static void metodoHuffman(Map <String,Double> auxmap){
+        String key1 = null,key2=null;
+        double menor1=1,menor2=1;
+        if(auxmap.size()>2){
+            for(Map.Entry<String, Double> entry : auxmap.entrySet()){
+                if(entry.getValue()<menor1){
+                    if(menor1<menor2) {
+                        key2 = key1;
+                        menor2 = menor1;
+                    }
+                    key1= entry.getKey();
+                    menor1=entry.getValue();
+                }else if(entry.getValue()<menor2){
+                    key2= entry.getKey();
+                    menor2=entry.getValue();
+                }
+            } //Del for salen las dos keys con menores probabilidades
+            auxmap.remove(key1);
+            auxmap.remove(key2);
+            auxmap.put(key1,menor1 + menor2);
+            metodoHuffman(auxmap);
+            //Metodo inverso donde se le asigna a cada valor su key binaria
+            String key3=recuperaKeyMenor(auxmap,menor1,menor2);
+            auxmap.remove(key3);
+            key1=key3 + "0";
+            key2=key3 + "1";
+            auxmap.put(key1,menor1);
+            auxmap.put(key2,menor2);
+
+        }else{
+            //Caso SE TERMINO PASO 1
+            int i=0;
+            for(Map.Entry<String, Double> entry : auxmap.entrySet()) {
+                //System.out.println("entry.getKey() = " + entry.getKey() + " entry.getValue() = " + entry.getValue());
+                if(i==0){
+                    key1="0";
+                    menor1=entry.getValue();
+                }else{
+                    key2="1";
+                    menor2=entry.getValue();
+                }
+                i++;
+            }
+            auxmap.clear();
+            for (i=0;i<2;i++){
+                if (i==0)
+                    auxmap.put(key1,menor1);
+                else
+                    auxmap.put(key2,menor2);
+            }
+            System.out.println("\n");
+            System.out.println("\nPASO 1 COMPLETADO");
+            System.out.println("\n");
+            for(Map.Entry<String, Double> entry : auxmap.entrySet())
+                System.out.println("entry.getKey() = " + entry.getKey() + " entry.getValue() = " + entry.getValue());
+            System.out.println("\n");
+            System.out.println("INICIA PASO 2\n");
+        }
+    }
+
+    public static String recuperaKeyMenor(Map <String,Double> auxmap,double menor1,double menor2){
+        for(Map.Entry<String, Double> entry : auxmap.entrySet()){
+            if (entry.getValue() == menor1+menor2)
+                return entry.getKey();
+        }
+        System.out.println("Esto no deberia ocurrir");
+        return null;
     }
 }
