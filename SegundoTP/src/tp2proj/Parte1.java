@@ -1,14 +1,20 @@
 package tp2proj;
 
+import java.io.BufferedWriter;
+import java.io.File;
+
+import java.io.FileWriter;
+
+import java.io.IOException;
+
 import java.util.Map;
 
 public class Parte1 {
-    public Parte1() {
-        super();
-    }
+
 
     public static void main(String[] args) {
-        Parte1 parte1 = new Parte1();
+        tasaDeCompresion("Huffman");
+        tasaDeCompresion("ShannonFano");
     }
     
     public static void metodoHuffman(Map <String,Double> auxmap){
@@ -78,5 +84,50 @@ public class Parte1 {
         }
         System.out.println("Esto no deberia ocurrir");
         return null;
+    }
+    
+    public static void tasaDeCompresion(String metodoUsado){
+        File file = new File("tp2_grupo11.txt");
+        File file2 = new File("FALTAASINGARNOMBRE.TXT"); //Seria el archivo comprimido
+        System.out.println("La tasa de compresion es de " + (file.length() - file2.length()) + " caracteres");
+        try{
+            File file3 = new File("Parte1TasaDeCompresion" + metodoUsado +".txt");
+            if (!file3.exists())
+                file3.createNewFile();
+            FileWriter fw3 = new FileWriter(file3);
+            BufferedWriter bw3 = new BufferedWriter(fw3);
+            bw3.write("La tasa de compresion es de " + (file.length() - file2.length()) + " caracteres");
+            bw3.close();
+            fw3.close();
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public static double calculoEntropia(Map<String,Double> map){
+        double auxentrop=0,auxprob=0;
+        for(Map.Entry<String, Double> entry : map.entrySet()) {
+            auxprob=entry.getValue();
+            auxentrop+=auxprob*(Math.log(auxprob)/-Math.log(2));
+        }
+        System.out.println("Entropia de fuente post-Huffman = " + auxentrop);
+        return auxentrop;
+    }
+    
+    public static double calculoLongMediaCodigo(Map<String,Double> map){
+        double aux=0;
+        for(Map.Entry<String, Double> entry : map.entrySet()) {
+            aux+=entry.getValue()*entry.getKey().length();
+        }
+        System.out.println("Longitud media de codigo de la fuente post-Huffman es " + aux);
+        return aux;
+    }
+    
+    public static double rendimiento(Map<String,Double> map) {
+        return calculoEntropia(map) / calculoLongMediaCodigo(map);
+    }
+    
+    public static double rendundancia(Map<String,Double> map) {
+        return 1 - rendimiento(map);
     }
 }
