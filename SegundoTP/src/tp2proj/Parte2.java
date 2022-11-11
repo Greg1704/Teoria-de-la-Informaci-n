@@ -55,9 +55,9 @@ public class Parte2 {
         System.out.println("Entropia salida : " + entropiaSalida(VProbSalida1));
         System.out.println("Entropia 'afin' : " + entropiaAFin(MSS1));
         System.out.println("Equivocacion H(A/B) : " + equivocacion(MC1, VProb1, VProbSalida1));
-        System.out.println("Informacion mutua H(A/B) : " + informacionMutua(MC1, VProb1, VProbSalida1));
+        System.out.println("Informacion mutua I(A/B): " + informacionMutua(MC1, VProb1, VProbSalida1));
         System.out.println("Equivocacion H(B/A) : " + equivocacion(MCInversa1, VProbSalida1, VProb1));
-        System.out.println("Informacion mutua H(B/A) : " + informacionMutua(MCInversa1, VProbSalida1, VProb1));
+        System.out.println("Informacion mutua I(B/A) : " + informacionMutua(MCInversa1, VProbSalida1, VProb1));
 
         System.out.println("");
 
@@ -73,10 +73,10 @@ public class Parte2 {
         System.out.println("Entropia 'a priori' : " + entropiaAPriori(VProb2));
         System.out.println("Entropia salida : " + entropiaSalida(VProbSalida2));
         System.out.println("Entropia 'afin' : " + entropiaAFin(MSS2));
-        System.out.println("Equivocacion H(A/B) : " + equivocacion(MC2, VProb2, VProbSalida2));
+        System.out.println("Equivocacion I(A/B) : " + equivocacion(MC2, VProb2, VProbSalida2));
         System.out.println("Informacion mutua H(A/B) : " + informacionMutua(MC2, VProb2, VProbSalida2));
         System.out.println("Equivocacion H(B/A) : " + equivocacion(MCInversa2, VProbSalida2, VProb2));
-        System.out.println("Informacion mutua H(B/A) : " + informacionMutua(MCInversa2, VProbSalida2, VProb2));
+        System.out.println("Informacion mutua I(B/A) : " + informacionMutua(MCInversa2, VProbSalida2, VProb2));
         System.out.println("");
 
 
@@ -90,9 +90,9 @@ public class Parte2 {
         System.out.println("Entropia salida : " + entropiaSalida(VProbSalida3));
         System.out.println("Entropia 'afin' : " + entropiaAFin(MSS3));
         System.out.println("Equivocacion H(A/B) : " + equivocacion(MC3, VProb3, VProbSalida3));
-        System.out.println("Informacion mutua H(A/B) : " + informacionMutua(MC3, VProb3, VProbSalida3));
+        System.out.println("Informacion mutua I(A/B) : " + informacionMutua(MC3, VProb3, VProbSalida3));
         System.out.println("Equivocacion H(B/A) : " + equivocacion(MCInversa3, VProbSalida3, VProb3));
-        System.out.println("Informacion mutua H(B/A) : " + informacionMutua(MCInversa3, VProbSalida3, VProb3));
+        System.out.println("Informacion mutua I(B/A) : " + informacionMutua(MCInversa3, VProbSalida3, VProb3));
         System.out.println("");
 
 
