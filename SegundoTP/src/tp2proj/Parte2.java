@@ -51,13 +51,14 @@ public class Parte2 {
 
         System.out.println("CANAL 1");
         System.out.println("---------------------------------------------------------------------");
-        System.out.println("La entropia 'a priori' de la entrada " + " 1 " + "es de " + entropiaAPriori(VProb1));
-        System.out.println("La entropia de salida de " + " 1 " + " es de " + entropiaSalida(VProbSalida1));
-        System.out.println("La equivocacion para el canal " + " 1 " + " es de " + equivocacion(MC1, VProb1, VProbSalida1));
-        System.out.println("La informacion mutua para la matriz de canal " + " 1 " + " es " + informacionMutua(MC1, VProb1, VProbSalida1));
-        System.out.println("La equivocacion para la matriz de canal inversa " + " 1 " + " es " + equivocacion(MCInversa1, VProbSalida1, VProb1));
-        System.out.println("La informacion mutua para la matriz de canal inversa " + " 1 " + " es " + informacionMutua(MCInversa1, VProbSalida1, VProb1));
-        System.out.println("La entropia 'afin' para la matriz " + " 1 " + " es " + entropiaAFin(MSS1));
+        System.out.println("Entropia 'a priori' : " + entropiaAPriori(VProb1));
+        System.out.println("Entropia salida : " + entropiaSalida(VProbSalida1));
+        System.out.println("Entropia 'afin' : " + entropiaAFin(MSS1));
+        System.out.println("Equivocacion H(A/B) : " + equivocacion(MC1, VProb1, VProbSalida1));
+        System.out.println("Informacion mutua H(A/B) : " + informacionMutua(MC1, VProb1, VProbSalida1));
+        System.out.println("Equivocacion H(B/A) : " + equivocacion(MCInversa1, VProbSalida1, VProb1));
+        System.out.println("Informacion mutua H(B/A) : " + informacionMutua(MCInversa1, VProbSalida1, VProb1));
+
         System.out.println("");
 
 
@@ -69,13 +70,13 @@ public class Parte2 {
 
         System.out.println("CANAL 2");
         System.out.println("---------------------------------------------------------------------");
-        System.out.println("La entropia 'a priori' de la entrada " + " 2 " + "es de " + entropiaAPriori(VProb2));
-        System.out.println("La entropia de salida de " + " 2 " + " es de " + entropiaSalida(VProbSalida2));
-        System.out.println("La equivocacion para el canal " + " 2 " + " es de " + equivocacion(MC2, VProb2, VProbSalida2));
-        System.out.println("La informacion mutua para la matriz de canal " + " 2 " + " es " + informacionMutua(MC2, VProb2, VProbSalida2));
-        System.out.println("La equivocacion para la matriz de canal inversa " + " 2 " + " es " + equivocacion(MCInversa2, VProbSalida2, VProb2));
-        System.out.println("La informacion mutua para la matriz de canal inversa " + " 2 " + " es " + informacionMutua(MCInversa2, VProbSalida2, VProb2));
-        System.out.println("La entropia 'afin' para la matriz " + " 2 " + " es " + entropiaAFin(MSS2));
+        System.out.println("Entropia 'a priori' : " + entropiaAPriori(VProb2));
+        System.out.println("Entropia salida : " + entropiaSalida(VProbSalida2));
+        System.out.println("Entropia 'afin' : " + entropiaAFin(MSS2));
+        System.out.println("Equivocacion H(A/B) : " + equivocacion(MC2, VProb2, VProbSalida2));
+        System.out.println("Informacion mutua H(A/B) : " + informacionMutua(MC2, VProb2, VProbSalida2));
+        System.out.println("Equivocacion H(B/A) : " + equivocacion(MCInversa2, VProbSalida2, VProb2));
+        System.out.println("Informacion mutua H(B/A) : " + informacionMutua(MCInversa2, VProbSalida2, VProb2));
         System.out.println("");
 
 
@@ -85,13 +86,13 @@ public class Parte2 {
         System.out.println("CANAL 3");
         System.out.println("---------------------------------------------------------------------");
 
-        System.out.println("La entropia 'a priori' de la entrada " + " 3 " + "es de " + entropiaAPriori(VProb3));
-        System.out.println("La entropia de salida de " + " 3 " + " es de " + entropiaSalida(VProbSalida3));
-        System.out.println("La equivocacion para el canal " + " 3 " + " es de " + equivocacion(MC3, VProb3, VProbSalida3));
-        System.out.println("La informacion mutua para la matriz de canal " + " 3 " + " es " + informacionMutua(MC3, VProb3, VProbSalida3));
-        System.out.println("La equivocacion para la matriz de canal inversa " + " 3 " + " es " + equivocacion(MCInversa3, VProbSalida3, VProb3));
-        System.out.println("La informacion mutua para la matriz de canal inversa " + " 3 " + " es " + informacionMutua(MCInversa3, VProbSalida3, VProb3));
-        System.out.println("La entropia 'afin' para la matriz " + " 3 " + " es " + entropiaAFin(MSS3));
+        System.out.println("Entropia 'a priori' : " + entropiaAPriori(VProb3));
+        System.out.println("Entropia salida : " + entropiaSalida(VProbSalida3));
+        System.out.println("Entropia 'afin' : " + entropiaAFin(MSS3));
+        System.out.println("Equivocacion H(A/B) : " + equivocacion(MC3, VProb3, VProbSalida3));
+        System.out.println("Informacion mutua H(A/B) : " + informacionMutua(MC3, VProb3, VProbSalida3));
+        System.out.println("Equivocacion H(B/A) : " + equivocacion(MCInversa3, VProbSalida3, VProb3));
+        System.out.println("Informacion mutua H(B/A) : " + informacionMutua(MCInversa3, VProbSalida3, VProb3));
         System.out.println("");
 
 
