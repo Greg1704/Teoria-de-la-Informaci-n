@@ -7,7 +7,10 @@ import java.io.FileWriter;
 
 import java.io.IOException;
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.lang.Math;
 
 public class Parte1 {
 
@@ -84,6 +87,58 @@ public class Parte1 {
         }
         System.out.println("Esto no deberia ocurrir");
         return null;
+    }
+    
+    public static void metodoShannonFano(Map <String,Double> auxmap, Map <String, String> keyACodificado){
+        Map<String,Double> mapOrdenado = new HashMap<String,Double>();
+        mapOrdenado.putAll(auxmap);
+        
+        
+        
+    }
+    
+    public static void recShannonFano(LinkedHashMap<String,Double> auxmap, String keyAcumulada, Map <String, String> salida) {
+        if (auxmap.size() > 2) {
+            LinkedHashMap <String, Double> mapIzq = new LinkedHashMap<String,Double>();
+            LinkedHashMap <String, Double> mapDer = new LinkedHashMap<String,Double>();
+            
+            //Calcula probabilidad total del auxmap dado
+            double probTotal = 0.0f;
+            double probGrupoMenor = 0.0f;
+            for (double prob : auxmap.values()) {
+                probTotal += prob;
+            }
+            for (Map.Entry<String, Double> entry : auxmap.entrySet())
+            {
+                if (probGrupoMenor + entry.getValue() < (float)probTotal / 2) 
+                {
+                    auxmap.remove(entry);
+                    mapIzq.put(entry.getKey(), entry.getValue());
+                    probGrupoMenor += entry.getValue();
+                }
+                //al meter la entrada en el grupo menor este tendría mas del 50% de probabilidad
+                else 
+                {
+                    //Si al agregar la ultima entrada al grupo menor quedaria mas cerca de 50/50, agregarla. Caso contrario, se pasa el resto al grupo        
+                    if (Math.abs(probGrupoMenor + entry.getValue() - (float)probTotal / 2) < Math.abs(probGrupoMenor - (float)probTotal / 2)) 
+                    {
+                        auxmap.remove(entry);
+                        mapIzq.put(entry.getKey(), entry.getValue());
+                        probGrupoMenor += entry.getValue();
+                    }
+                }
+            }
+            //pasar el resto a la derecha
+            for (Map.Entry<String, Double> entry : auxmap.entrySet()) 
+            {
+                auxmap.remove(entry);
+                mapDer.put(entry.getKey(), entry.getValue());
+            }
+            recShannonFano(mapIzq, keyAcumulada + "0", salida);
+            recShannonFano(mapDer, keyAcumulada + "1", salida);
+        }
+        
+        
     }
     
     public static void tasaDeCompresion(String metodoUsado){
