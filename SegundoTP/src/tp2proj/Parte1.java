@@ -12,6 +12,13 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.lang.Math;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map.Entry;
+import java.util.Set;
+
 public class Parte1 {
 
 
@@ -90,14 +97,13 @@ public class Parte1 {
     }
     
     public static void metodoShannonFano(Map <String,Double> auxmap, Map <String, String> keyACodificado){
-        Map<String,Double> mapOrdenado = new HashMap<String,Double>();
-        mapOrdenado.putAll(auxmap);
+        LinkedHashMap<String,Double> mapOrdenado = ordenaMap(auxmap);
         
         
         
     }
     
-    public static void recShannonFano(LinkedHashMap<String,Double> auxmap, String keyAcumulada, Map <String, String> salida) {
+    public static void recShannonFano(LinkedHashMap<String,Double> auxmap, String keyAcumulada, Map<String, String> salida) {
         if (auxmap.size() > 2) {
             LinkedHashMap <String, Double> mapIzq = new LinkedHashMap<String,Double>();
             LinkedHashMap <String, Double> mapDer = new LinkedHashMap<String,Double>();
@@ -137,8 +143,27 @@ public class Parte1 {
             recShannonFano(mapIzq, keyAcumulada + "0", salida);
             recShannonFano(mapDer, keyAcumulada + "1", salida);
         }
+        //termina recursion
+        else {
+            List<Entry<String,Double>> palabras = new ArrayList<Entry<String,Double>>(auxmap.entrySet());
+            salida.put(palabras.get(0).getKey(), keyAcumulada + "0");
+            salida.put(palabras.get(1).getKey(), keyAcumulada + "1");
+        }
         
         
+    }
+    
+    public static LinkedHashMap ordenaMap(Map<String, Double> mapa) {
+        List<Entry<String,Double>> listaOrdenada = new ArrayList<Entry<String,Double>>(mapa.entrySet());
+        LinkedHashMap<String, Double> salida = new LinkedHashMap<String, Double>();
+        Collections.sort(listaOrdenada, new Comparator<Map.Entry<String, Double>>(){
+             public int compare(Map.Entry<String, Double> ent1, Map.Entry<String, Double> ent2) {
+                return ent1.getValue().compareTo(ent2.getValue());
+            }});
+        for (Entry<String,Double> entrada : listaOrdenada){
+            salida.put(entrada.getKey(), entrada.getValue());
+        }
+        return salida;
     }
     
     public static void tasaDeCompresion(String metodoUsado){
