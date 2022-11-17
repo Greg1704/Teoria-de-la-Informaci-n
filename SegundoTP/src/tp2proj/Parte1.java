@@ -15,6 +15,7 @@ import java.lang.Math;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -98,6 +99,7 @@ public class Parte1 {
     
     public static void metodoShannonFano(Map <String,Double> auxmap, Map <String, String> keyACodificado){
         LinkedHashMap<String,Double> mapOrdenado = ordenaMap(auxmap);
+        recShannonFano(mapOrdenado, "", keyACodificado);
         
         
         
@@ -107,37 +109,44 @@ public class Parte1 {
         if (auxmap.size() > 2) {
             LinkedHashMap <String, Double> mapIzq = new LinkedHashMap<String,Double>();
             LinkedHashMap <String, Double> mapDer = new LinkedHashMap<String,Double>();
+            Iterator iteratorPalabras = new ArrayList<Entry<String,Double>>(auxmap.entrySet()).iterator();
             
             //Calcula probabilidad total del auxmap dado
             double probTotal = 0.0f;
-            double probGrupoMenor = 0.0f;
+            double probGrupoIzquierdo = 0.0f;
             for (double prob : auxmap.values()) {
                 probTotal += prob;
             }
-            for (Map.Entry<String, Double> entry : auxmap.entrySet())
+            //for (Map.Entry<String, Double> entry : listaPalabras)
+            while (iteratorPalabras.hasNext())
             {
-                if (probGrupoMenor + entry.getValue() < (float)probTotal / 2) 
+                Map.Entry<String, Double> entry = (Map.Entry<String, Double>)iteratorPalabras.next();
+                if (probGrupoIzquierdo + entry.getValue() < (float)probTotal / 2) 
                 {
-                    auxmap.remove(entry);
                     mapIzq.put(entry.getKey(), entry.getValue());
-                    probGrupoMenor += entry.getValue();
+                    probGrupoIzquierdo += entry.getValue();
                 }
                 //al meter la entrada en el grupo menor este tendría mas del 50% de probabilidad
                 else 
                 {
-                    //Si al agregar la ultima entrada al grupo menor quedaria mas cerca de 50/50, agregarla. Caso contrario, se pasa el resto al grupo        
-                    if (Math.abs(probGrupoMenor + entry.getValue() - (float)probTotal / 2) < Math.abs(probGrupoMenor - (float)probTotal / 2)) 
+                    //Si al agregar la ultima entrada al grupo menor quedaria mas cerca de 50/50, agregarla. Caso contrario, se corta y pasa el resto al grupo derecho        
+                    if (Math.abs(probGrupoIzquierdo + entry.getValue() - (float)probTotal / 2) < Math.abs(probGrupoIzquierdo - (float)probTotal / 2)) 
                     {
-                        auxmap.remove(entry);
                         mapIzq.put(entry.getKey(), entry.getValue());
-                        probGrupoMenor += entry.getValue();
                     }
+                    else 
+                    {
+                        mapDer.put(entry.getKey(), entry.getValue());
+                    }
+                    break;
                 }
             }
+            
             //pasar el resto a la derecha
-            for (Map.Entry<String, Double> entry : auxmap.entrySet()) 
+            //for (Map.Entry<String, Double> entry : listaPalabras) 
+            while (iteratorPalabras.hasNext())
             {
-                auxmap.remove(entry);
+                Map.Entry<String, Double> entry = (Map.Entry<String, Double>)iteratorPalabras.next();
                 mapDer.put(entry.getKey(), entry.getValue());
             }
             recShannonFano(mapIzq, keyAcumulada + "0", salida);
@@ -146,19 +155,24 @@ public class Parte1 {
         //termina recursion
         else {
             List<Entry<String,Double>> palabras = new ArrayList<Entry<String,Double>>(auxmap.entrySet());
-            salida.put(palabras.get(0).getKey(), keyAcumulada + "0");
-            salida.put(palabras.get(1).getKey(), keyAcumulada + "1");
+            if (auxmap.size() == 1) {
+                salida.put(palabras.get(0).getKey(), keyAcumulada);
+            }
+            else {
+                for (Integer i = 0; i < palabras.size(); i++) {
+                    salida.put(palabras.get(i).getKey(), keyAcumulada + i.toString());
+                }
+            }
         }
-        
-        
     }
     
-    public static LinkedHashMap ordenaMap(Map<String, Double> mapa) {
+    //Ordena probabilidades en orden descendiente
+    public static LinkedHashMap<String, Double> ordenaMap(Map<String, Double> mapa) {
         List<Entry<String,Double>> listaOrdenada = new ArrayList<Entry<String,Double>>(mapa.entrySet());
         LinkedHashMap<String, Double> salida = new LinkedHashMap<String, Double>();
         Collections.sort(listaOrdenada, new Comparator<Map.Entry<String, Double>>(){
              public int compare(Map.Entry<String, Double> ent1, Map.Entry<String, Double> ent2) {
-                return ent1.getValue().compareTo(ent2.getValue());
+                return ent2.getValue().compareTo(ent1.getValue());
             }});
         for (Entry<String,Double> entrada : listaOrdenada){
             salida.put(entrada.getKey(), entrada.getValue());
