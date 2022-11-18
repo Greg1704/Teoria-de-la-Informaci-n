@@ -3,9 +3,15 @@ package tp2proj;
 import java.io.BufferedWriter;
 import java.io.File;
 
+import java.io.FileInputStream;
 import java.io.FileWriter;
 
 import java.io.IOException;
+
+import java.io.InputStream;
+
+import java.io.InputStreamReader;
+import java.io.Reader;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -22,13 +28,39 @@ import java.util.Set;
 
 public class Parte1 {
 
+    static Map<String,Double> map = new HashMap<String,Double>();
 
     public static void main(String[] args) {
-        tasaDeCompresion("Huffman");
-        tasaDeCompresion("ShannonFano");
+        char simb;
+        try (InputStream in = new FileInputStream("tp2_grupo11.txt");
+                     Reader reader = new InputStreamReader(in)) {
+            String palabra = "";
+            while((simb =(char) reader.read()) != -1){
+                if(simb != ' ')
+                   palabra += simb;
+                else{
+                   if(map.containsKey(palabra))
+                       map.put(palabra,map.get(palabra) + 1);
+                   else{
+                       map.put(palabra,1.0); 
+                       System.out.println(palabra);
+                   }
+                }
+            }
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
+        for(Map.Entry<String, Double> entry : map.entrySet()){
+            System.out.println("key: " + entry.getKey() + "  value: " + entry.getValue());
+        }
+        
+        
+        //tasaDeCompresion("Huffman");
+        //tasaDeCompresion("ShannonFano");
     }
     
-    public static void metodoHuffman(Map <String,Double> auxmap){
+    
+    public static void metodoHuffman(LinkedHashMap <String,Double> auxmap){
         String key1 = null,key2=null;
         double menor1=1,menor2=1;
         if(auxmap.size()>2){
