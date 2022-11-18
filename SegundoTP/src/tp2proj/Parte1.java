@@ -31,28 +31,42 @@ public class Parte1 {
     static Map<String,Double> map = new HashMap<String,Double>();
 
     public static void main(String[] args) {
-        char simb;
+        int simb;
         try (InputStream in = new FileInputStream("tp2_grupo11.txt");
                      Reader reader = new InputStreamReader(in)) {
             String palabra = "";
-            while((simb =(char) reader.read()) != -1){
-                if(simb != ' ')
-                   palabra += simb;
+            System.out.println("Leyendo archivo...");
+            while((simb = reader.read()) != -1){
+                if(simb != ' ' && simb != '\n')
+                   palabra += (char) simb;
                 else{
                    if(map.containsKey(palabra))
                        map.put(palabra,map.get(palabra) + 1);
                    else{
                        map.put(palabra,1.0); 
-                       System.out.println(palabra);
                    }
-                }
+                   palabra = "";
+                } 
             }
+            
+            File file = new File("Ej1Diccionario.txt");
+            if (!file.exists())
+                file.createNewFile();
+            FileWriter fw = new FileWriter(file);
+            BufferedWriter bw = new BufferedWriter(fw);
+            bw.write("Casos encontrados: " + map.size() + "\n");
+            for(Map.Entry<String, Double> entry : map.entrySet()){
+                System.out.println("key: " + entry.getKey() + "  value: " + entry.getValue());
+                bw.write("key: " + entry.getKey() + "  value: " + entry.getValue() + "\n");
+            }
+            bw.close();
+            fw.close();
+            
+            metodoHuffman(map);
         }catch (IOException e) {
             e.printStackTrace();
         }
-        for(Map.Entry<String, Double> entry : map.entrySet()){
-            System.out.println("key: " + entry.getKey() + "  value: " + entry.getValue());
-        }
+        
         
         
         //tasaDeCompresion("Huffman");
@@ -60,7 +74,12 @@ public class Parte1 {
     }
     
     
-    public static void metodoHuffman(LinkedHashMap <String,Double> auxmap){
+    public static void metodoHuffman(Map <String,Double> auxmap){
+        LinkedHashMap<String,Double> mapOrdenado = ordenaMap(auxmap);
+        Huffman(mapOrdenado);
+    }
+    
+    public static void Huffman(LinkedHashMap <String,Double> auxmap){
         String key1 = null,key2=null;
         double menor1=1,menor2=1;
         if(auxmap.size()>2){
@@ -80,7 +99,7 @@ public class Parte1 {
             auxmap.remove(key1);
             auxmap.remove(key2);
             auxmap.put(key1,menor1 + menor2);
-            metodoHuffman(auxmap);
+            Huffman(auxmap);
             //Metodo inverso donde se le asigna a cada valor su key binaria
             String key3=recuperaKeyMenor(auxmap,menor1,menor2);
             auxmap.remove(key3);
