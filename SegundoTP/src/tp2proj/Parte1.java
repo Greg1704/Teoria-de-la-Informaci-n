@@ -59,7 +59,7 @@ public class Parte1 {
             BufferedWriter bw = new BufferedWriter(fw);
             bw.write("Casos encontrados: " + map.size() + "\n");
             for(Map.Entry<String, Double> entry : map.entrySet()){
-                System.out.println("key: " + entry.getKey() + "  value: " + entry.getValue());
+                //System.out.println("key: " + entry.getKey() + "  value: " + entry.getValue());
                 bw.write("key: " + entry.getKey() + "  value: " + entry.getValue() + "\n");
             }
             bw.close();
@@ -84,7 +84,7 @@ public class Parte1 {
     
     public static void Huffman(Map <String,Double> auxmap){
             String key1 = null,key2=null;
-            double menor1=1,menor2=1;
+            double menor1=10000,menor2=10000;
             if(auxmap.size()>2){
                 for(Map.Entry<String, Double> entry : auxmap.entrySet()){
                     if(entry.getValue()<menor1){
@@ -99,8 +99,10 @@ public class Parte1 {
                         menor2=entry.getValue();
                     }
                 } //Del for salen las dos keys con menores probabilidades
+                //System.out.println(key1 + "  " + key2);
                 auxmap.remove(key1);
                 auxmap.remove(key2);
+                //System.out.println(auxmap.size());
                 auxmap.put(key1,menor1 + menor2);
                 Huffman(auxmap);
                 //Metodo inverso donde se le asigna a cada valor su key binaria
@@ -280,7 +282,7 @@ public class Parte1 {
     }
     
     public static void codificacion(LinkedHashMap<String,Double> auxmap,String metodo){
-        try (InputStream in = new FileInputStream("datosGrupo11.txt");
+        try (InputStream in = new FileInputStream("tp2_grupo11.txt");
                     Reader reader = new InputStreamReader(in)) {
             int simb,bin;
             String nombreArchivo = metodo + "Codificado.dat",palabra="";
