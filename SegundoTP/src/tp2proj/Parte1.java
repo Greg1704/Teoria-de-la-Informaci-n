@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Reader;
 
@@ -324,15 +325,18 @@ public class Parte1 {
             try {
                 int simb;
                 FileInputStream inputStream = new FileInputStream(file);
+                ObjectInputStream objectStream = new ObjectInputStream(inputStream);
                 System.out.println("El archivo existe");
-                //auxmap = (LinkedHashMap <String, Double>) inputStream.read();
-                while((simb = inputStream.read()) != -1){
+                auxmap = (LinkedHashMap <String, Double>) objectStream.readObject();
+                for(Map.Entry<String, Double> entry : auxmap.entrySet()){
+                    System.out.println("key: " + entry.getKey() + "  value: " + entry.getValue());
+                }
+                /*while((simb = inputStream.read()) != -1){
                     /*Habria que ver como asociar el valor del simbolo a la tabla extraida.
                      * Y luego habria que ir reformando el archivo, agregando lo extraido anteriormente*/
-                }
             } catch (FileNotFoundException e) {
-                System.out.println("El archivo no existe");
             } catch (IOException e) {
+            } catch (ClassNotFoundException e) {
             }
         } 
     }
