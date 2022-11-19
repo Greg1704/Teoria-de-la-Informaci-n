@@ -79,10 +79,26 @@ public class Parte1 {
     
     
     public static void metodoHuffman(Map <String,Double> auxmap){
-        Huffman(auxmap);
-        LinkedHashMap<String,Double> mapOrdenado = ordenaMap(auxmap);
-        codificacion(mapOrdenado,"Huffman",".Huf");
+        Map <String,Double> Huffmap = new HashMap<String,Double>();
+        for(Map.Entry<String, Double> entry : auxmap.entrySet())
+            Huffmap.put(entry.getKey(),entry.getValue());
+        Huffman(Huffmap);
+        List<Entry<String,Double>> origList = ordenar(map);
+        List<Entry<String,Double>> binList = ordenar(Huffmap);
+        LinkedHashMap<String,String> mapStringABinario = new LinkedHashMap<String,String>();
+        for (int i= binList.size();i>0;i--)
+            mapStringABinario.put(origList.get(i-1).getKey(),binList.get(i-1).getKey());
+        //codificacion(mapStringABinario,"Huffman",".Huf");
         decodificacion("Huffman",".Huf");
+    }
+    
+    public static List ordenar(Map<String,Double> map){
+        List<Entry<String,Double>> list = new ArrayList<Entry<String,Double>>(map.entrySet());
+        Collections.sort(list, new Comparator<Map.Entry<String, Double>>(){
+                        public int compare(Map.Entry<String, Double> ent1, Map.Entry<String, Double> ent2) {
+                            return ent1.getValue().compareTo(ent2.getValue());
+                        }});
+        return list;
     }
     
     public static void Huffman(Map <String,Double> auxmap){
@@ -339,5 +355,19 @@ public class Parte1 {
             } catch (ClassNotFoundException e) {
             }
         } 
+    }
+    
+    public ArrayList<Boolean> StringABinario(String str) {
+            ArrayList<Boolean> salida = new ArrayList<Boolean>();
+            
+            for (char c : str.toCharArray()) {
+                if (c == '0'){
+                    salida.add(false);
+                }
+                else {
+                    salida.add(true);
+                }
+            }
+            return salida;
     }
 }
