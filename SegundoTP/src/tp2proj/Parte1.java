@@ -89,7 +89,7 @@ public class Parte1 {
         for (int i= binList.size();i>0;i--)
             mapStringABinario.put(origList.get(i-1).getKey(),binList.get(i-1).getKey());
         codificacion(mapStringABinario,"Huffman",".Huf");
-        //decodificacion("Huffman",".Huf");
+        decodificacion("Huffman",".Huf");
     }
     
     public static List ordenar(Map<String,Double> map){
@@ -352,20 +352,23 @@ public class Parte1 {
     
     public static void decodificacion(String metodo,String extension){
         File file= new File(metodo + "Codificado" + extension);
-        LinkedHashMap <String, Double> auxmap = new LinkedHashMap<String,Double>();
+        LinkedHashMap <String, String> auxmap = new LinkedHashMap<String,String>();
         if(file.exists()){
             try {
                 int simb;
                 FileInputStream inputStream = new FileInputStream(file);
                 ObjectInputStream objectStream = new ObjectInputStream(inputStream);
                 System.out.println("El archivo existe");
-                auxmap = (LinkedHashMap <String, Double>) objectStream.readObject();
-                for(Map.Entry<String, Double> entry : auxmap.entrySet()){
+                auxmap = (LinkedHashMap <String, String>) objectStream.readObject();
+                for(Map.Entry<String, String> entry : auxmap.entrySet()){
                     System.out.println("key: " + entry.getKey() + "  value: " + entry.getValue());
                 }
-                /*while((simb = inputStream.read()) != -1){
-                    /*Habria que ver como asociar el valor del simbolo a la tabla extraida.
-                     * Y luego habria que ir reformando el archivo, agregando lo extraido anteriormente*/
+                while((simb = inputStream.read()) != -1){
+                    /*Habria que agarrar valor por valor.
+                      A cada valor que agarramos, crearle un String que muestre su valor binario
+                      y luego buscar este en el HashMap recuperado.
+                      Luego de esto habria que escribir la palabra en el archivo e ingresar un espacio*/
+                }
             } catch (FileNotFoundException e) {
             } catch (IOException e) {
             } catch (ClassNotFoundException e) {
