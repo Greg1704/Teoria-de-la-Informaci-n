@@ -88,8 +88,8 @@ public class Parte1 {
         LinkedHashMap<String,String> mapStringABinario = new LinkedHashMap<String,String>();
         for (int i= binList.size();i>0;i--)
             mapStringABinario.put(origList.get(i-1).getKey(),binList.get(i-1).getKey());
-        //codificacion(mapStringABinario,"Huffman",".Huf");
-        decodificacion("Huffman",".Huf");
+        codificacion(mapStringABinario,"Huffman",".Huf");
+        //decodificacion("Huffman",".Huf");
     }
     
     public static List ordenar(Map<String,Double> map){
@@ -300,10 +300,23 @@ public class Parte1 {
         return 1 - rendimiento(map);
     }
     
-    public static void codificacion(LinkedHashMap<String,Double> auxmap,String metodo,String extension){
+    public static void codificacion(LinkedHashMap<String,String> auxmap,String metodo,String extension){
         try (InputStream in = new FileInputStream("tp2_grupo11.txt");
                     Reader reader = new InputStreamReader(in)) {
-            int simb,bin;
+            int simb;
+            ArrayList<Boolean> bin;
+            LinkedHashMap<String,ArrayList<Boolean>> codifMap = new LinkedHashMap<String,ArrayList<Boolean>> ();
+            for(Map.Entry<String, String> entry : auxmap.entrySet()){
+                codifMap.put(entry.getKey(),StringABinario(entry.getValue()));
+            }
+            String nombreArchivo2 = "tablaSola.Huf";
+            File archivo2 = new File(nombreArchivo2);
+            FileOutputStream fos2 = new FileOutputStream(archivo2);
+            ObjectOutputStream escribir2 = new ObjectOutputStream(fos2);
+            escribir2.writeObject(auxmap);
+            escribir2.close();
+            fos2.close();
+            
             String nombreArchivo = metodo + "Codificado" + extension,palabra="";
             File archivo = new File(nombreArchivo);
             FileOutputStream fos = new FileOutputStream(archivo);
@@ -313,8 +326,10 @@ public class Parte1 {
                 if(simb != ' ' && simb != '\n')
                    palabra += (char) simb;
                 else{
-                   bin = (int) buscaValue(auxmap,palabra);
-                   escribir.write(bin); 
+                   bin = buscaValue(codifMap,palabra);
+                   for(int i=0;i<bin.size();i++){
+                      escribir.writeBoolean(bin.get(i));
+                   }
                    palabra = "";
                 }
             }
@@ -325,13 +340,14 @@ public class Parte1 {
         }
     }
     
-    public static double buscaValue(LinkedHashMap<String,Double> auxmap,String buscado){
-        for(Map.Entry<String, Double> entry : auxmap.entrySet()) {
+    public static ArrayList<Boolean> buscaValue(LinkedHashMap<String,ArrayList<Boolean>> auxmap,String buscado){
+        ArrayList<Boolean> salida = new ArrayList<Boolean>();
+        for(Map.Entry<String, ArrayList<Boolean>> entry : auxmap.entrySet()) {
             if(entry.getKey().equals(buscado)){
                 return entry.getValue();
             }
         }
-        return 0;
+        return null; //No deberia llegar aca
     }
     
     public static void decodificacion(String metodo,String extension){
@@ -357,7 +373,7 @@ public class Parte1 {
         } 
     }
     
-    public ArrayList<Boolean> StringABinario(String str) {
+    public static ArrayList<Boolean> StringABinario(String str) {
             ArrayList<Boolean> salida = new ArrayList<Boolean>();
             
             for (char c : str.toCharArray()) {
