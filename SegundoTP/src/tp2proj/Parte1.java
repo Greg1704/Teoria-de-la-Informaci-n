@@ -79,7 +79,7 @@ public class Parte1 {
     public static void metodoHuffman(Map <String,Double> auxmap){
         Huffman(auxmap);
         LinkedHashMap<String,Double> mapOrdenado = ordenaMap(auxmap);
-        codificacion(mapOrdenado,"Huffman");
+        codificacion(mapOrdenado,"Huffman",".Huf");
     }
     
     public static void Huffman(Map <String,Double> auxmap){
@@ -281,11 +281,11 @@ public class Parte1 {
         return 1 - rendimiento(map);
     }
     
-    public static void codificacion(LinkedHashMap<String,Double> auxmap,String metodo){
+    public static void codificacion(LinkedHashMap<String,Double> auxmap,String metodo,String extension){
         try (InputStream in = new FileInputStream("tp2_grupo11.txt");
                     Reader reader = new InputStreamReader(in)) {
             int simb,bin;
-            String nombreArchivo = metodo + "Codificado.dat",palabra="";
+            String nombreArchivo = metodo + "Codificado" + extension,palabra="";
             File archivo = new File(nombreArchivo);
             FileOutputStream fos = new FileOutputStream(archivo);
             ObjectOutputStream escribir = new ObjectOutputStream(fos);
@@ -313,5 +313,14 @@ public class Parte1 {
             }
         }
         return 0;
+    }
+    
+    public static void decodificacion(LinkedHashMap<String,Double> auxmap,String metodo,String extension){
+        File file= new File(metodo + "Codificado" + extension);
+        if(file.exists()){
+            
+        }else
+            System.out.println("El archivo no existe");
+        
     }
 }
