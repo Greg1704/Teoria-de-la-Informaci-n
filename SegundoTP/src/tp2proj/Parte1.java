@@ -4,6 +4,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 
@@ -80,6 +81,7 @@ public class Parte1 {
         Huffman(auxmap);
         LinkedHashMap<String,Double> mapOrdenado = ordenaMap(auxmap);
         codificacion(mapOrdenado,"Huffman",".Huf");
+        decodificacion("Huffman",".Huf");
     }
     
     public static void Huffman(Map <String,Double> auxmap){
@@ -315,12 +317,23 @@ public class Parte1 {
         return 0;
     }
     
-    public static void decodificacion(LinkedHashMap<String,Double> auxmap,String metodo,String extension){
+    public static void decodificacion(String metodo,String extension){
         File file= new File(metodo + "Codificado" + extension);
+        LinkedHashMap <String, Double> auxmap = new LinkedHashMap<String,Double>();
         if(file.exists()){
-            
-        }else
-            System.out.println("El archivo no existe");
-        
+            try {
+                int simb;
+                FileInputStream inputStream = new FileInputStream(file);
+                System.out.println("El archivo existe");
+                //auxmap = (LinkedHashMap <String, Double>) inputStream.read();
+                while((simb = inputStream.read()) != -1){
+                    /*Habria que ver como asociar el valor del simbolo a la tabla extraida.
+                     * Y luego habria que ir reformando el archivo, agregando lo extraido anteriormente*/
+                }
+            } catch (FileNotFoundException e) {
+                System.out.println("El archivo no existe");
+            } catch (IOException e) {
+            }
+        } 
     }
 }
