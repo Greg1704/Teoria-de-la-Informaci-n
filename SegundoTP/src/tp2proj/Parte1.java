@@ -303,11 +303,14 @@ public class Parte1 {
     public static void codificacion(LinkedHashMap<String,String> auxmap,String metodo,String extension){
         try (InputStream in = new FileInputStream("tp2_grupo11.txt");
                     Reader reader = new InputStreamReader(in)) {
-            int simb;
-            ArrayList<Boolean> bin;
-            LinkedHashMap<String,ArrayList<Boolean>> codifMap = new LinkedHashMap<String,ArrayList<Boolean>> ();
+            int simb,bin,longmax = encontrarLongMaxima(auxmap);
+            LinkedHashMap<String,String> codifMap = new LinkedHashMap<String,String> ();
             for(Map.Entry<String, String> entry : auxmap.entrySet()){
-                codifMap.put(entry.getKey(),StringABinario(entry.getValue()));
+                String auxpalabra = entry.getValue();
+                for(int i = auxpalabra.length()-1;i<longmax;i++){
+                    auxpalabra += "0";
+                }
+                codifMap.put(entry.getKey(),auxpalabra);
             }
             String nombreArchivo2 = "tablaSola.Huf";
             File archivo2 = new File(nombreArchivo2);
@@ -326,10 +329,8 @@ public class Parte1 {
                 if(simb != ' ' && simb != '\n')
                    palabra += (char) simb;
                 else{
-                   bin = buscaValue(codifMap,palabra);
-                   for(int i=0;i<bin.size();i++){
-                      escribir.writeBoolean(bin.get(i));
-                   }
+                   bin = Integer.parseInt(buscaValue(codifMap, palabra),2);
+                   escribir.write(bin);
                    palabra = "";
                 }
             }
@@ -340,9 +341,8 @@ public class Parte1 {
         }
     }
     
-    public static ArrayList<Boolean> buscaValue(LinkedHashMap<String,ArrayList<Boolean>> auxmap,String buscado){
-        ArrayList<Boolean> salida = new ArrayList<Boolean>();
-        for(Map.Entry<String, ArrayList<Boolean>> entry : auxmap.entrySet()) {
+    public static String buscaValue(LinkedHashMap<String,String> auxmap,String buscado){
+        for(Map.Entry<String,String> entry : auxmap.entrySet()) {
             if(entry.getKey().equals(buscado)){
                 return entry.getValue();
             }
@@ -385,5 +385,14 @@ public class Parte1 {
                 }
             }
             return salida;
+    }
+    
+    public static int encontrarLongMaxima(LinkedHashMap<String,String> auxmap){
+        int longitud =0;
+        for(Map.Entry<String, String> entry : auxmap.entrySet()){
+            if(entry.getValue().length()>longitud)
+                longitud = entry.getValue().length();
+        }
+        return longitud;
     }
 }
