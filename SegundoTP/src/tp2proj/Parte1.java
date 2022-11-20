@@ -34,7 +34,7 @@ public class Parte1 {
 
     static Map<String,Double> map = new HashMap<String,Double>();
     static Map<String,String> map2 = new HashMap<String,String>();
-    static int palabrasTotales = 0;
+    static int palabrasTotales;
 
     public static void main(String[] args) {
         int simb;
@@ -71,6 +71,7 @@ public class Parte1 {
             bw.close();
             fw.close();
             metodoHuffman(map);
+            metodoShannonFano(map,map2);
         }catch (IOException e) {
             e.printStackTrace();
         }
@@ -93,7 +94,6 @@ public class Parte1 {
         FileWriter fw = new FileWriter(file);
         BufferedWriter bw = new BufferedWriter(fw);
         bw.write("Casos encontrados: " + map.size() + "\n");
-        palabrasTotales = map.size();
         for(Map.Entry<String, Double> entry : Huffmap.entrySet()){
             //System.out.println("key: " + entry.getKey() + "  value: " + entry.getValue());
             bw.write("key: " + entry.getKey() + "  value: " + entry.getValue() + "\n");
@@ -102,6 +102,8 @@ public class Parte1 {
         fw.close();
         System.out.println("Entropía para Huffman  " + calculoEntropia(Huffmap));
         System.out.println("Longitud media para Huffman  " + calculoLongMediaCodigo(Huffmap));
+        System.out.println("Rendimiento para Huffman " + rendimiento(Huffmap));
+        System.out.println("Redundancia para Huffman " + redundancia(Huffmap));
         List<Entry<String,Double>> origList = ordenar(map);
         List<Entry<String,Double>> binList = ordenar(Huffmap);
         LinkedHashMap<String,String> mapStringABinario = new LinkedHashMap<String,String>();
@@ -192,12 +194,26 @@ public class Parte1 {
     }
     
     public static void metodoShannonFano(Map <String,Double> auxmap, Map <String, String> keyACodificado){
+        
+        double aux;
+        
         LinkedHashMap<String,Double> mapOrdenado = ordenaMap(auxmap);
         recShannonFano(mapOrdenado, "", keyACodificado);
         
+        Map <String,Double> mapBinarioYApariciones = new HashMap<String,Double>();
+        for(Map.Entry<String, String> entry : keyACodificado.entrySet()){
+            aux = buscaValueDouble(mapOrdenado,entry.getKey());
+            mapBinarioYApariciones.put(entry.getValue(),aux);
+        }
+        
+        System.out.println("Entropía para Shannon-Fano  " + calculoEntropia(mapBinarioYApariciones));
+        System.out.println("Longitud media para Shannon-Fano  " + calculoLongMediaCodigo(mapBinarioYApariciones));
+        System.out.println("Rendimiento para Shannon-Fano " + rendimiento(mapBinarioYApariciones));
+        System.out.println("Redundancia para Shannon-Fano " + redundancia(mapBinarioYApariciones));
         
         
     }
+    
     
     public static void recShannonFano(LinkedHashMap<String,Double> auxmap, String keyAcumulada, Map<String, String> salida) {
         if (auxmap.size() > 2) {
@@ -295,10 +311,9 @@ public class Parte1 {
     public static double calculoEntropia(Map<String,Double> auxmap){
         double auxentrop=0,auxprob=0;
         for(Map.Entry<String, Double> entry : auxmap.entrySet()) {
-            auxprob=entry.getValue()/palabrasTotales;
+            auxprob=entry.getValue()/ palabrasTotales;
             auxentrop+=auxprob*(Math.log(auxprob)/-Math.log(2));
         }
-        System.out.println("Entropia de fuente post-Huffman = " + auxentrop);
         return auxentrop;
     }
     
@@ -307,8 +322,7 @@ public class Parte1 {
         for(Map.Entry<String, Double> entry : auxmap.entrySet()) {
             aux+=entry.getValue()*entry.getKey().length();
         }
-        aux=aux;
-        System.out.println("Longitud media de codigo de la fuente post-Huffman es " + aux);
+        aux=aux/palabrasTotales;
         return aux;
     }
     
@@ -316,7 +330,7 @@ public class Parte1 {
         return calculoEntropia(auxmap) / calculoLongMediaCodigo(auxmap);
     }
     
-    public static double rendundancia(Map<String,Double> auxmap) {
+    public static double redundancia(Map<String,Double> auxmap) {
         return 1 - rendimiento(auxmap);
     }
     
@@ -375,7 +389,7 @@ public class Parte1 {
                 if(simb != ' ' && simb != '\n')
                    palabra += (char) simb;
                 else{
-                   bin = buscaValue(codifMap, palabra);
+                   bin = buscaValueInt(codifMap, palabra);
                    escribir.write(bin);
                    palabra = "";
                     
@@ -396,8 +410,17 @@ public class Parte1 {
         }
     }
     
-    public static int buscaValue(LinkedHashMap<String,Integer> auxmap,String buscado){
+    public static int buscaValueInt(LinkedHashMap<String,Integer> auxmap,String buscado){
         for(Map.Entry<String,Integer> entry : auxmap.entrySet()) {
+            if(entry.getKey().equals(buscado)){
+                return entry.getValue();
+            }
+        }
+        return -1; //No deberia llegar aca
+    }
+    
+    public static double buscaValueDouble(LinkedHashMap<String,Double> auxmap,String buscado){
+        for(Map.Entry<String,Double> entry : auxmap.entrySet()) {
             if(entry.getKey().equals(buscado)){
                 return entry.getValue();
             }
