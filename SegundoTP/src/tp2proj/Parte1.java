@@ -273,9 +273,9 @@ public class Parte1 {
         }
     }
     
-    public static double calculoEntropia(Map<String,Double> map){
+    public static double calculoEntropia(Map<String,Double> auxmap){
         double auxentrop=0,auxprob=0;
-        for(Map.Entry<String, Double> entry : map.entrySet()) {
+        for(Map.Entry<String, Double> entry : auxmap.entrySet()) {
             auxprob=entry.getValue();
             auxentrop+=auxprob*(Math.log(auxprob)/-Math.log(2));
         }
@@ -283,21 +283,21 @@ public class Parte1 {
         return auxentrop;
     }
     
-    public static double calculoLongMediaCodigo(Map<String,Double> map){
+    public static double calculoLongMediaCodigo(Map<String,Double> auxmap){
         double aux=0;
-        for(Map.Entry<String, Double> entry : map.entrySet()) {
+        for(Map.Entry<String, Double> entry : auxmap.entrySet()) {
             aux+=entry.getValue()*entry.getKey().length();
         }
         System.out.println("Longitud media de codigo de la fuente post-Huffman es " + aux);
         return aux;
     }
     
-    public static double rendimiento(Map<String,Double> map) {
-        return calculoEntropia(map) / calculoLongMediaCodigo(map);
+    public static double rendimiento(Map<String,Double> auxmap) {
+        return calculoEntropia(auxmap) / calculoLongMediaCodigo(auxmap);
     }
     
-    public static double rendundancia(Map<String,Double> map) {
-        return 1 - rendimiento(map);
+    public static double rendundancia(Map<String,Double> auxmap) {
+        return 1 - rendimiento(auxmap);
     }
     
     public static void codificacion(LinkedHashMap<String,String> auxmap,String metodo,String extension){
