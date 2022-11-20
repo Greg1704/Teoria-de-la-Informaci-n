@@ -304,19 +304,35 @@ public class Parte1 {
         try (InputStream in = new FileInputStream("tp2_grupo11.txt");
                     Reader reader = new InputStreamReader(in)) {
             int simb,bin,longmax = encontrarLongMaxima(auxmap);
-            LinkedHashMap<String,String> codifMap = new LinkedHashMap<String,String> ();
+            LinkedHashMap<String,Integer> codifMap = new LinkedHashMap<String,Integer> ();
             for(Map.Entry<String, String> entry : auxmap.entrySet()){
                 String auxpalabra = entry.getValue();
                 for(int i = auxpalabra.length()-1;i<longmax;i++){
                     auxpalabra += "0";
                 }
-                codifMap.put(entry.getKey(),auxpalabra);
+                codifMap.put(entry.getKey(),Integer.parseInt(auxpalabra, 2));
             }
+            /*for(Map.Entry<String, Integer> entry : codifMap.entrySet()){
+                System.out.println("key: " + entry.getKey() + "  value: " + entry.getValue());
+            }*/
+            LinkedHashMap<String,Integer> mapOrdenado = ordenaMapInteger(codifMap);
+            File file2 = new File(metodo + "ChequeamosTabla.txt");
+            if (!file2.exists())
+                file2.createNewFile();
+            FileWriter fw2 = new FileWriter(file2);
+            BufferedWriter bw2 = new BufferedWriter(fw2);
+            for(Map.Entry<String, Integer> entry : codifMap.entrySet()){
+                bw2.write("key: " + entry.getKey() + "  value: " + entry.getValue() + "\n");
+            }
+            bw2.close();
+            fw2.close();
+            
+            
             String nombreArchivo2 = "tablaSola.Huf";
             File archivo2 = new File(nombreArchivo2);
             FileOutputStream fos2 = new FileOutputStream(archivo2);
             ObjectOutputStream escribir2 = new ObjectOutputStream(fos2);
-            escribir2.writeObject(auxmap);
+            escribir2.writeObject(codifMap);
             escribir2.close();
             fos2.close();
             
@@ -324,12 +340,12 @@ public class Parte1 {
             File archivo = new File(nombreArchivo);
             FileOutputStream fos = new FileOutputStream(archivo);
             ObjectOutputStream escribir = new ObjectOutputStream(fos);
-            escribir.writeObject(auxmap); 
+            escribir.writeObject(codifMap); 
             while ((simb = reader.read()) != -1){
                 if(simb != ' ' && simb != '\n')
                    palabra += (char) simb;
                 else{
-                   bin = Integer.parseInt(buscaValue(codifMap, palabra),2);
+                   bin = buscaValue(codifMap, palabra);
                    escribir.write(bin);
                    palabra = "";
                 }
@@ -341,39 +357,65 @@ public class Parte1 {
         }
     }
     
-    public static String buscaValue(LinkedHashMap<String,String> auxmap,String buscado){
-        for(Map.Entry<String,String> entry : auxmap.entrySet()) {
+    public static int buscaValue(LinkedHashMap<String,Integer> auxmap,String buscado){
+        for(Map.Entry<String,Integer> entry : auxmap.entrySet()) {
             if(entry.getKey().equals(buscado)){
                 return entry.getValue();
             }
         }
-        return null; //No deberia llegar aca
+        return -1; //No deberia llegar aca
     }
     
     public static void decodificacion(String metodo,String extension){
         File file= new File(metodo + "Codificado" + extension);
-        LinkedHashMap <String, String> auxmap = new LinkedHashMap<String,String>();
+        LinkedHashMap <String, Integer> auxmap = new LinkedHashMap<String,Integer>();
         if(file.exists()){
             try {
                 int simb;
+                String aux,palabra;
                 FileInputStream inputStream = new FileInputStream(file);
                 ObjectInputStream objectStream = new ObjectInputStream(inputStream);
                 System.out.println("El archivo existe");
-                auxmap = (LinkedHashMap <String, String>) objectStream.readObject();
-                for(Map.Entry<String, String> entry : auxmap.entrySet()){
-                    System.out.println("key: " + entry.getKey() + "  value: " + entry.getValue());
+                auxmap = (LinkedHashMap <String, Integer>) objectStream.readObject();
+                for(Map.Entry<String, Integer> entry : auxmap.entrySet()){
+                    //System.out.println("key: " + entry.getKey() + "  value: " + entry.getValue());
                 }
+                File file2 = new File(metodo + "ArchivoDecodificado.txt");
+                if (!file2.exists())
+                    file2.createNewFile();
+                FileWriter fw2 = new FileWriter(file2);
+                BufferedWriter bw2 = new BufferedWriter(fw2);
                 while((simb = inputStream.read()) != -1){
                     /*Habria que agarrar valor por valor.
                       A cada valor que agarramos, crearle un String que muestre su valor binario
                       y luego buscar este en el HashMap recuperado.
                       Luego de esto habria que escribir la palabra en el archivo e ingresar un espacio*/
+                    //aux = Integer.toBinaryString(simb);
+                    System.out.println(simb);
+                    if(auxmap.containsValue(simb)){
+                        palabra=buscaKey(auxmap,simb);
+                        bw2.write(palabra + " ");
+                    }
                 }
+                bw2.close();
+                fw2.close();
+                objectStream.close();
+                inputStream.close();
             } catch (FileNotFoundException e) {
             } catch (IOException e) {
             } catch (ClassNotFoundException e) {
             }
         } 
+    }
+    
+    public static String buscaKey(LinkedHashMap <String, Integer> auxmap, int binario){
+        
+        for(Map.Entry<String, Integer> entry : auxmap.entrySet()){
+            if(entry.getValue() == binario)
+                return entry.getKey();
+        }
+        
+        return null; //No deberia llegar aca
     }
     
     public static ArrayList<Boolean> StringABinario(String str) {
@@ -397,5 +439,19 @@ public class Parte1 {
                 longitud = entry.getValue().length();
         }
         return longitud;
+    }
+    
+    //Ordena probabilidades en orden descendiente
+    public static LinkedHashMap<String, Integer> ordenaMapInteger(Map<String, Integer> mapa) {
+        List<Entry<String,Integer>> listaOrdenada = new ArrayList<Entry<String,Integer>>(mapa.entrySet());
+        LinkedHashMap<String, Integer> salida = new LinkedHashMap<String, Integer>();
+        Collections.sort(listaOrdenada, new Comparator<Map.Entry<String, Integer>>(){
+             public int compare(Map.Entry<String, Integer> ent1, Map.Entry<String, Integer> ent2) {
+                return ent2.getValue().compareTo(ent1.getValue());
+            }});
+        for (Entry<String,Integer> entrada : listaOrdenada){
+            salida.put(entrada.getKey(), entrada.getValue());
+        }
+        return salida;
     }
 }
