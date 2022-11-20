@@ -59,6 +59,10 @@ public class Parte2 {
         System.out.println("Equivocacion H(B/A) : " + equivocacion(MCInversa1, VProbSalida1, VProb1));
         System.out.println("Informacion mutua I(B/A) : " + informacionMutua(MCInversa1, VProbSalida1, VProb1));
 
+        for (int h = 0 ; h < M1 ; h++) {
+            System.out.println("Entropia 'a posteriori' H(A/b" + (h+1) + ") = " + entropiaAPosteriori(MC1, VProb1, VProbSalida1, h));
+        }
+
         System.out.println("");
 
 
@@ -73,10 +77,15 @@ public class Parte2 {
         System.out.println("Entropia 'a priori' : " + entropiaAPriori(VProb2));
         System.out.println("Entropia salida : " + entropiaSalida(VProbSalida2));
         System.out.println("Entropia 'afin' : " + entropiaAFin(MSS2));
-        System.out.println("Equivocacion I(A/B) : " + equivocacion(MC2, VProb2, VProbSalida2));
-        System.out.println("Informacion mutua H(A/B) : " + informacionMutua(MC2, VProb2, VProbSalida2));
+        System.out.println("Equivocacion H(A/B) : " + equivocacion(MC2, VProb2, VProbSalida2));
+        System.out.println("Informacion mutua I(A/B) : " + informacionMutua(MC2, VProb2, VProbSalida2));
         System.out.println("Equivocacion H(B/A) : " + equivocacion(MCInversa2, VProbSalida2, VProb2));
         System.out.println("Informacion mutua I(B/A) : " + informacionMutua(MCInversa2, VProbSalida2, VProb2));
+
+        for (int h = 0 ; h < M2 ; h++) {
+            System.out.println("Entropia 'a posteriori' H(A/b" + (h+1) + ") = " + entropiaAPosteriori(MC2, VProb2, VProbSalida2, h));
+        }
+
         System.out.println("");
 
 
@@ -93,6 +102,11 @@ public class Parte2 {
         System.out.println("Informacion mutua I(A/B) : " + informacionMutua(MC3, VProb3, VProbSalida3));
         System.out.println("Equivocacion H(B/A) : " + equivocacion(MCInversa3, VProbSalida3, VProb3));
         System.out.println("Informacion mutua I(B/A) : " + informacionMutua(MCInversa3, VProbSalida3, VProb3));
+
+        for (int h = 0 ; h < M3 ; h++) {
+            System.out.println("Entropia 'a posteriori' H(A/b" + (h+1) + ") = " + entropiaAPosteriori(MC3, VProb3, VProbSalida3, h));
+        }
+
         System.out.println("");
 
 
@@ -106,6 +120,27 @@ public class Parte2 {
         System.out.println(MC1[2][0] + " " + MC1[2][1] + " " + MC1[2][2]);
         System.out.println(MC1[3][0] + " " + MC1[3][1] + " " + MC1[3][2]);
         System.out.println(MC1[4][0] + " " + MC1[4][1] + " " + MC1[4][2]);
+
+        System.out.println("------------------------------------------------");
+
+        System.out.println("MATRIZ DE CANAL 2");
+        System.out.println("------------------------------------------------");
+        System.out.println(MC2[0][0] + " " + MC2[0][1] + " " + MC2[0][2] + " " + MC2[0][3]);
+        System.out.println(MC2[1][0] + " " + MC2[1][1] + " " + MC2[1][2] + " " + MC2[1][3]);
+        System.out.println(MC2[2][0] + " " + MC2[2][1] + " " + MC2[2][2] + " " + MC2[2][3]);
+        System.out.println(MC2[3][0] + " " + MC2[3][1] + " " + MC2[3][2] + " " + MC2[3][3]);
+
+
+        System.out.println("MATRIZ DE CANAL 3");
+        System.out.println("------------------------------------------------");
+        System.out.println(MC3[0][0] + " " + MC3[0][1] + " " + MC3[0][2] + " " + MC3[0][3]);
+        System.out.println(MC3[1][0] + " " + MC3[1][1] + " " + MC3[1][2] + " " + MC3[1][3]);
+        System.out.println(MC3[2][0] + " " + MC3[2][1] + " " + MC3[2][2] + " " + MC3[2][3]);
+        System.out.println(MC3[3][0] + " " + MC3[3][1] + " " + MC3[3][2] + " " + MC3[3][3]);
+        System.out.println(MC3[4][0] + " " + MC3[4][1] + " " + MC3[4][2] + " " + MC3[4][3]);
+        System.out.println(MC3[5][0] + " " + MC3[5][1] + " " + MC3[5][2] + " " + MC3[5][3]);
+
+        System.out.println("------------------------------------------------");
 
         System.out.println("MATRIZ DE CANAL INVERSA 1");
         System.out.println("------------------------------------------------");
@@ -185,11 +220,11 @@ public class Parte2 {
 
         MC3[4][0] = 0.2;
         MC3[4][1] = defineElemMC3('c');
-        MC3[4][2] = defineElemMC1('a');
+        MC3[4][2] = defineElemMC3('a');
         MC3[4][3] = 1 - MC3[4][0] - MC3[4][1] - MC3[4][2];
 
-        MC3[5][0] = defineElemMC1('b');
-        MC3[5][1] = defineElemMC1('c');
+        MC3[5][0] = defineElemMC3('b');
+        MC3[5][1] = defineElemMC3('c');
         MC3[5][2] = 0.3;
         MC3[5][3] = 1 - MC3[5][0] - MC3[5][1] - MC3[5][2];
     }
@@ -219,13 +254,13 @@ public class Parte2 {
             aux = 0.02 * NumGrupo;
             if (aux < 0.1 || aux > 0.2) {
                 aux = 0.2;
+            }
             } else if (c == 'c') {
                 aux = 0.03 * NumGrupo;
                 if (aux < 0.1 || aux > 0.3) {
                     aux = 0.3;
                 }
             }
-        }
         return aux;
     }
 
@@ -239,11 +274,11 @@ public class Parte2 {
             aux = 0.02 * NumGrupo;
             if (aux < 0.1 || aux > 0.2) {
                 aux = 0.2;
+            }
             } else if (c == 'c') {
-                aux = 0.03 * NumGrupo;
-                if (aux < 0.1 || aux > 0.3) {
-                    aux = 0.3;
-                }
+            aux = 0.03 * NumGrupo;
+            if (aux < 0.1 || aux > 0.3) {
+                aux = 0.3;
             }
         }
         return aux;
@@ -288,7 +323,7 @@ public class Parte2 {
     public static double entropiaAPosteriori(double[][] MC, double[] VProb, double[] VProbSalida, int j) {
         double aux = 0;
         int i = 0;
-        for (i = 0 ; i < VProb.length-1 ; i++) {
+        for (i = 0 ; i < VProb.length ; i++) {
             double prob = (MC[i][j] * VProb[i]) / VProbSalida[j]; // (P(bj / ai) * P(ai)) / P(bj)
             if (prob > 0) {
                 aux +=  prob * (-Math.log(prob) / Math.log(2)); // prob * -log(prob)
