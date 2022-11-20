@@ -341,6 +341,15 @@ public class Parte1 {
             FileOutputStream fos = new FileOutputStream(archivo);
             ObjectOutputStream escribir = new ObjectOutputStream(fos);
             escribir.writeObject(codifMap); 
+            
+            
+            File file3 = new File(metodo + "textoEnInt.txt");
+            if (!file2.exists())
+                file2.createNewFile();
+            FileWriter fw3 = new FileWriter(file3);
+            BufferedWriter bw3 = new BufferedWriter(fw3);
+            
+            
             while ((simb = reader.read()) != -1){
                 if(simb != ' ' && simb != '\n')
                    palabra += (char) simb;
@@ -348,10 +357,19 @@ public class Parte1 {
                    bin = buscaValue(codifMap, palabra);
                    escribir.write(bin);
                    palabra = "";
+                    
+                    
+                   bw3.write(bin + "\n");
+                    
                 }
             }
             escribir.close();
             fos.close();
+            
+            bw3.close();
+            fw3.close();
+            
+            
         }catch (IOException e) {
             e.printStackTrace();
         }
@@ -377,21 +395,28 @@ public class Parte1 {
                 ObjectInputStream objectStream = new ObjectInputStream(inputStream);
                 System.out.println("El archivo existe");
                 auxmap = (LinkedHashMap <String, Integer>) objectStream.readObject();
-                for(Map.Entry<String, Integer> entry : auxmap.entrySet()){
-                    //System.out.println("key: " + entry.getKey() + "  value: " + entry.getValue());
-                }
+                /*for(Map.Entry<String, Integer> entry : auxmap.entrySet()){
+                    System.out.println("key: " + entry.getKey() + "  value: " + entry.getValue());
+                }*/
                 File file2 = new File(metodo + "ArchivoDecodificado.txt");
                 if (!file2.exists())
                     file2.createNewFile();
                 FileWriter fw2 = new FileWriter(file2);
                 BufferedWriter bw2 = new BufferedWriter(fw2);
+                
+                File file3 = new File(metodo + "textoEnIntRecuperado.txt");
+                if (!file2.exists())
+                    file2.createNewFile();
+                FileWriter fw3 = new FileWriter(file3);
+                BufferedWriter bw3 = new BufferedWriter(fw3);
+                
                 while((simb = inputStream.read()) != -1){
                     /*Habria que agarrar valor por valor.
                       A cada valor que agarramos, crearle un String que muestre su valor binario
                       y luego buscar este en el HashMap recuperado.
                       Luego de esto habria que escribir la palabra en el archivo e ingresar un espacio*/
                     //aux = Integer.toBinaryString(simb);
-                    System.out.println(simb);
+                    bw3.write(simb + "\n");
                     if(auxmap.containsValue(simb)){
                         palabra=buscaKey(auxmap,simb);
                         bw2.write(palabra + " ");
@@ -401,6 +426,11 @@ public class Parte1 {
                 fw2.close();
                 objectStream.close();
                 inputStream.close();
+                
+                bw3.close();
+                fw3.close();
+                
+                
             } catch (FileNotFoundException e) {
             } catch (IOException e) {
             } catch (ClassNotFoundException e) {
