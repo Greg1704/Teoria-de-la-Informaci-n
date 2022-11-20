@@ -34,6 +34,7 @@ public class Parte1 {
 
     static Map<String,Double> map = new HashMap<String,Double>();
     static Map<String,String> map2 = new HashMap<String,String>();
+    static int palabrasTotales = 0;
 
     public static void main(String[] args) {
         int simb;
@@ -63,7 +64,10 @@ public class Parte1 {
             for(Map.Entry<String, Double> entry : map.entrySet()){
                 //System.out.println("key: " + entry.getKey() + "  value: " + entry.getValue());
                 bw.write("key: " + entry.getKey() + "  value: " + entry.getValue() + "\n");
+                palabrasTotales += entry.getValue();
             }
+            System.out.println(map.size());
+            System.out.println(palabrasTotales);
             bw.close();
             fw.close();
             metodoHuffman(map);
@@ -78,11 +82,26 @@ public class Parte1 {
     }
     
     
-    public static void metodoHuffman(Map <String,Double> auxmap){
+    public static void metodoHuffman(Map <String,Double> auxmap) throws IOException {
         Map <String,Double> Huffmap = new HashMap<String,Double>();
         for(Map.Entry<String, Double> entry : auxmap.entrySet())
             Huffmap.put(entry.getKey(),entry.getValue());
         Huffman(Huffmap);
+        File file = new File("Ej1DiccionarioBinario.txt");
+        if (!file.exists())
+            file.createNewFile();
+        FileWriter fw = new FileWriter(file);
+        BufferedWriter bw = new BufferedWriter(fw);
+        bw.write("Casos encontrados: " + map.size() + "\n");
+        palabrasTotales = map.size();
+        for(Map.Entry<String, Double> entry : Huffmap.entrySet()){
+            //System.out.println("key: " + entry.getKey() + "  value: " + entry.getValue());
+            bw.write("key: " + entry.getKey() + "  value: " + entry.getValue() + "\n");
+        }
+        bw.close();
+        fw.close();
+        System.out.println("Entropía para Huffman  " + calculoEntropia(Huffmap));
+        System.out.println("Longitud media para Huffman  " + calculoLongMediaCodigo(Huffmap));
         List<Entry<String,Double>> origList = ordenar(map);
         List<Entry<String,Double>> binList = ordenar(Huffmap);
         LinkedHashMap<String,String> mapStringABinario = new LinkedHashMap<String,String>();
@@ -276,7 +295,7 @@ public class Parte1 {
     public static double calculoEntropia(Map<String,Double> auxmap){
         double auxentrop=0,auxprob=0;
         for(Map.Entry<String, Double> entry : auxmap.entrySet()) {
-            auxprob=entry.getValue();
+            auxprob=entry.getValue()/palabrasTotales;
             auxentrop+=auxprob*(Math.log(auxprob)/-Math.log(2));
         }
         System.out.println("Entropia de fuente post-Huffman = " + auxentrop);
@@ -288,6 +307,7 @@ public class Parte1 {
         for(Map.Entry<String, Double> entry : auxmap.entrySet()) {
             aux+=entry.getValue()*entry.getKey().length();
         }
+        aux=aux;
         System.out.println("Longitud media de codigo de la fuente post-Huffman es " + aux);
         return aux;
     }
@@ -341,7 +361,7 @@ public class Parte1 {
             File archivo = new File(nombreArchivo);
             FileOutputStream fos = new FileOutputStream(archivo);
             ObjectOutputStream escribir = new ObjectOutputStream(fos);
-            escribir.write(longmax);
+            //escribir.write(longmax);
             escribir.writeObject(mapOrdenado); 
             
             File file3 = new File(metodo + "textoEnInt.txt");
@@ -395,12 +415,12 @@ public class Parte1 {
                 FileInputStream inputStream = new FileInputStream(file);
                 ObjectInputStream objectStream = new ObjectInputStream(inputStream);
                 System.out.println("El archivo existe");
-                cantBytes = inputStream.read(); 
+                cantBytes = 2; 
                 System.out.println("Cantidad de bytes  " + cantBytes);
                 auxmap = (LinkedHashMap <String, Integer>) objectStream.readObject();
-                /*for(Map.Entry<String, Integer> entry : auxmap.entrySet()){
-                    System.out.println("key: " + entry.getKey() + "  value: " + entry.getValue());
-                }*/
+                for(Map.Entry<String, Integer> entry : auxmap.entrySet()){
+                    //System.out.println("key: " + entry.getKey() + "  value: " + entry.getValue());
+                }
                 File file2 = new File(metodo + "ArchivoDecodificado.txt");
                 if (!file2.exists())
                     file2.createNewFile();
@@ -419,15 +439,16 @@ public class Parte1 {
                       y luego buscar este en el HashMap recuperado.
                       Luego de esto habria que escribir la palabra en el archivo e ingresar un espacio*/
                     //aux = Integer.toBinaryString(simb);
+                    bw3.write(simb + "\n");
                     if(auxBytesContador<cantBytes){
                         auxlongitud = Integer.toBinaryString(simb);
                         for(int i = auxlongitud.length()-1;i<8;i++){
-                            auxlongitud += "0" + auxlongitud;
+                            auxlongitud = "0" + auxlongitud;
                         }
                         aux += auxlongitud;
                         auxBytesContador++;
-                        bw3.write(aux + "\n");
                     }else if(auxmap.containsValue(Integer.parseInt(aux, 2))){
+                            System.out.println("entro");
                             palabra=buscaKey(auxmap,Integer.parseInt(aux, 2));
                             bw2.write(palabra + " ");
                             auxBytesContador = 0;
