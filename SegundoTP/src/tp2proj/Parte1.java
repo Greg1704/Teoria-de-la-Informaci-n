@@ -305,6 +305,7 @@ public class Parte1 {
                     Reader reader = new InputStreamReader(in)) {
             int simb,bin,longmax = encontrarLongMaxima(auxmap);
             LinkedHashMap<String,Integer> codifMap = new LinkedHashMap<String,Integer> ();
+            System.out.println(longmax);
             for(Map.Entry<String, String> entry : auxmap.entrySet()){
                 String auxpalabra = entry.getValue();
                 for(int i = auxpalabra.length()-1;i<longmax;i++){
@@ -332,7 +333,7 @@ public class Parte1 {
             File archivo2 = new File(nombreArchivo2);
             FileOutputStream fos2 = new FileOutputStream(archivo2);
             ObjectOutputStream escribir2 = new ObjectOutputStream(fos2);
-            escribir2.writeObject(codifMap);
+            escribir2.writeObject(mapOrdenado);
             escribir2.close();
             fos2.close();
             
@@ -340,8 +341,8 @@ public class Parte1 {
             File archivo = new File(nombreArchivo);
             FileOutputStream fos = new FileOutputStream(archivo);
             ObjectOutputStream escribir = new ObjectOutputStream(fos);
-            escribir.writeObject(codifMap); 
-            
+            escribir.write(longmax);
+            escribir.writeObject(mapOrdenado); 
             
             File file3 = new File(metodo + "textoEnInt.txt");
             if (!file2.exists())
@@ -389,11 +390,13 @@ public class Parte1 {
         LinkedHashMap <String, Integer> auxmap = new LinkedHashMap<String,Integer>();
         if(file.exists()){
             try {
-                int simb;
-                String aux,palabra;
+                int simb,cantBytes,auxBytesContador=0;
+                String aux="",palabra,auxlongitud;
                 FileInputStream inputStream = new FileInputStream(file);
                 ObjectInputStream objectStream = new ObjectInputStream(inputStream);
                 System.out.println("El archivo existe");
+                cantBytes = inputStream.read(); 
+                System.out.println("Cantidad de bytes  " + cantBytes);
                 auxmap = (LinkedHashMap <String, Integer>) objectStream.readObject();
                 /*for(Map.Entry<String, Integer> entry : auxmap.entrySet()){
                     System.out.println("key: " + entry.getKey() + "  value: " + entry.getValue());
@@ -416,10 +419,19 @@ public class Parte1 {
                       y luego buscar este en el HashMap recuperado.
                       Luego de esto habria que escribir la palabra en el archivo e ingresar un espacio*/
                     //aux = Integer.toBinaryString(simb);
-                    bw3.write(simb + "\n");
-                    if(auxmap.containsValue(simb)){
-                        palabra=buscaKey(auxmap,simb);
-                        bw2.write(palabra + " ");
+                    if(auxBytesContador<cantBytes){
+                        auxlongitud = Integer.toBinaryString(simb);
+                        for(int i = auxlongitud.length()-1;i<8;i++){
+                            auxlongitud += "0" + auxlongitud;
+                        }
+                        aux += auxlongitud;
+                        auxBytesContador++;
+                        bw3.write(aux + "\n");
+                    }else if(auxmap.containsValue(Integer.parseInt(aux, 2))){
+                            palabra=buscaKey(auxmap,Integer.parseInt(aux, 2));
+                            bw2.write(palabra + " ");
+                            auxBytesContador = 0;
+                            aux = "";
                     }
                 }
                 bw2.close();
@@ -467,6 +479,9 @@ public class Parte1 {
         for(Map.Entry<String, String> entry : auxmap.entrySet()){
             if(entry.getValue().length()>longitud)
                 longitud = entry.getValue().length();
+        }
+        while(longitud % 8 != 0){
+            longitud++;
         }
         return longitud;
     }
