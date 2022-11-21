@@ -300,76 +300,87 @@ public class Parte1 {
         return 1 - rendimiento(auxmap);
     }
     
+    public ArrayList<Boolean> StringABinario(String str) {
+            ArrayList<Boolean> salida = new ArrayList<Boolean>();
+            
+            for (char c : str.toCharArray()) {
+                if (c == '0'){
+                    salida.add(false);
+                }
+                else {
+                    salida.add(true);
+                }
+            }
+            return salida;
+        }
+    
+    
     public static void codificacion(LinkedHashMap<String,String> auxmap,String metodo,String extension){
         try (InputStream in = new FileInputStream("tp2_grupo11.txt");
                     Reader reader = new InputStreamReader(in)) {
-            int simb,bin,longmax = encontrarLongMaxima(auxmap);
-            LinkedHashMap<String,Integer> codifMap = new LinkedHashMap<String,Integer> ();
-            System.out.println(longmax);
-            for(Map.Entry<String, String> entry : auxmap.entrySet()){
-                String auxpalabra = entry.getValue();
-                for(int i = auxpalabra.length()-1;i<longmax;i++){
-                    auxpalabra += "0";
-                }
-                codifMap.put(entry.getKey(),Integer.parseInt(auxpalabra, 2));
-            }
-            /*for(Map.Entry<String, Integer> entry : codifMap.entrySet()){
-                System.out.println("key: " + entry.getKey() + "  value: " + entry.getValue());
-            }*/
-            LinkedHashMap<String,Integer> mapOrdenado = ordenaMapInteger(codifMap);
-            File file2 = new File(metodo + "ChequeamosTabla.txt");
-            if (!file2.exists())
-                file2.createNewFile();
-            FileWriter fw2 = new FileWriter(file2);
-            BufferedWriter bw2 = new BufferedWriter(fw2);
-            for(Map.Entry<String, Integer> entry : codifMap.entrySet()){
-                bw2.write("key: " + entry.getKey() + "  value: " + entry.getValue() + "\n");
-            }
-            bw2.close();
-            fw2.close();
+            int simb,bin;
             
             
-            String nombreArchivo2 = "tablaSola.Huf";
+            
+            String nombreArchivo2 = "tablaSola" + extension;
             File archivo2 = new File(nombreArchivo2);
             FileOutputStream fos2 = new FileOutputStream(archivo2);
             ObjectOutputStream escribir2 = new ObjectOutputStream(fos2);
-            escribir2.writeObject(mapOrdenado);
-            escribir2.close();
+            escribir2.writeObject(auxmap);
             fos2.close();
+            
             
             String nombreArchivo = metodo + "Codificado" + extension,palabra="";
             File archivo = new File(nombreArchivo);
             FileOutputStream fos = new FileOutputStream(archivo);
             ObjectOutputStream escribir = new ObjectOutputStream(fos);
-            escribir.write(longmax);
-            escribir.writeObject(mapOrdenado); 
+            escribir.writeObject(auxmap); 
             
-            File file3 = new File(metodo + "textoEnInt.txt");
-            if (!file2.exists())
-                file2.createNewFile();
-            FileWriter fw3 = new FileWriter(file3);
-            BufferedWriter bw3 = new BufferedWriter(fw3);
             
+            
+            ArrayList<Boolean> valoresEnBits = new ArrayList<Boolean>();
             
             while ((simb = reader.read()) != -1){
                 if(simb != ' ' && simb != '\n')
                    palabra += (char) simb;
                 else{
-                   bin = buscaValue(codifMap, palabra);
-                   escribir.write(bin);
-                   palabra = "";
-                    
-                    
-                   bw3.write(bin + "\n");
-                    
+                    //saco String en binario, convierto a bits y lo agrego al conjunto a guardar
+                    String strBin = auxmap.get(palabra);
+                    for (char c : strBin.toCharArray()) {
+                        if (c == '0'){
+                            valoresEnBits.add(false);
+                        }
+                        else {
+                            valoresEnBits.add(true);
+                        }
+                    }
+                    palabra = "";
                 }
             }
+            
+            byte byteACargar = 0;
+            int contador = 0;
+            Iterator valoresIterator = valoresEnBits.iterator();
+            while (valoresIterator.hasNext()) {
+                boolean valor = (Boolean) valoresIterator.next();
+                //si el próximo valor es true, seteo el bit numero "contador" del byte siendo cargado
+                if (valor) {
+                    byteACargar = (byte) (byteACargar | (1 << 7 - contador));
+                }
+                contador++;
+                //si ya llenó el byte, guardo en archivo
+                if (contador == 8) {
+                    fos.write(byteACargar);
+                    contador = 0;
+                    byteACargar = 0;
+                }
+            }
+            if (contador != 0) //no cargó último byte por estar incompleto, lo escribo manualmente
+            {
+                fos.write(byteACargar);
+            }
             escribir.close();
-            fos.close();
-            
-            bw3.close();
-            fw3.close();
-            
+            fos.close();            
             
         }catch (IOException e) {
             e.printStackTrace();
@@ -385,19 +396,19 @@ public class Parte1 {
         return -1; //No deberia llegar aca
     }
     
+    public static boolean valorEnPosicionDeByte(int pos, byte byt) {
+        byte valorEnPos = (byte) (byt & (1 << (7 - pos)));
+        return valorEnPos != 0;
+    }
+    
     public static void decodificacion(String metodo,String extension){
         File file= new File(metodo + "Codificado" + extension);
-        LinkedHashMap <String, Integer> auxmap = new LinkedHashMap<String,Integer>();
+        LinkedHashMap <String, String> auxmap = new LinkedHashMap<String,String>();
         if(file.exists()){
             try {
-                int simb,cantBytes,auxBytesContador=0;
-                String aux="",palabra,auxlongitud;
                 FileInputStream inputStream = new FileInputStream(file);
                 ObjectInputStream objectStream = new ObjectInputStream(inputStream);
-                System.out.println("El archivo existe");
-                cantBytes = inputStream.read(); 
-                System.out.println("Cantidad de bytes  " + cantBytes);
-                auxmap = (LinkedHashMap <String, Integer>) objectStream.readObject();
+                auxmap = (LinkedHashMap <String, String>) objectStream.readObject();
                 /*for(Map.Entry<String, Integer> entry : auxmap.entrySet()){
                     System.out.println("key: " + entry.getKey() + "  value: " + entry.getValue());
                 }*/
@@ -407,40 +418,39 @@ public class Parte1 {
                 FileWriter fw2 = new FileWriter(file2);
                 BufferedWriter bw2 = new BufferedWriter(fw2);
                 
-                File file3 = new File(metodo + "textoEnIntRecuperado.txt");
-                if (!file2.exists())
-                    file2.createNewFile();
-                FileWriter fw3 = new FileWriter(file3);
-                BufferedWriter bw3 = new BufferedWriter(fw3);
+                //en realidad lee un byte, pero el read tira un int de 0 a 255 que representa un byte
+                int lectura = 0;
                 
-                while((simb = inputStream.read()) != -1){
-                    /*Habria que agarrar valor por valor.
-                      A cada valor que agarramos, crearle un String que muestre su valor binario
-                      y luego buscar este en el HashMap recuperado.
-                      Luego de esto habria que escribir la palabra en el archivo e ingresar un espacio*/
-                    //aux = Integer.toBinaryString(simb);
-                    if(auxBytesContador<cantBytes){
-                        auxlongitud = Integer.toBinaryString(simb);
-                        for(int i = auxlongitud.length()-1;i<8;i++){
-                            auxlongitud += "0" + auxlongitud;
-                        }
-                        aux += auxlongitud;
-                        auxBytesContador++;
-                        bw3.write(aux + "\n");
-                    }else if(auxmap.containsValue(Integer.parseInt(aux, 2))){
-                            palabra=buscaKey(auxmap,Integer.parseInt(aux, 2));
-                            bw2.write(palabra + " ");
-                            auxBytesContador = 0;
-                            aux = "";
+                //Se pasan todos los bytes del archivo a una lista de bools
+                ArrayList<Boolean> lecturaCompleta = new ArrayList<Boolean>();
+                lectura = (byte) inputStream.read();
+                while (lectura != -1) {
+                    byte lecturaEnByte = (byte) lectura;
+                    for (int i = 0 ; i < 8; i++) {
+                        lecturaCompleta.add(valorEnPosicionDeByte(i, lecturaEnByte));
+                    }
+                    lectura = inputStream.read();
+                }
+                //Ya cargados todos los valores, voy pasando a strings binarios y decodificando a medida 
+                //que los voy encontrando
+                String palabraCodificada = "";
+                Iterator iteradorLecturaCompleta = lecturaCompleta.iterator();
+                while (iteradorLecturaCompleta.hasNext()) {
+                    boolean valorSig = (Boolean) iteradorLecturaCompleta.next();
+                    palabraCodificada = palabraCodificada.concat(valorSig? "1" : "0");
+                    //si la palabra coincide, la escribe y resetea la palabra
+                    if (auxmap.containsValue(palabraCodificada)) {
+                        bw2.write(buscaKey(auxmap, palabraCodificada) + " ");
+                        palabraCodificada = "";
                     }
                 }
+                
+                
                 bw2.close();
                 fw2.close();
                 objectStream.close();
                 inputStream.close();
                 
-                bw3.close();
-                fw3.close();
                 
                 
             } catch (FileNotFoundException e) {
@@ -450,6 +460,7 @@ public class Parte1 {
         } 
     }
     
+    /*
     public static String buscaKey(LinkedHashMap <String, Integer> auxmap, int binario){
         
         for(Map.Entry<String, Integer> entry : auxmap.entrySet()){
@@ -458,20 +469,15 @@ public class Parte1 {
         }
         
         return null; //No deberia llegar aca
-    }
+    }*/
     
-    public static ArrayList<Boolean> StringABinario(String str) {
-            ArrayList<Boolean> salida = new ArrayList<Boolean>();
-            
-            for (char c : str.toCharArray()) {
-                if (c == '0'){
-                    salida.add(false);
-                }
-                else {
-                    salida.add(true);
-                }
+    public static String buscaKey(LinkedHashMap <String, String> auxmap, String value){ 
+        for(Map.Entry<String, String> entry : auxmap.entrySet()){
+            if (entry.getValue().equals(value)) {
+                return entry.getKey();
             }
-            return salida;
+        }
+        return "";
     }
     
     public static int encontrarLongMaxima(LinkedHashMap<String,String> auxmap){
