@@ -33,7 +33,7 @@ import java.util.Set;
 public class Parte1 {
 
     static Map<String,Double> map = new HashMap<String,Double>();
-    static Map<String,String> map2 = new HashMap<String,String>();
+    static LinkedHashMap<String,String> map2 = new LinkedHashMap<String,String>();
     static int palabrasTotales;
 
     public static void main(String[] args) {
@@ -111,6 +111,7 @@ public class Parte1 {
             mapStringABinario.put(origList.get(i-1).getKey(),binList.get(i-1).getKey());
         codificacion(mapStringABinario,"Huffman",".Huf");
         decodificacion("Huffman",".Huf");
+        tasaDeCompresion("Huffman",".Huf");
     }
     
     public static List ordenar(Map<String,Double> map){
@@ -193,7 +194,7 @@ public class Parte1 {
         return null;
     }
     
-    public static void metodoShannonFano(Map <String,Double> auxmap, Map <String, String> keyACodificado){
+    public static void metodoShannonFano(Map <String,Double> auxmap, LinkedHashMap <String, String> keyACodificado){
         
         double aux;
         
@@ -211,7 +212,9 @@ public class Parte1 {
         System.out.println("Rendimiento para Shannon-Fano " + rendimiento(mapBinarioYApariciones));
         System.out.println("Redundancia para Shannon-Fano " + redundancia(mapBinarioYApariciones));
         
-        
+        codificacion(keyACodificado,"ShannonFano",".Fan");
+        decodificacion("ShannonFano",".Fan");
+        tasaDeCompresion("ShannonFano",".Fan");
     }
     
     
@@ -290,17 +293,18 @@ public class Parte1 {
         return salida;
     }
     
-    public static void tasaDeCompresion(String metodoUsado){
+    public static void tasaDeCompresion(String metodoUsado,String extension){
         File file = new File("tp2_grupo11.txt");
-        File file2 = new File("FALTAASINGARNOMBRE.TXT"); //Seria el archivo comprimido
-        System.out.println("La tasa de compresion es de " + (file.length() - file2.length()) + " caracteres");
+        File file2 = new File(metodoUsado + "Codificado" + extension); //Seria el archivo comprimido
+        File file4 = new File(metodoUsado + "tablaSola" + extension);
+        System.out.println("La tasa de compresion es de " + ((double) file.length()/(file2.length() - file4.length())) + ":1");
         try{
             File file3 = new File("Parte1TasaDeCompresion" + metodoUsado +".txt");
             if (!file3.exists())
                 file3.createNewFile();
             FileWriter fw3 = new FileWriter(file3);
             BufferedWriter bw3 = new BufferedWriter(fw3);
-            bw3.write("La tasa de compresion es de " + (file.length() - file2.length()) + " caracteres");
+            bw3.write("La tasa de compresion es de " + ((double) file.length()/(file2.length() - file4.length())) + ":1");
             bw3.close();
             fw3.close();
         }catch (IOException e) {
@@ -356,7 +360,7 @@ public class Parte1 {
             
             
             
-            String nombreArchivo2 = "tablaSola" + extension;
+            String nombreArchivo2 = metodo + "TablaSola" + extension;
             File archivo2 = new File(nombreArchivo2);
             FileOutputStream fos2 = new FileOutputStream(archivo2);
             ObjectOutputStream escribir2 = new ObjectOutputStream(fos2);
