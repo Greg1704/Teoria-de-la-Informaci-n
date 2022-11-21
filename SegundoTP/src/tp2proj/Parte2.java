@@ -139,17 +139,7 @@ public class Parte2 {
         System.out.println(MC3[3][0] + " " + MC3[3][1] + " " + MC3[3][2] + " " + MC3[3][3]);
         System.out.println(MC3[4][0] + " " + MC3[4][1] + " " + MC3[4][2] + " " + MC3[4][3]);
         System.out.println(MC3[5][0] + " " + MC3[5][1] + " " + MC3[5][2] + " " + MC3[5][3]);
-
-        System.out.println("------------------------------------------------");
-
-        System.out.println("MATRIZ DE CANAL INVERSA 1");
-        System.out.println("------------------------------------------------");
-        System.out.println(MCInversa1[0][0] + " " + MCInversa1[0][1] + " " + MCInversa1[0][2] + " "  + MCInversa1[0][3] + " " + MCInversa1[0][4]);
-        System.out.println(MCInversa1[1][0] + " " + MCInversa1[1][1] + " " + MCInversa1[1][2] + " "  + MCInversa1[1][3] + " " + MCInversa1[1][4]);
-        System.out.println(MCInversa1[2][0] + " " + MCInversa1[2][1] + " " + MCInversa1[2][2] + " "  + MCInversa1[2][3] + " " + MCInversa1[2][4]);
-
-
-
+        
     }
 
     public static void cargaMatrices(double MC1[][], double MC2[][], double MC3[][]) {
