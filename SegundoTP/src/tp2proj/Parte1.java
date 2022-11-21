@@ -88,18 +88,6 @@ public class Parte1 {
         for(Map.Entry<String, Double> entry : auxmap.entrySet())
             Huffmap.put(entry.getKey(),entry.getValue());
         Huffman(Huffmap);
-        File file = new File("Ej1DiccionarioBinario.txt");
-        if (!file.exists())
-            file.createNewFile();
-        FileWriter fw = new FileWriter(file);
-        BufferedWriter bw = new BufferedWriter(fw);
-        bw.write("Casos encontrados: " + map.size() + "\n");
-        for(Map.Entry<String, Double> entry : Huffmap.entrySet()){
-            //System.out.println("key: " + entry.getKey() + "  value: " + entry.getValue());
-            bw.write("key: " + entry.getKey() + "  value: " + entry.getValue() + "\n");
-        }
-        bw.close();
-        fw.close();
         System.out.println("Entropía para Huffman  " + calculoEntropia(Huffmap));
         System.out.println("Longitud media para Huffman  " + calculoLongMediaCodigo(Huffmap));
         System.out.println("Rendimiento para Huffman " + rendimiento(Huffmap));
